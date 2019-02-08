@@ -3,6 +3,9 @@ package agent;
 import MASInfrastructure.Communication.ICommunication;
 import MASInfrastructure.Etat.LifeCycle;
 import common.Direction;
+import entites.AbstractEntite;
+import plateau.Case;
+
 import java.util.Map;
 
 /**
@@ -21,14 +24,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     private Direction direction;
 
     /**
-     * L'identifiant de l'entité portée par l'agent.
+     * L'entité portée par l'agent.
      */
-    private int idEntitePortee;
-
-    /**
-     * Le plateau.
-     */
-    //private IAgentPlateau plateau;
+    private AbstractEntite entitePortee;
 
     /**
      * Constructeur par défaut.
@@ -39,21 +37,21 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         super(lifeCycle, myMailBoxManager);
         this.nom = "";
         this.direction = Direction.N;
-        this.idEntitePortee = 0;
+        this.entitePortee = null;
     }
 
     public AbstractAgentSitue(String nom, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
         this.nom = nom;
         this.direction = Direction.N;
-        this.idEntitePortee = 0;
+        this.entitePortee = null;
     }
 
     public AbstractAgentSitue(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
         this.nom = nom;
         this.direction = directionInitiale;
-        this.idEntitePortee = 0;
+        this.entitePortee = null;
     }
 
     /**
@@ -77,11 +75,10 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Se déplacer dans la direction de l'agent.
      */
     public void avancer() {
-        // TODO avancer
+        plateau.deplacerAgent(this, this.direction);
     }
 
-    //public Map<Direction, Case> detecter() {
-    public Map<Direction, String> detecter() {
+    public Map<Direction, Case> detecter() {
         // TODO detecter
         return null;
     }
@@ -90,28 +87,13 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Dépose l'entité dans la direction choisie.
      */
     public void deposer() {
-        // TODO appel du plateau
-        //plateau.deposer(this.direction);
+        // TODO deposer
     }
 
-    public int ramasser(String className) {
-        // TODO
-        return 0;
+    public void ramasser(AbstractEntite entite) {
+        plateau.ramasserEntite(this, entite);
     }
 
-    /**
-     * Renvoie la direction actuel de l'agent.
-     * @return la direction de l'agent
-     */
-    public Direction getDirection() {
-        return direction;
-    }
+    public abstract void actionTour();
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 }
