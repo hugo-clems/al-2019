@@ -1,0 +1,102 @@
+@startuml "core"
+class plateau {
+    -nom: String
+    -listeAgents: Map<AbstractAgentSitue, Case>
+    -listeEntites: Map<Entite, Case>
+    --
+    +init(): void
+    +placerAgent(Position, AbstractAgentSitue): boolean
+    +placerEntite(Position, Entite): boolean
+    +enleverAgent(Position, AbstractAgentSitue): AbstractAgentSitue
+    +enleverEntite(Position, Entite): Entite
+    +deplacerAgent(AbstractAgentSitue, Direction): boolean
+    +ramasserEntite(AbstractAgentSitue, Entite): boolean
+    +getVoisinage(Case): Map<Direction, Case>
+    +getCase(AbstractAgentSitue): Case
+}
+interface IAgentPlateau {
+    +deplacerAgent(AbstractAgentSitue, Direction): boolean
+    +ramasserEntite(AbstractAgentSitue, Entite): boolean
+    +getVoisinage(Case): Map<Direction, Case>
+    +getCase(AbstractAgentSitue): Case
+}
+interface IEntitePlateau {
+    
+}
+interface IDeveloppeurPlateau {
+    +placerAgent(Position, AbstractAgentSitue): boolean
+    +placerEntite(Position, Entite): boolean
+    +enleverAgent(Position, AbstractAgentSitue): AbstractAgentSitue
+    +enleverEntite(Position, Entite): Entite
+}
+class Case {
+    -id: int
+    --
+}
+class Position {
+    -x: int
+    -y: int
+}
+class InfraAgent #grey {
+    --
+    +run(): void
+    +readMessage(): IMessage
+    +readMessages(): List<IMessage>
+}
+abstract class AbstractAgent {
+
+}
+abstract class AbstractEntite {
+    -nom: String
+    -id: UUID
+}
+abstract class AbstractEntiteActive {
+
+}
+abstract class AbstractEntitePassive {
+
+}
+class Obstacle {
+
+}
+enum Direction {
+    N
+    NO
+    O
+    SO
+    S
+    SE
+    E
+    NE
+}
+abstract class AbstractAgentSitue {
+    -nom: String
+    -id: UUID
+    '/!\ un id existe deja dans InfraAgentReference
+    --
+    seDeplacerVers(Direction): void
+    seTournerVers(Direction): void
+    avancer(): void
+    detecter(): Map<Direction, Case>
+    deposer(): void
+    ramasser(Entite entite): void
+    {abstract} actionTour(): void
+}
+
+AbstractEntiteActive -up-|> AbstractEntite
+AbstractEntitePassive -up-|> AbstractEntite
+Case o--> "[*] agents" AbstractAgentSitue
+AbstractAgentSitue --> "[1] plateau" IAgentPlateau
+AbstractAgentSitue o-> "[0..1] entitePortee" AbstractEntite
+AbstractEntite --> "[1] plateau" IEntitePlateau
+plateau *-- "[*] cases" Case
+plateau .up.|> IAgentPlateau
+plateau .up.|> IEntitePlateau
+plateau ..|> IDeveloppeurPlateau
+Case --> "[1] position" Position
+Case o--> "[*] entites" AbstractEntite
+AbstractAgentSitue --> "[1] direction" Direction
+AbstractAgentSitue -up-|> AbstractAgent
+AbstractAgent -up-|> InfraAgent
+Obstacle -up-|> AbstractEntitePassive
+@enduml
