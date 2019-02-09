@@ -1,5 +1,7 @@
 package plateau;
 
+import java.awt.*;
+
 public class Position {
 
     private int x;
@@ -26,4 +28,17 @@ public class Position {
     public void setY(int y) {
         this.y = y;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Position that = (Position) o;
+
+        return (x == that.getX() && y == that.getY());
+    }
+
 }

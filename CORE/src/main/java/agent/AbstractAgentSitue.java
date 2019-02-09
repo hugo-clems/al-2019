@@ -78,16 +78,19 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         plateau.deplacerAgent(this, this.direction);
     }
 
+    /**
+     * Permet à l'agent de détecter son environnement
+     * @return une Map contenant les 8 Directions avec les Cases
+     */
     public Map<Direction, Case> detecter() {
-        // TODO detecter
-        return null;
+        return plateau.getVoisinage(this);
     }
 
     /**
      * Dépose l'entité dans la direction choisie.
      */
-    public void deposer() {
-        // TODO deposer
+    public void deposer(AbstractEntite entite) {
+        plateau.deposerEntite(this, entite);
     }
 
     public void ramasser(AbstractEntite entite) {

@@ -1,10 +1,8 @@
 package plateau;
 
-import java.awt.*;
-
 public interface IDeveloppeurPlateau {
 
-    Boolean placerAgentite(Point point, IAgentite agentite);
+    Boolean placerAgentite(Position position, IAgentite agentite);
 
-    IAgentite enleverAgentite(Point point, IAgentite agentite);
+    IAgentite enleverAgentite(Position position, IAgentite agentite);
 }
