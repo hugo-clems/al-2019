@@ -6,16 +6,66 @@ import common.Direction;
 import entites.AbstractEntite;
 import entites.Obstacle;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
 
-    private String nom ;
-    private Map<IAgentite, Case> listeAgentites ;
+    /**
+     * Nom du plateau.
+     */
+    private String nom;
+
+    /**
+     * Map des agentités du plateau liés à une case.
+     */
+    private Map<IAgentite, Case> listeAgentites;
+
+    /**
+     * Liste des cases du plateau.
+     */
     private List<Case> cases ;
+
+    /**
+     * Constructeur par défaut.
+     * @param nom
+     */
+    public Plateau (String nom) {
+        this.nom = nom;
+        listeAgentites = new HashMap <IAgentite, Case> ();
+        cases = new ArrayList <Case> ();
+    }
+
+    /**
+     * Get le nom du plateau.
+     * @return
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * Get la liste des agentités.
+     * @return
+     */
+    public Map<IAgentite, Case> getListeAgentites() {
+        return listeAgentites;
+    }
+
+    /**
+     * Get la liste des cases du plateau.
+     * @return
+     */
+    public List<Case> getCases() {
+        return cases;
+    }
+
+    /**
+     * Set le nom du plateau.
+     * @param nom
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
     @Override
     public Boolean placerAgentite(Position position, IAgentite agentite) {
@@ -95,6 +145,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return listeAgentites.get(agent);
     }
 
+    /**
+     * Retourne la case qui se trouve à une distance de 1 de l'agent en fonction de la direction
+     * de celui-ci.
+     * @param direction
+     * @param caseAgent
+     * @return
+     */
     private Case caseDirection(Direction direction, Case caseAgent) {
         Case c = cases.get(0);
         switch (direction) {
@@ -126,6 +183,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return c;
     }
 
+    /**
+     * Retourne la case qui se trouve à X et Y de la case de l'Agent.
+     * @param caseAgent
+     * @param x
+     * @param y
+     * @return
+     */
     private Case findCase (Case caseAgent, int x, int y) {
         boolean trouve = false;
         int i = 0;

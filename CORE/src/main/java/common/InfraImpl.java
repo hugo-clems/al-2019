@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public abstract class InfraImpl extends Infrastructure {
 
+    /**
+     * Constructeur par défaut.
+     */
     public InfraImpl() {
         super();
     }
@@ -56,14 +59,26 @@ public abstract class InfraImpl extends Infrastructure {
         return this.receiveMessages(reference);
     }
 
+    /**
+     * Change la stratégie de l'Ordonnanceur.
+     * @param strategie
+     */
     public void changerStrategie(IStratOrdonnanceur strategie) {
         this.changerOrdonnancement(strategie);
     }
 
+    /**
+     * Ajoute un agent à l'Ordonnanceur.
+     * @param agent
+     */
     public void ajouterAgentOrdonnanceur(InfraAgent agent) {
         this.ordagentAjoute(agent);
     }
 
+    /**
+     * Retire un agent de l'Ordonnanceur.
+     * @param agent
+     */
     public void retirerAgentOrdonnanceur(InfraAgent agent) {
         this.OrdagentRetire(agent);
     }

@@ -40,6 +40,12 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         this.entitePortee = null;
     }
 
+    /**
+     * Constructeur pour ajouter un nom à l'agent.
+     * @param nom
+     * @param lifeCycle
+     * @param myMailBoxManager
+     */
     public AbstractAgentSitue(String nom, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
         this.nom = nom;
@@ -47,6 +53,13 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         this.entitePortee = null;
     }
 
+    /**
+     * Constructeur pour rajouter un nom et une Direction à l'agent.
+     * @param nom
+     * @param directionInitiale
+     * @param lifeCycle
+     * @param myMailBoxManager
+     */
     public AbstractAgentSitue(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
         this.nom = nom;
@@ -79,7 +92,7 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     }
 
     /**
-     * Permet à l'agent de détecter son environnement
+     * Permet à l'agent de détecter son environnement.
      * @return une Map contenant les 8 Directions avec les Cases
      */
     public Map<Direction, Case> detecter() {
@@ -87,16 +100,23 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     }
 
     /**
-     * Dépose l'entité dans la direction choisie.
+     * Dépose l'entité sur la case où se situe l'agent.
      */
     public void deposer(AbstractEntite entite) {
         plateau.deposerEntite(this, entite);
     }
 
+    /**
+     * Ramasse l'entité qui se trouve devant l'agent.
+     * @param entite
+     */
     public void ramasser(AbstractEntite entite) {
         plateau.ramasserEntite(this, entite);
     }
 
+    /**
+     * Effectue l'action durant le tour de l'agent.
+     */
     public abstract void actionTour();
 
 }
