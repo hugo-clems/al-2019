@@ -1,7 +1,5 @@
 package plateau;
 
-import java.awt.*;
-
 public class Position {
 
     /**

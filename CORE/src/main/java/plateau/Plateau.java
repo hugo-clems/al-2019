@@ -1,12 +1,14 @@
 package plateau;
 
 import agent.AbstractAgent;
-import agent.AbstractAgentSitue;
 import common.Direction;
 import entites.AbstractEntite;
 import entites.Obstacle;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
 
