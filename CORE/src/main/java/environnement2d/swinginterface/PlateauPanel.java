@@ -1,41 +1,46 @@
 package environnement2d.swinginterface;
 
-import environnement2d.graphics.PlateauGraphic;
+import environnement2d.graphics.PlateauComponent;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel principal du plateau.
+ *
+ * Contient une toolbox contenant les entités / agents à placer
+ * et la représentation du plateau
+ */
 public class PlateauPanel extends JPanel {
+    private static final int SPACE = 5;
 
-    private PlateauGraphic plateauGraphic;
+    private PlateauComponent plateauComponent;
 
     private PlateauToolsPanel plateauToolsPanel;
 
-    /**
-     * Espace entre les boutons.
-     */
-    private static final int SPACE = 5;
 
-    /**
-     * Constructor.
-     *
-     * @param panel  main panel
-     */
-    public PlateauPanel(final MainPanel panel) {
-        plateauGraphic = new PlateauGraphic(panel);
-        plateauToolsPanel = new PlateauToolsPanel(plateauGraphic);
-        plateauGraphic.setStartButton(plateauToolsPanel.getStartButton());
+    public PlateauPanel() {
+        plateauComponent = new PlateauComponent();
+        plateauToolsPanel = new PlateauToolsPanel(plateauComponent);
+        plateauComponent.setStartButton(plateauToolsPanel.getStartButton());
+
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+
+        this.setLayout(layout);
+
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weighty = 1;
+        c.weightx = 0.3;
+        c.fill = GridBagConstraints.BOTH;
+        this.add(plateauToolsPanel, c);
 
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(plateauGraphic);
-        this.add(Box.createRigidArea(new Dimension(0, SPACE)));
-        this.add(plateauToolsPanel);
-        this.add(Box.createRigidArea(new Dimension(0, SPACE)));
-
-    }
-
-    public final PlateauGraphic getPlateauGraphic() {
-        return plateauGraphic;
+        this.add(Box.createHorizontalStrut(SPACE));
+        c.gridx = 2;
+        c.gridy = 0;
+        c.weightx = 0.7;
+        this.add(plateauComponent, c);
     }
 }

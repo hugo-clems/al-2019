@@ -55,8 +55,7 @@ public class Window {
     public static void main(final String[] args) {
         Window window = new Window();
         MainPanel panel = new MainPanel();
-        PlateauPanel plateau = new PlateauPanel(panel);
-        window.setContent(plateau);
+        window.setContent(panel);
     }
 }
 
