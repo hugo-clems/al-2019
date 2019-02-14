@@ -28,13 +28,30 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     private List<Case> cases ;
 
     /**
+     * Nombre de colonne du plateau
+     */
+    private int colonne;
+
+    /**
+     * Nombre de ligne du plateau
+     */
+    private int ligne;
+
+    /**
      * Constructeur par défaut.
      * @param nom
+     * @param ligne nombre de ligne du plateau
+     * @param colonne nombre de colonne du plateau
      */
-    public Plateau (String nom) {
+    public Plateau(String nom, int ligne, int colonne) {
         this.nom = nom;
+        this.ligne = ligne;
+        this.colonne = colonne;
         listeAgentites = new HashMap <IAgentite, Case> ();
         cases = new ArrayList <Case> ();
+
+        // Initialisation du plateau
+        this.init();
     }
 
     /**
@@ -67,6 +84,14 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
      */
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public int getColonne() {
+        return colonne;
+    }
+
+    public int getLigne() {
+        return ligne;
     }
 
     @Override
@@ -145,6 +170,17 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     @Override
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
+    }
+
+    /**
+     * Initialisation du plateau
+     */
+    private void init() {
+        for (int x = 0; x < colonne; x++) {
+            for (int y = 0; y < ligne; y++) {
+                cases.add(new Case(new Position(x, y)));
+            }
+        }
     }
 
     /**
