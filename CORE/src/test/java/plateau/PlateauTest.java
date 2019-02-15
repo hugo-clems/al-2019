@@ -1,16 +1,16 @@
 package plateau;
 
-import static org.junit.Assert.*;
-
 import agent.AbstractAgent;
 import agent.AbstractAgentSitue;
 import common.Direction;
 import entites.Obstacle;
-import org.junit.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class PlateauTest {
 
@@ -19,25 +19,11 @@ public class PlateauTest {
 
     @Before
     public void setUp() throws Exception {
-        plateau = new Plateau("plateauTest");
+        plateau = new Plateau("plateauTest", 5, 5);
         agent = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
-        //Ajout de 25 cases
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                Case c = new Case (new Position(x,y));
-                //Ajout obstacles au bord
-                if (x == 0 || x == 4 || y == 0 || y == 4) {
-                    Obstacle o = new Obstacle("Obstacle" + x + y, plateau);
-                    c.getAgentites().add(o);
-                    plateau.getListeAgentites().put(o, c);
-                }
-                if (x == 2 && y == 3) {
-                    plateau.getListeAgentites().put(agent, c);
-                    c.getAgentites().add(agent);
-                }
-                plateau.getCases().add(c);
-            }
-        }
+
+        plateau.getListeAgentites().put(agent, plateau.getCases().get(new Position(2, 3)));
+        plateau.getCases().get(new Position(2, 3)).getAgentites().add(agent);
     }
 
     @Test

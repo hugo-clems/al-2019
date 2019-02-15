@@ -71,4 +71,8 @@ public class Position {
         return (x == that.getX() && y == that.getY());
     }
 
+    @Override
+    public int hashCode() {
+        return x * 10 + y;
+    }
 }
