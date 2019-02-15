@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
 
+    //region Attributes
     /**
      * Nom du plateau.
      */
@@ -21,23 +22,25 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     private Map<IAgentite, Case> listeAgentites;
 
     /**
-     * Liste des cases du plateau.
+     * Map des cases du plateau avec leur position.
      */
     private Map<Position, Case> cases;
 
     /**
-     * Nombre de colonne du plateau
+     * Nombre de colonne du plateau (axe x)
      */
     private int colonne;
 
     /**
-     * Nombre de ligne du plateau
+     * Nombre de ligne du plateau (axe y)
      */
     private int ligne;
+    //endregion
 
+    //region Constructors
     /**
      * Constructeur par défaut.
-     * @param nom
+     * @param nom Le nom du plateau
      * @param ligne nombre de ligne du plateau
      * @param colonne nombre de colonne du plateau
      */
@@ -45,53 +48,69 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         this.nom = nom;
         this.ligne = ligne;
         this.colonne = colonne;
-        listeAgentites = new HashMap();
+        this.listeAgentites = new HashMap<>();
         cases = new HashMap<>();
 
         // Initialisation du plateau
         this.init();
     }
+    //endregion
 
+    //region Getter
     /**
      * Get le nom du plateau.
-     * @return
+     * @return Le nom du plateau
      */
     public String getNom() {
         return nom;
     }
 
     /**
-     * Get la liste des agentités.
-     * @return
+     * Set le nom du plateau.
+     *
+     * @param nom le nouveau nom du plateau
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * Get la map des agentités.
+     * @return La map des agents lier à une case
      */
     public Map<IAgentite, Case> getListeAgentites() {
         return listeAgentites;
     }
 
     /**
-     * Get la liste des cases du plateau.
-     * @return
+     * Get la map des cases du plateau.
+     * @return La map des cases avec leur position
      */
     public Map<Position, Case> getCases() {
         return cases;
     }
 
     /**
-     * Set le nom du plateau.
-     * @param nom
+     * get le nombre de colone (axe x)
+     * @return colone
      */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public int getColonne() {
         return colonne;
     }
+    //endregion
 
+    //region Setter
+
+    /**
+     * Get le nombre de ligne (axe Y)
+     * @return ligne
+     */
     public int getLigne() {
         return ligne;
     }
+    //endregion
 
+    //region IDeveloppeurPlateau
     @Override
     public Boolean placerAgentite(Position position, IAgentite agentite) {
 
@@ -107,16 +126,17 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
         return null;
     }
+    //endregion
 
+    //region IAgentPlateau
     @Override
     public Boolean deplacerAgent(AbstractAgent agent, Direction direction) {
         Case c = getCaseByDirectionForAgent(direction, getCase(agent));
 
         //Vérification s'il n'y a pas d'obstacle sur la case où veut bouger l'agent
-        for (IAgentite agentite : c.getAgentites()) {
-            if (agentite instanceof Obstacle) {
-                return false;
-            }
+        assert c != null;
+        if (checkObstacleInCase(c)) {
+            return false;
         }
         //Déplacement de l'agent
         getCase(agent).getAgentites().remove(agent);
@@ -137,7 +157,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
 
     @Override
     public Map <Direction, Case> getVoisinage(AbstractAgent agent) {
-        Map<Direction, Case> map = new HashMap();
+        Map<Direction, Case> map = new HashMap<>();
         for (Direction direction : Direction.values()) {
             map.put(direction, getCaseByDirectionForAgent(direction, getCase(agent)));
         }
@@ -148,9 +168,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
+    //endregion
 
+    //region Private methods
     /**
      * Initialisation du plateau
+     * Creation de toutes les cases
+     * Ajout d'obstacle autour du plateau
      */
     private void init() {
         for (int x = 0; x < colonne; x++) {
@@ -167,8 +191,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     }
 
     /**
-     * Retourne la case qui se trouve à une distance de 1 de l'agent en fonction de la direction
-     * de celui-ci.
+     * Retourne la case qui se trouve à la position donnée par rapport à l'agent.
      * @param direction Direction de la case souhaitée
      * @param caseAgent Case de l'agent
      * @return Case desirée ou null en cas d'erreur
@@ -196,6 +219,11 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return null;
     }
 
+    /**
+     * Methode pour tester la présence d'un obstacle sur un case
+     * @param pCase La case dans la quelle on test si elle contient un obstacle
+     * @return true si il y'a un obstacle sinon false
+     */
     private boolean checkObstacleInCase(Case pCase) {
         for (IAgentite agentite : pCase.getAgentites()) {
             if (agentite instanceof Obstacle)
@@ -203,4 +231,5 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         }
         return false;
     }
+    //endregion
 }
