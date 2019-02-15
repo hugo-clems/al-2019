@@ -2,7 +2,6 @@ package plateau;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Case {
 
@@ -66,5 +65,10 @@ public class Case {
     @Override
     public int hashCode() {
         return position.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Case{\n\tposition: (" + position.getX() + "," + position.getY() + ")\n}";
     }
 }

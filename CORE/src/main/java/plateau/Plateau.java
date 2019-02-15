@@ -94,7 +94,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
 
     @Override
     public Boolean placerAgentite(Position position, IAgentite agentite) {
-        return null;
+
+        Case mCase = cases.get(position);
+        if (checkObstacleInCase(mCase))
+            return false;
+        mCase.getAgentites().add(agentite);
+        listeAgentites.put(agentite, mCase);
+        return true;
     }
 
     @Override
@@ -151,13 +157,11 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
             for (int y = 0; y < ligne; y++) {
                 Position positionTemp = new Position(x, y);
                 Case caseTemp = new Case(positionTemp);
-                // TODO : remplacer par placerEntitie
+                cases.put(positionTemp, caseTemp);
                 if (x == 0 || x == colonne - 1 || y == 0 || y == ligne - 1) {
                     Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y, this);
-                    caseTemp.getAgentites().add(obstacle);
-                    listeAgentites.put(obstacle, caseTemp);
+                    placerAgentite(positionTemp, obstacle);
                 }
-                cases.put(positionTemp, caseTemp);
             }
         }
     }
@@ -190,5 +194,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
                 return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
         }
         return null;
+    }
+
+    private boolean checkObstacleInCase(Case pCase) {
+        for (IAgentite agentite : pCase.getAgentites()) {
+            if (agentite instanceof Obstacle)
+                return true;
+        }
+        return false;
     }
 }
