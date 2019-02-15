@@ -1,6 +1,6 @@
 package java.domain;
 
-public class Connexion {
+public class Connexion extends Recommandable {
 
     private Port fourni;
     private Port requis;
