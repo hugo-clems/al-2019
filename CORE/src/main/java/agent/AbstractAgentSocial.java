@@ -9,14 +9,14 @@ import MASInfrastructure.Infrastructure;
 public class AbstractAgentSocial extends AbstractAgent {
 
     /**
-     *
+     * l'infrastructure d'infra
      */
     private Infrastructure infra = new Infrastructure();
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
+     * @param lifeCycle le cycle de vie de l'agent
+     * @param myMailBoxManager le moyen de communication de l'agent
      */
     public AbstractAgentSocial(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
@@ -24,7 +24,7 @@ public class AbstractAgentSocial extends AbstractAgent {
 
     /**
      * Diffuse un message à tous les agents sociaux.
-     * @param message
+     * @param message le message qui va être diffusé
      */
     public void diffuserMessage(IMessage message) {
         infra.sendMessageBroadcast(message);

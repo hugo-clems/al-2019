@@ -24,7 +24,7 @@ public class Position {
 
     /**
      * Get x.
-     * @return
+     * @return x
      */
     public int getX() {
         return x;
@@ -40,7 +40,7 @@ public class Position {
 
     /**
      * Get y.
-     * @return
+     * @return y
      */
     public int getY() {
         return y;
@@ -56,8 +56,8 @@ public class Position {
 
     /**
      * Méthode equals d'une Position qui compare les X et Y de 2 positions.
-     * @param o
-     * @return
+     * @param o l'objet à tester
+     * @return true si les 2 positions sont égales et false sinon
      */
     @Override
     public boolean equals(Object o) {

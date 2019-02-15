@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class PlateauTest {
 
-    /*private Plateau plateau;
+    private Plateau plateau;
     private AbstractAgent agent;
 
     @Before
@@ -110,5 +110,5 @@ public class PlateauTest {
     @Test
     public void getCase() {
         assertEquals(new Case(new Position(2,3)), plateau.getCase(agent));
-    }*/
+    }
 }

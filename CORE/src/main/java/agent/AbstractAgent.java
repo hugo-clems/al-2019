@@ -15,8 +15,8 @@ public abstract class AbstractAgent extends InfraAgent implements IAgentite {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
+     * @param lifeCycle le cycle de vie de l'agent
+     * @param myMailBoxManager le moyen de communication de l'agent
      */
     public AbstractAgent(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(null, lifeCycle, myMailBoxManager);

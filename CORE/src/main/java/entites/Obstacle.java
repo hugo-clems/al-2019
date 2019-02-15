@@ -6,8 +6,8 @@ public class Obstacle extends AbstractEntitePassive {
 
     /**
      * Constructeur par défaut.
-     * @param nom
-     * @param plateau
+     * @param nom nom de l'obtacle
+     * @param plateau plateau auquel appartient l'obstacle
      */
     public Obstacle(String nom, IEntitePlateau plateau) {
         super(nom, plateau);

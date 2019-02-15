@@ -22,9 +22,9 @@ public abstract class InfraImpl extends Infrastructure {
 
     /**
      * Créer un nouvel agent.
-     * @param lifeCycle
-     * @param myMailBoxManager
-     * @return
+     * @param lifeCycle le cycle de vie de l'agent
+     * @param myMailBoxManager le moyen de commuication de l'agent
+     * @return l'agent qui a été créé
      */
     public InfraAgent creer(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         return this.creer(null, lifeCycle, myMailBoxManager);
@@ -48,20 +48,25 @@ public abstract class InfraImpl extends Infrastructure {
 
     /**
      * Reçois un message.
-     * @param reference
-     * @return
+     * @param reference la référence de l'agent
+     * @return le message reçu
      */
     public Optional<IMessage> recevoirMessage(InfraAgentReference reference) {
         return this.receiveMessage(reference);
     }
 
+    /**
+     * Reçois plusieurs messages.
+     * @param reference la référence de l'agent
+     * @return une list des messages reçue
+     */
     public ArrayList<IMessage> recevoirMessages(InfraAgentReference reference) {
         return this.receiveMessages(reference);
     }
 
     /**
      * Change la stratégie de l'Ordonnanceur.
-     * @param strategie
+     * @param strategie la stratégie d'ordonnancement
      */
     public void changerStrategie(IStratOrdonnanceur strategie) {
         this.changerOrdonnancement(strategie);
@@ -69,7 +74,7 @@ public abstract class InfraImpl extends Infrastructure {
 
     /**
      * Ajoute un agent à l'Ordonnanceur.
-     * @param agent
+     * @param agent l'agent à ajouter à l'ordonnanceur
      */
     public void ajouterAgentOrdonnanceur(InfraAgent agent) {
         this.ordagentAjoute(agent);
@@ -77,7 +82,7 @@ public abstract class InfraImpl extends Infrastructure {
 
     /**
      * Retire un agent de l'Ordonnanceur.
-     * @param agent
+     * @param agent l'agent à retirer de l'ordonnanceur
      */
     public void retirerAgentOrdonnanceur(InfraAgent agent) {
         this.OrdagentRetire(agent);

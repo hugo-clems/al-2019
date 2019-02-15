@@ -24,8 +24,8 @@ public abstract class AbstractEntite implements IAgentite {
 
     /**
      * Constructeur par défaut.
-     * @param nom
-     * @param plateau
+     * @param nom le nom de l'entité
+     * @param plateau le plateau auquel appartient l'entité
      */
     public AbstractEntite (String nom, IEntitePlateau plateau) {
         this.nom = nom;
