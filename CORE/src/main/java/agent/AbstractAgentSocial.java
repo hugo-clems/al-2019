@@ -1,33 +1,56 @@
 package agent;
 
-import AmbientEnvironment.OCPlateforme.OCService;
 import MASInfrastructure.Communication.ICommunication;
 import MASInfrastructure.Communication.IMessage;
 import MASInfrastructure.Etat.LifeCycle;
-import MASInfrastructure.Infrastructure;
 
-public class AbstractAgentSocial extends AbstractAgent {
+import java.util.ArrayList;
+import java.util.Optional;
 
-    /**
-     * l'infrastructure d'infra
-     */
-    private Infrastructure infra = new Infrastructure();
+/**
+ * Un agent social.
+ */
+public abstract class AbstractAgentSocial extends AbstractAgent {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle le cycle de vie de l'agent
-     * @param myMailBoxManager le moyen de communication de l'agent
+     * @param lifeCycle
+     * @param myMailBoxManager
      */
     public AbstractAgentSocial(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         super(lifeCycle, myMailBoxManager);
     }
 
     /**
-     * Diffuse un message à tous les agents sociaux.
-     * @param message le message qui va être diffusé
+     * Envoie un message.
+     * @param message le message à envoyer
+     */
+    public void envoyerMessage(IMessage message) {
+        this.infra.sendMessage(message);
+    }
+
+    /**
+     * Diffuse un message.
+     * @param message le message à diffuser
      */
     public void diffuserMessage(IMessage message) {
-        infra.sendMessageBroadcast(message);
+        this.infra.sendMessageBroadcast(message);
+    }
+
+    /**
+     * Reçois le dernier message.
+     * @return le dernier message reçu
+     */
+    public Optional<IMessage> recevoirDernierMessage() {
+        return this.infra.receiveMessage(this.reference);
+    }
+
+    /**
+     * Reçois les messages.
+     * @return les messages reçus
+     */
+    public ArrayList<IMessage> recevoirMessages() {
+        return this.infra.receiveMessages(this.reference);
     }
 
 }
