@@ -11,7 +11,7 @@ public class PlateauToolsPanel extends JPanel {
     private JButton start;
 
     public PlateauToolsPanel() {
-        //this.plateauComponent = plateauComponent;
+
     }
 
     public JButton getStartButton() {
