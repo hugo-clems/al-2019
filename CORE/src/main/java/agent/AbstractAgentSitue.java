@@ -2,6 +2,7 @@ package agent;
 
 import MASInfrastructure.Communication.ICommunication;
 import MASInfrastructure.Etat.LifeCycle;
+import MASInfrastructure.Infrastructure;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
@@ -30,11 +31,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle le cycle de vie de l'agent
-     * @param myMailBoxManager le moyen de communication de l'agent
      */
-    public AbstractAgentSitue(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue() {
+        super();
         this.nom = "";
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -43,11 +42,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Constructeur pour ajouter un nom à l'agent.
      * @param nom le nom de l'agent
-     * @param lifeCycle le cycle de vie de l'agent
-     * @param myMailBoxManager le moyen de communication de l'agent
      */
-    public AbstractAgentSitue(String nom, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue(String nom) {
+        super();
         this.nom = nom;
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -57,11 +54,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Constructeur pour rajouter un nom et une Direction à l'agent.
      * @param nom le nom de l'agent
      * @param directionInitiale la direction initiale de l'agent
-     * @param lifeCycle le cycle de vie de l'agent
-     * @param myMailBoxManager le moyen de communication de l'agent
      */
-    public AbstractAgentSitue(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue(String nom, Direction directionInitiale) {
+        super();
         this.nom = nom;
         this.direction = directionInitiale;
         this.entitePortee = null;

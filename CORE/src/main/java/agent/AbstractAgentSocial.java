@@ -14,11 +14,9 @@ public abstract class AbstractAgentSocial extends AbstractAgent {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
      */
-    public AbstractAgentSocial(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSocial() {
+        super();
     }
 
     /**
