@@ -1,0 +1,20 @@
+package java.domain;
+
+public class Connexion {
+
+    private Port fourni;
+    private Port requis;
+
+    public Connexion(Port fourni, Port requis) {
+        this.fourni = fourni;
+        this.requis = requis;
+    }
+
+    public Port getFourni() {
+        return fourni;
+    }
+
+    public void setFourni(Port fourni) {
+        this.fourni = fourni;
+    }
+}
