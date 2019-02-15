@@ -17,4 +17,12 @@ public class Connexion extends Recommandable {
     public void setFourni(Port fourni) {
         this.fourni = fourni;
     }
+
+    public Port getRequis() {
+        return requis;
+    }
+
+    public void setRequis(Port requis) {
+        this.requis = requis;
+    }
 }

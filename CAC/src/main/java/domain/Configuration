@@ -18,4 +18,11 @@ public class Configuration extends  Recommandable{
     public void setConnexions(Set<Connexion> connexions) {
         this.connexions = connexions;
     }
+
+    public void ajouterConnexion (Connexion connexion){
+
+        connexions.add(connexion);
+    }
+
+
 }
