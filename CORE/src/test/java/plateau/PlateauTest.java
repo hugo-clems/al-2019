@@ -28,10 +28,25 @@ public class PlateauTest {
 
     @Test
     public void placerAgentite() {
+        AbstractAgent agentTest = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
+        Position position = new Position(0, 0);
+        assertFalse(plateau.placerAgentite(position, agentTest));
+        position.setX(3);
+        position.setY(3);
+        assertTrue(plateau.placerAgentite(position, agentTest));
+        Case mCase = plateau.getCases().get(position);
+        assertEquals(mCase, plateau.getListeAgentites().get(agentTest));
+        assertTrue(mCase.getAgentites().contains(agentTest));
+        assertEquals(1, mCase.getAgentites().size());
     }
 
     @Test
     public void enleverAgentite() {
+        Case caseDepart = plateau.getCase(agent);
+        assertEquals(1, caseDepart.getAgentites().size());
+        assertEquals(agent, plateau.enleverAgentite(caseDepart.getPosition(), agent));
+        assertEquals(0, caseDepart.getAgentites().size());
+        assertNull(plateau.getListeAgentites().get(agent));
     }
 
     @Test

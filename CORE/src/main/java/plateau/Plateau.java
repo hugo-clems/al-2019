@@ -124,7 +124,12 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
 
     @Override
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
-        return null;
+        if (listeAgentites.isEmpty() || listeAgentites.get(agentite) == null) {
+            return null;
+        }
+        Case mCase = listeAgentites.remove(agentite);
+        mCase.getAgentites().remove(agentite);
+        return agentite;
     }
     //endregion
 

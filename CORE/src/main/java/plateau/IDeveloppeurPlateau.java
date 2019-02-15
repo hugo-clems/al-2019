@@ -14,7 +14,7 @@ public interface IDeveloppeurPlateau {
      * Retire l'agent du plateau à la Position donnée.
      * @param position la position sur laquelle on retire l'agentite
      * @param agentite l'agentite à retirer du plateau
-     * @return true si l'agentite a été retiré et false sinon
+     * @return l'agentite si elle a été retirée et null sinon
      */
     IAgentite enleverAgentite(Position position, IAgentite agentite);
 }
