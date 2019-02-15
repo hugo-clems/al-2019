@@ -1,13 +1,20 @@
 package plateau;
 
-import entites.AbstractEntite;
-import agent.AbstractAgentSitue;
-
-import java.awt.*;
-
 public interface IDeveloppeurPlateau {
 
-    Boolean placerAgent(Point point, AbstractAgentSitue agent);
-    Boolean placerEntite(Point point, AbstractEntite agent);
-    AbstractEntite enleverEntite(Point point, AbstractEntite entite);
+    /**
+     * Place un nouvel agent sur le plateau à la Position donnée.
+     * @param position
+     * @param agentite
+     * @return
+     */
+    Boolean placerAgentite(Position position, IAgentite agentite);
+
+    /**
+     * Retire l'agent du plateau à la Position donnée.
+     * @param position
+     * @param agentite
+     * @return
+     */
+    IAgentite enleverAgentite(Position position, IAgentite agentite);
 }

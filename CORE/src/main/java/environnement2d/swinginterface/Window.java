@@ -54,9 +54,10 @@ public class Window {
      */
     public static void main(final String[] args) {
         Window window = new Window();
+        SmartCursor cursor = new SmartCursor();
         MainPanel panel = new MainPanel();
-        PlateauPanel plateau = new PlateauPanel(panel);
-        window.setContent(plateau);
+        //PlateauPanel plateau = new PlateauPanel(panel, cursor);
+        window.setContent(panel);
     }
 }
 

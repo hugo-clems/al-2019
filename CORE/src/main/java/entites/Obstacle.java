@@ -2,14 +2,14 @@ package entites;
 
 import plateau.IEntitePlateau;
 
-public abstract class AbstractEntiteActive extends AbstractEntite {
+public class Obstacle extends AbstractEntitePassive {
 
     /**
      * Constructeur par défaut.
      * @param nom
      * @param plateau
      */
-    public AbstractEntiteActive(String nom, IEntitePlateau plateau) {
+    public Obstacle(String nom, IEntitePlateau plateau) {
         super(nom, plateau);
     }
 }

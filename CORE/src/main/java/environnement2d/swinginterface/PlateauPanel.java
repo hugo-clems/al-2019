@@ -5,7 +5,7 @@ import environnement2d.graphics.PlateauGraphic;
 import javax.swing.*;
 import java.awt.*;
 
-public class PlateauPanel extends JPanel {
+public class PlateauPanel extends JComponent {
 
     private PlateauGraphic plateauGraphic;
 
@@ -21,8 +21,8 @@ public class PlateauPanel extends JPanel {
      *
      * @param panel  main panel
      */
-    public PlateauPanel(final MainPanel panel) {
-        plateauGraphic = new PlateauGraphic(panel);
+    public PlateauPanel(final MainPanel panel, final SmartCursor cursor) {
+        plateauGraphic = new PlateauGraphic(panel, cursor);
         plateauToolsPanel = new PlateauToolsPanel(plateauGraphic);
         plateauGraphic.setStartButton(plateauToolsPanel.getStartButton());
 
