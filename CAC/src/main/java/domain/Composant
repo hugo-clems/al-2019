@@ -1,0 +1,46 @@
+package java.domain;
+
+import javax.sound.sampled.Port;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Composant  {
+
+    private String nom;
+
+    private Set<Port> portFourni;
+    private Set<Port> portRequis;
+
+    public Composant(String name) {
+        this.nom = name;
+        this.portFourni = new HashSet<>();
+        this.portRequis = new HashSet<>();
+    }
+
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Set<Port> getPortFourni() {
+        return portFourni;
+    }
+
+    public void setPortFourni(Set<Port> portFourni) {
+        this.portFourni = portFourni;
+    }
+
+    public Set<Port> getPortRequis() {
+        return portRequis;
+    }
+
+    public void setPortRequis(Set<Port> portRequis) {
+        this.portRequis = portRequis;
+    }
+
+
+}
