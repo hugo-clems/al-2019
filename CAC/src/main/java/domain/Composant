@@ -8,12 +8,12 @@ public class Composant  {
 
     private String nom;
 
-    private Set<Port> portFourni;
+    private Set<Port> portFournis;
     private Set<Port> portRequis;
 
     public Composant(String name) {
         this.nom = name;
-        this.portFourni = new HashSet<>();
+        this.portFournis = new HashSet<>();
         this.portRequis = new HashSet<>();
     }
 
@@ -27,11 +27,11 @@ public class Composant  {
     }
 
     public Set<Port> getPortFourni() {
-        return portFourni;
+        return portFournis;
     }
 
     public void setPortFourni(Set<Port> portFourni) {
-        this.portFourni = portFourni;
+        this.portFournis = portFourni;
     }
 
     public Set<Port> getPortRequis() {
@@ -40,6 +40,14 @@ public class Composant  {
 
     public void setPortRequis(Set<Port> portRequis) {
         this.portRequis = portRequis;
+    }
+
+    public void addPortFournit (Port p){
+        portFournis.add(p);
+    }
+
+    public void addPortRequit (Port p) {
+        portRequis.add(p);
     }
 
 
