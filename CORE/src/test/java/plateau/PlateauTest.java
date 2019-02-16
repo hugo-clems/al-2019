@@ -1,51 +1,52 @@
 package plateau;
 
-import static org.junit.Assert.*;
-
 import agent.AbstractAgent;
 import agent.AbstractAgentSitue;
 import common.Direction;
 import entites.Obstacle;
-import org.junit.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Map;
 
+import static org.junit.Assert.*;
+
 public class PlateauTest {
 
-    /*private Plateau plateau;
+    private Plateau plateau;
     private AbstractAgent agent;
 
     @Before
     public void setUp() throws Exception {
-        plateau = new Plateau("plateauTest");
+        plateau = new Plateau("plateauTest", 5, 5);
         agent = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
-        //Ajout de 25 cases
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                Case c = new Case (new Position(x,y));
-                //Ajout obstacles au bord
-                if (x == 0 || x == 4 || y == 0 || y == 4) {
-                    Obstacle o = new Obstacle("Obstacle" + x + y, plateau);
-                    c.getAgentites().add(o);
-                    plateau.getListeAgentites().put(o, c);
-                }
-                if (x == 2 && y == 3) {
-                    plateau.getListeAgentites().put(agent, c);
-                    c.getAgentites().add(agent);
-                }
-                plateau.getCases().add(c);
-            }
-        }
+
+        plateau.getListeAgentites().put(agent, plateau.getCases().get(new Position(2, 3)));
+        plateau.getCases().get(new Position(2, 3)).getAgentites().add(agent);
     }
 
     @Test
     public void placerAgentite() {
+        AbstractAgent agentTest = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
+        Position position = new Position(0, 0);
+        assertFalse(plateau.placerAgentite(position, agentTest));
+        position.setX(3);
+        position.setY(3);
+        assertTrue(plateau.placerAgentite(position, agentTest));
+        Case mCase = plateau.getCases().get(position);
+        assertEquals(mCase, plateau.getListeAgentites().get(agentTest));
+        assertTrue(mCase.getAgentites().contains(agentTest));
+        assertEquals(1, mCase.getAgentites().size());
     }
 
     @Test
     public void enleverAgentite() {
+        Case caseDepart = plateau.getCase(agent);
+        assertEquals(1, caseDepart.getAgentites().size());
+        assertEquals(agent, plateau.enleverAgentite(caseDepart.getPosition(), agent));
+        assertEquals(0, caseDepart.getAgentites().size());
+        assertNull(plateau.getListeAgentites().get(agent));
     }
 
     @Test
@@ -110,5 +111,5 @@ public class PlateauTest {
     @Test
     public void getCase() {
         assertEquals(new Case(new Position(2,3)), plateau.getCase(agent));
-    }*/
+    }
 }

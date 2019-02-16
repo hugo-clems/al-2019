@@ -2,6 +2,7 @@ package agent;
 
 import MASInfrastructure.Communication.ICommunication;
 import MASInfrastructure.Etat.LifeCycle;
+import MASInfrastructure.Infrastructure;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
@@ -30,11 +31,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
      */
-    public AbstractAgentSitue(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue() {
+        super();
         this.nom = "";
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -42,12 +41,10 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Constructeur pour ajouter un nom à l'agent.
-     * @param nom
-     * @param lifeCycle
-     * @param myMailBoxManager
+     * @param nom le nom de l'agent
      */
-    public AbstractAgentSitue(String nom, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue(String nom) {
+        super();
         this.nom = nom;
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -55,13 +52,11 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Constructeur pour rajouter un nom et une Direction à l'agent.
-     * @param nom
-     * @param directionInitiale
-     * @param lifeCycle
-     * @param myMailBoxManager
+     * @param nom le nom de l'agent
+     * @param directionInitiale la direction initiale de l'agent
      */
-    public AbstractAgentSitue(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue(String nom, Direction directionInitiale) {
+        super();
         this.nom = nom;
         this.direction = directionInitiale;
         this.entitePortee = null;
@@ -69,7 +64,7 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Se tourne et se déplace vers une direction.
-     * @param nouvelleDirection la direction vers laquel se tourner
+     * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
      */
     public void seDeplacerVers(Direction nouvelleDirection) {
         this.seTournerVers(nouvelleDirection);
@@ -78,7 +73,7 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Change la direction de l'agent.
-     * @param nouvelleDirection la direction vers laquel se tourner
+     * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
      */
     public void seTournerVers(Direction nouvelleDirection) {
         this.direction = nouvelleDirection;
@@ -108,7 +103,7 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
 
     /**
      * Ramasse l'entité qui se trouve devant l'agent.
-     * @param entite
+     * @param entite l'entité à ramasser
      */
     public void ramasser(AbstractEntite entite) {
         plateau.ramasserEntite(this, entite);

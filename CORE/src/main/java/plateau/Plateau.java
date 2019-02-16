@@ -5,13 +5,12 @@ import common.Direction;
 import entites.AbstractEntite;
 import entites.Obstacle;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
 
+    //region Attributes
     /**
      * Nom du plateau.
      */
@@ -23,23 +22,25 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     private Map<IAgentite, Case> listeAgentites;
 
     /**
-     * Liste des cases du plateau.
+     * Map des cases du plateau avec leur position.
      */
-    private List<Case> cases ;
+    private Map<Position, Case> cases;
 
     /**
-     * Nombre de colonne du plateau
+     * Nombre de colonne du plateau (axe x)
      */
     private int colonne;
 
     /**
-     * Nombre de ligne du plateau
+     * Nombre de ligne du plateau (axe y)
      */
     private int ligne;
+    //endregion
 
+    //region Constructors
     /**
      * Constructeur par défaut.
-     * @param nom
+     * @param nom Le nom du plateau
      * @param ligne nombre de ligne du plateau
      * @param colonne nombre de colonne du plateau
      */
@@ -47,100 +48,101 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         this.nom = nom;
         this.ligne = ligne;
         this.colonne = colonne;
-        listeAgentites = new HashMap <IAgentite, Case> ();
-        cases = new ArrayList <Case> ();
+        this.listeAgentites = new HashMap<>();
+        cases = new HashMap<>();
 
         // Initialisation du plateau
         this.init();
     }
+    //endregion
 
+    //region Getter
     /**
      * Get le nom du plateau.
-     * @return
+     * @return Le nom du plateau
      */
     public String getNom() {
         return nom;
     }
 
     /**
-     * Get la liste des agentités.
-     * @return
+     * Set le nom du plateau.
+     *
+     * @param nom le nouveau nom du plateau
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * Get la map des agentités.
+     * @return La map des agents lier à une case
      */
     public Map<IAgentite, Case> getListeAgentites() {
         return listeAgentites;
     }
 
     /**
-     * Get la liste des cases du plateau.
-     * @return
+     * Get la map des cases du plateau.
+     * @return La map des cases avec leur position
      */
-    public List<Case> getCases() {
+    public Map<Position, Case> getCases() {
         return cases;
     }
 
     /**
-     * Set le nom du plateau.
-     * @param nom
+     * get le nombre de colone (axe x)
+     * @return colone
      */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public int getColonne() {
         return colonne;
     }
+    //endregion
 
+    //region Setter
+
+    /**
+     * Get le nombre de ligne (axe Y)
+     * @return ligne
+     */
     public int getLigne() {
         return ligne;
     }
+    //endregion
 
+    //region IDeveloppeurPlateau
     @Override
     public Boolean placerAgentite(Position position, IAgentite agentite) {
-        return null;
+
+        Case mCase = cases.get(position);
+        if (checkObstacleInCase(mCase))
+            return false;
+        mCase.getAgentites().add(agentite);
+        listeAgentites.put(agentite, mCase);
+        return true;
     }
 
     @Override
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
-        return null;
+        if (listeAgentites.isEmpty() || listeAgentites.get(agentite) == null) {
+            return null;
+        }
+        Case mCase = listeAgentites.remove(agentite);
+        mCase.getAgentites().remove(agentite);
+        return agentite;
     }
+    //endregion
 
+    //region IAgentPlateau
     @Override
     public Boolean deplacerAgent(AbstractAgent agent, Direction direction) {
-        Case c = cases.get(0);
-        switch (direction) {
-            case N:
-                c = findCase (getCase(agent), 0, 1);
-                break;
-            case NE:
-                c = findCase (getCase(agent), 1, 1);
-                break;
-            case E:
-                c = findCase (getCase(agent), 1, 0);
-                break;
-            case SE:
-                c = findCase (getCase(agent), 1, -1);
-                break;
-            case S:
-                c = findCase (getCase(agent), 0, -1);
-                break;
-            case SO:
-                c = findCase (getCase(agent), -1, -1);
-                break;
-            case O:
-                c = findCase (getCase(agent), -1, 0);
-                break;
-            case NO:
-                c = findCase (getCase(agent), -1, 1);
-                break;
-        }
+        Case c = getCaseByDirectionForAgent(direction, getCase(agent));
 
         //Vérification s'il n'y a pas d'obstacle sur la case où veut bouger l'agent
-        for (IAgentite agentite : c.getAgentites()) {
-            if (agentite instanceof Obstacle) {
-                return false;
-            }
+        assert c != null;
+        if (checkObstacleInCase(c)) {
+            return false;
         }
-
         //Déplacement de l'agent
         getCase(agent).getAgentites().remove(agent);
         c.getAgentites().add(agent);
@@ -160,9 +162,9 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
 
     @Override
     public Map <Direction, Case> getVoisinage(AbstractAgent agent) {
-        Map <Direction, Case> map = new HashMap <Direction, Case>();
+        Map<Direction, Case> map = new HashMap<>();
         for (Direction direction : Direction.values()) {
-            map.put(direction, caseDirection(direction, getCase(agent)));
+            map.put(direction, getCaseByDirectionForAgent(direction, getCase(agent)));
         }
         return map;
     }
@@ -171,75 +173,68 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
+    //endregion
 
+    //region Private methods
     /**
      * Initialisation du plateau
+     * Creation de toutes les cases
+     * Ajout d'obstacle autour du plateau
      */
     private void init() {
         for (int x = 0; x < colonne; x++) {
             for (int y = 0; y < ligne; y++) {
-                cases.add(new Case(new Position(x, y)));
+                Position positionTemp = new Position(x, y);
+                Case caseTemp = new Case(positionTemp);
+                cases.put(positionTemp, caseTemp);
+                if (x == 0 || x == colonne - 1 || y == 0 || y == ligne - 1) {
+                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y, this);
+                    placerAgentite(positionTemp, obstacle);
+                }
             }
         }
     }
 
     /**
-     * Retourne la case qui se trouve à une distance de 1 de l'agent en fonction de la direction
-     * de celui-ci.
-     * @param direction
-     * @param caseAgent
-     * @return
+     * Retourne la case qui se trouve à la position donnée par rapport à l'agent.
+     * @param direction Direction de la case souhaitée
+     * @param caseAgent Case de l'agent
+     * @return Case desirée ou null en cas d'erreur
      */
-    private Case caseDirection(Direction direction, Case caseAgent) {
-        Case c = cases.get(0);
+    private Case getCaseByDirectionForAgent(Direction direction, Case caseAgent) {
+        Position agentPosition = caseAgent.getPosition();
         switch (direction) {
             case N:
-                c = findCase (caseAgent, 0, 1);
-                break;
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() + 1));
             case NE:
-                c = findCase (caseAgent, 1, 1);
-                break;
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() + 1));
             case E:
-                c = findCase (caseAgent, 1, 0);
-                break;
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY()));
             case SE:
-                c = findCase (caseAgent, 1, -1);
-                break;
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() - 1));
             case S:
-                c = findCase (caseAgent, 0, -1);
-                break;
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() - 1));
             case SO:
-                c = findCase (caseAgent, -1, -1);
-                break;
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() - 1));
             case O:
-                c = findCase (caseAgent, -1, 0);
-                break;
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY()));
             case NO:
-                c = findCase (caseAgent, -1, 1);
-                break;
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
         }
-        return c;
+        return null;
     }
 
     /**
-     * Retourne la case qui se trouve à X et Y de la case de l'Agent.
-     * @param caseAgent
-     * @param x
-     * @param y
-     * @return
+     * Methode pour tester la présence d'un obstacle sur un case
+     * @param pCase La case dans la quelle on test si elle contient un obstacle
+     * @return true si il y'a un obstacle sinon false
      */
-    private Case findCase (Case caseAgent, int x, int y) {
-        boolean trouve = false;
-        int i = 0;
-        Case c = cases.get(0);
-        while (!trouve) {
-            if (cases.get(i).getPosition().getX() == caseAgent.getPosition().getX() + x
-                    && cases.get(i).getPosition().getY() == caseAgent.getPosition().getY() + y) {
-                trouve = true;
-                c = cases.get(i);
-            }
-            i++;
+    private boolean checkObstacleInCase(Case pCase) {
+        for (IAgentite agentite : pCase.getAgentites()) {
+            if (agentite instanceof Obstacle)
+                return true;
         }
-        return c;
+        return false;
     }
+    //endregion
 }

@@ -1,12 +1,23 @@
 package agent;
 
 import MASInfrastructure.Agent.InfraAgent;
-import MASInfrastructure.Communication.ICommunication;
+import MASInfrastructure.Agent.InfraAgentReference;
 import MASInfrastructure.Etat.LifeCycle;
+import MASInfrastructure.Infrastructure;
 import plateau.IAgentPlateau;
 import plateau.IAgentite;
 
 public abstract class AbstractAgent extends InfraAgent implements IAgentite {
+
+    /**
+     * L'infrastructure.
+     */
+    protected Infrastructure infra = new Infrastructure();
+
+    /**
+     * Référence de l'agent.
+     */
+    protected InfraAgentReference reference;
 
     /**
      * L'interface du plateau.
@@ -15,11 +26,10 @@ public abstract class AbstractAgent extends InfraAgent implements IAgentite {
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
      */
-    public AbstractAgent(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(null, lifeCycle, myMailBoxManager);
+    public AbstractAgent() {
+        super(null, new LifeCycle(null), new Infrastructure());
+        this.reference = this.getInfraAgentReference();
     }
 
 }

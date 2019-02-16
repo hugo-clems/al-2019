@@ -11,7 +11,7 @@ import MASInfrastructure.Ordonnanceur.IStratOrdonnanceur;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public abstract class InfraImpl extends Infrastructure {
+public class InfraImpl extends Infrastructure {
 
     /**
      * Constructeur par défaut.
@@ -28,35 +28,6 @@ public abstract class InfraImpl extends Infrastructure {
      */
     public InfraAgent creer(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
         return this.creer(null, lifeCycle, myMailBoxManager);
-    }
-
-    /**
-     * Envoie un message.
-     * @param message le message à envoyer
-     */
-    public void envoyerMessage(IMessage message) {
-        this.sendMessage(message);
-    }
-
-    /**
-     * Diffuse un message.
-     * @param message le message à diffuser
-     */
-    public void diffuserMessage(IMessage message) {
-        this.sendMessageBroadcast(message);
-    }
-
-    /**
-     * Reçois un message.
-     * @param reference
-     * @return
-     */
-    public Optional<IMessage> recevoirMessage(InfraAgentReference reference) {
-        return this.receiveMessage(reference);
-    }
-
-    public ArrayList<IMessage> recevoirMessages(InfraAgentReference reference) {
-        return this.receiveMessages(reference);
     }
 
     /**
