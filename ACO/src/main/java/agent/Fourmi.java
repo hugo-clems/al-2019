@@ -8,8 +8,8 @@ public class Fourmi extends AbstractAgentSitue {
 
     public boolean transporteNourriture;
 
-    public Fourmi(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager, boolean transporteNourriture) {
-        super(nom, directionInitiale, lifeCycle, myMailBoxManager);
+    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture) {
+        super(nom, directionInitiale);
         this.transporteNourriture = transporteNourriture;
     }
 
@@ -21,4 +21,8 @@ public class Fourmi extends AbstractAgentSitue {
 
     }
 
+    @Override
+    public void actionTour() {
+
+    }
 }

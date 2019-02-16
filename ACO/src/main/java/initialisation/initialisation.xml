@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plateau xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="initialisation.xsd">
+    <nom>Simulateur ACO</nom>
+    <width>30</width>
+    <heigth>30</heigth>
+    <liste_agentite>
+        <nid>
+            <nom>Fourmilère</nom>
+            <position>
+                <x>20</x>
+                <y>20</y>
+            </position>
+        </nid>
+        <nourritures>
+            <nourriture>
+                <nom>Source Nourriture 1</nom>
+                <quantite>50</quantite>
+                <position>
+                    <x>10</x>
+                    <y>10</y>
+                </position>
+            </nourriture>
+            <nourriture>
+                <nom>Source Nourriture 2</nom>
+                <quantite>60</quantite>
+                <position>
+                    <x>15</x>
+                    <y>15</y>
+                </position>
+            </nourriture>
+        </nourritures>
+        <fourmis>
+            <fourmi>
+                <nom>Fourmi 1</nom>
+                <direction_initiale>NO</direction_initiale>
+            </fourmi>
+            <fourmi>
+                <nom>Fourmi 2</nom>
+                <direction_initiale>S</direction_initiale>
+            </fourmi>
+        </fourmis>
+    </liste_agentite>
+
+</plateau>
