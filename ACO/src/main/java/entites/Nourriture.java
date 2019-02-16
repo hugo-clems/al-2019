@@ -1,10 +1,13 @@
 package entites;
 
+import plateau.Plateau;
+
 public class Nourriture extends  AbstractEntitePassive {
 
     private int quantite;
 
-    public Nourriture(int quantite){
+    public Nourriture(int quantite , Plateau plateau, String nom){
+        super(nom,plateau);
         this.quantite = quantite;
     }
 
