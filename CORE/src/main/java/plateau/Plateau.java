@@ -9,7 +9,7 @@ import entites.Obstacle;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
+public class Plateau implements IEntitePlateau, IAgentPlateau {
 
     //region Attributes
     /**
@@ -111,8 +111,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     }
     //endregion
 
-    //region IDeveloppeurPlateau
-    @Override
+    //region main
     public Boolean placerAgentite(Position position, IAgentite agentite) {
 
         Case mCase = cases.get(position);
@@ -123,7 +122,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return true;
     }
 
-    @Override
+
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
         if (listeAgentites.isEmpty() || listeAgentites.get(agentite) == null) {
             return null;
