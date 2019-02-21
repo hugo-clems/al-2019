@@ -32,4 +32,9 @@ public abstract class AbstractAgent extends InfraAgent implements IAgentite {
         this.reference = this.getInfraAgentReference();
     }
 
+    /**
+     * Effectue l'action durant le tour de l'agent.
+     */
+    public abstract void actionTour();
+
 }
