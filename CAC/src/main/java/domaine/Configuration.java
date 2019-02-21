@@ -1,10 +1,16 @@
 package domaine;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Configuration extends Recommandable {
+public class Configuration extends Recommandable implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4866753559812134311L;
 
 	private String id;
 

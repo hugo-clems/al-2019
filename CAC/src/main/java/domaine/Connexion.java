@@ -1,13 +1,21 @@
 package domaine;
 
-public class Connexion extends Recommandable {
+import java.io.Serializable;
 
-    private Port fourni;
+public class Connexion extends Recommandable implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7856893215103074382L;
+	private Port fourni;
     private Port requis;
 
     public Connexion(Port fourni, Port requis) {
         this.fourni = fourni;
         this.requis = requis;
+    }
+    public Connexion() {
     }
 
     public Port getFourni() {

@@ -1,14 +1,20 @@
 package domaine;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  *
  */
-public class Composant {
+public class Composant implements Serializable{
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5585017048919772280L;
+
+	/**
      * Nom du composant
      */
     private String nom;
@@ -25,7 +31,8 @@ public class Composant {
     public Composant(String name) {
         this.nom = name;
     }
-
+    public Composant() {
+    }
     public String getNom() {
         return nom;
     }

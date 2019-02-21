@@ -1,13 +1,22 @@
 package domaine;
 
-public class Port {
+import java.io.Serializable;
 
-    private Composant composant;
+public class Port implements Serializable{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9056062783144620502L;
+	private Composant composant;
     private String service;
 
     public Port(Composant composant, String service) {
         this.composant = composant;
         this.service = service;
+    }
+    public Port() {
+    	
     }
 
     public String getService() {
