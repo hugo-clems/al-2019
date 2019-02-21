@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * C'est pas beau à cause d'INFRA !
  */
-public class AbstractMessage implements IMessage {
+public abstract class AbstractMessage implements IMessage {
 
     private InfraAgentReference emitter;
 
