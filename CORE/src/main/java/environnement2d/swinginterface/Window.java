@@ -1,5 +1,7 @@
 package environnement2d.swinginterface;
 
+import plateau.Plateau;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -13,6 +15,9 @@ public class Window {
      */
     private JFrame frame;
 
+    private PlateauToolsPanel plateauToolsPanel;
+    private Plateau plateau;
+
     /**
      * Constructor.
      *
@@ -21,7 +26,9 @@ public class Window {
      *                           is called in an environment that
      *                           does not support a keyboard, display, or mouse
      */
-    public Window() throws HeadlessException {
+    public Window(PlateauToolsPanel plateauToolsPanel, Plateau plateau) throws HeadlessException {
+        this.plateauToolsPanel = plateauToolsPanel;
+        this. plateau = plateau;
         frame = new JFrame();
         frame.setTitle("AL2018-2019");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,10 +60,13 @@ public class Window {
      * @param args args
      */
     public static void main(final String[] args) {
-        Window window = new Window();
-        MainPanel panel = new MainPanel();
-        PlateauPanel plateau = new PlateauPanel(panel);
-        window.setContent(plateau);
+        PlateauToolsPanel plateauToolsPanel = new PlateauToolsPanel();
+        Plateau plateau = new Plateau("titre", 80, 100);
+        Window window = new Window(plateauToolsPanel, plateau);
+
+        MainPanel panel = new MainPanel(window.plateauToolsPanel, window.plateau);
+
+        window.setContent(panel);
     }
 }
 
