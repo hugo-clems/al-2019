@@ -6,43 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Strategie implements IStrategie {
-
-    /**
-     * La durée d'un tour.
-     */
-    private final int DUREE_TOUR = 666;
+    private Runner runner;
+    private Thread t;
 
     /**
      * La liste des agents à ordonnancer.
      */
     private List<AbstractAgent> listeAgents = new ArrayList<>();
 
-    /**
-     * Etat de l'ordonnanceur.
-     * true si l'ordonnanceur tourne, false sinon
-     */
-    private boolean isRunning = false;
 
     @Override
     public void lancer() {
-        this.isRunning = true;
-        while (this.isRunning) {
-            // On attends 666ms pour que les tours ne soient pas instantanés
-            for (AbstractAgent agent : listeAgents) {
-                try {
-                    Thread.sleep(this.DUREE_TOUR);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                agent.actionTour();     // Effectue l'action du tour
-                // TODO envoie info fin de tour au 2D
-            }
-        }
+        this.runner = new Runner(this.listeAgents);
+        this.t = new Thread(this.runner);
+        this.t.start();
     }
 
     @Override
     public void arreter() {
-        this.isRunning = false;
+        this.runner.setRunning(false);
     }
 
     @Override

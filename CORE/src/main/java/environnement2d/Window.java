@@ -4,8 +4,10 @@ import entites.AbstractEntite;
 import entites.Obstacle;
 import plateau.Plateau;
 import plateau.Position;
+import strategie.Strategie;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
@@ -20,6 +22,11 @@ public class Window {
 
     private PlateauComponent plateau;
 
+    private JButton start;
+    private JButton stop;
+
+    private Strategie strategie;
+
     /**
      * Constructor.
      *
@@ -30,17 +37,18 @@ public class Window {
      */
     public Window(PlateauComponent plateau) throws HeadlessException {
         this.plateau = plateau;
-        frame = new JFrame();
-        frame.setTitle("AL2018-2019");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    /**
-     * Getter frame.
-     *
-     * @return frame
-     */
-    public final JFrame getFrame() {
-        return frame;
+        this.frame = new JFrame();
+        this.frame.setTitle("AL2018-2019");
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.start = new JButton();
+        this.start.addActionListener(this::startStrategie);
+        this.start.setText("Start");
+
+        this.stop = new JButton();
+        this.stop.addActionListener(this::stopStrategie);
+        this.stop.setText("Stop");
+
+        this.strategie = new Strategie();
     }
 
     /**
@@ -49,10 +57,10 @@ public class Window {
      * @param panel panel a modifier
      */
     public final void setContent(final JPanel panel) {
-        getFrame().setContentPane(panel);
-        getFrame().pack();
-        getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getFrame().setVisible(true);
+        this.frame.setContentPane(panel);
+        this.frame.pack();
+        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.setVisible(true);
     }
 
     /**
@@ -83,8 +91,18 @@ public class Window {
         Window window = new Window(pc);
 
         MainPanel panel = new MainPanel(window.plateau);
+        panel.setStart(window.start);
+        panel.setStop(window.stop);
 
         window.setContent(panel);
+    }
+
+    private void startStrategie(ActionEvent e) {
+        this.strategie.lancer();
+    }
+
+    private void stopStrategie(ActionEvent e) {
+        this.strategie.arreter();
     }
 }
 
