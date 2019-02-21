@@ -11,8 +11,11 @@ import MASInfrastructure.Ordonnanceur.IStratOrdonnanceur;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public abstract class InfraImpl extends Infrastructure {
+public class InfraImpl extends Infrastructure {
 
+    /**
+     * Constructeur par défaut.
+     */
     public InfraImpl() {
         super();
     }
@@ -28,42 +31,25 @@ public abstract class InfraImpl extends Infrastructure {
     }
 
     /**
-     * Envoie un message.
-     * @param message le message à envoyer
+     * Change la stratégie de l'Ordonnanceur.
+     * @param strategie
      */
-    public void envoyerMessage(IMessage message) {
-        this.sendMessage(message);
-    }
-
-    /**
-     * Diffuse un message.
-     * @param message le message à diffuser
-     */
-    public void diffuserMessage(IMessage message) {
-        this.sendMessageBroadcast(message);
-    }
-
-    /**
-     * Reçois un message.
-     * @param reference
-     * @return
-     */
-    public Optional<IMessage> recevoirMessage(InfraAgentReference reference) {
-        return this.receiveMessage(reference);
-    }
-
-    public ArrayList<IMessage> recevoirMessages(InfraAgentReference reference) {
-        return this.receiveMessages(reference);
-    }
-
     public void changerStrategie(IStratOrdonnanceur strategie) {
         this.changerOrdonnancement(strategie);
     }
 
+    /**
+     * Ajoute un agent à l'Ordonnanceur.
+     * @param agent
+     */
     public void ajouterAgentOrdonnanceur(InfraAgent agent) {
         this.ordagentAjoute(agent);
     }
 
+    /**
+     * Retire un agent de l'Ordonnanceur.
+     * @param agent
+     */
     public void retirerAgentOrdonnanceur(InfraAgent agent) {
         this.OrdagentRetire(agent);
     }
