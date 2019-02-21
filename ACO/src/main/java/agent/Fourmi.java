@@ -8,6 +8,7 @@ import entites.Obstacle;
 import entites.Pheromone;
 import plateau.Case;
 import plateau.IAgentite;
+import plateau.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,20 @@ import java.util.Random;
 
 public class Fourmi extends AbstractAgentSitue {
 
-    public boolean transporteNourriture;
-    public boolean suitPheromone;
+    private boolean transporteNourriture;
+    private boolean suitPheromone;
+    private final Position positionNid;
 
-    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, boolean suitPheromone) {
+
+    public Position getPositionNid() {
+        return positionNid;
+    }
+
+    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, boolean suitPheromone, Position position_nid) {
         super(nom, directionInitiale);
         this.transporteNourriture = transporteNourriture;
         this.suitPheromone = suitPheromone;
+        this.positionNid=position_nid;
     }
 
     public void chercherNourriture(){
