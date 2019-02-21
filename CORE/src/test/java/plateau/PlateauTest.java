@@ -27,7 +27,7 @@ public class PlateauTest {
     }
 
     @Test
-    public void placerAgentite() {
+    public void placerAgentiteTest() {
         AbstractAgent agentTest = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
         Position position = new Position(0, 0);
         assertFalse(plateau.placerAgentite(position, agentTest));
@@ -41,7 +41,7 @@ public class PlateauTest {
     }
 
     @Test
-    public void enleverAgentite() {
+    public void enleverAgentiteTest() {
         Case caseDepart = plateau.getCase(agent);
         assertEquals(1, caseDepart.getAgentites().size());
         assertEquals(agent, plateau.enleverAgentite(caseDepart.getPosition(), agent));
@@ -50,7 +50,7 @@ public class PlateauTest {
     }
 
     @Test
-    public void deplacerAgent() {
+    public void deplacerAgentTest() {
         //l'agent ne bouge pas
         Case ancienneCase = plateau.getCase(agent);
         assertFalse(plateau.deplacerAgent(agent, Direction.N));
@@ -77,15 +77,15 @@ public class PlateauTest {
     }
 
     @Test
-    public void ramasserEntite() {
+    public void ramasserEntiteTest() {
     }
 
     @Test
-    public void deposerEntite() {
+    public void deposerEntiteTest() {
     }
 
     @Test
-    public void getVoisinage() {
+    public void getVoisinageTest() {
         Map<Direction, Case> voisinage = plateau.getVoisinage(agent);
 
         //Nord
@@ -109,7 +109,7 @@ public class PlateauTest {
     }
 
     @Test
-    public void getCase() {
+    public void getCaseTest() {
         assertEquals(new Case(new Position(2,3)), plateau.getCase(agent));
     }
 }
