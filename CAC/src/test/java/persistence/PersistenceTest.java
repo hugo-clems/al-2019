@@ -32,8 +32,8 @@ public class PersistenceTest {
 		composant1 = new Composant("comp1");
 		composant2 = new Composant("comp2");
 
-		portR = new Port(composant1, "s1");
-		portF = new Port(composant2, "s1");
+		portR = new Port(null, "s1");
+		portF = new Port(null, "s1");
 
 		composant1.ajouterPortRequis(portR);
 		composant2.ajouterPortFourni(portF);
@@ -56,8 +56,8 @@ public class PersistenceTest {
 		 // /home/louis/git/al-2019-2/CAC/src/test/java/persistence/PersistenceTest.java
 //		 try {
 //			 hey = PersistenceTest.class.getResourceAsStream("bdd.json");
-			
-//		     os = new FileOutputStream(new File("../../../../main/resources/bdd.json"));
+//			
+////		     os = new FileOutputStream(new File("../../../../main/resources/bdd.json"));
 //		 }catch (IOException e) {
 //	            e.printStackTrace();
 //	        }finally{

@@ -41,7 +41,9 @@ public class Persistence implements IPersistence{
 		
 		 OutputStream os = null;
 	        try {
-	            os = new FileOutputStream(new File("../../resources/bdd.json"));
+	        	File newfile = new File("src/main/resources/bdd.json");
+	        	System.out.println(newfile.canRead());
+	            os = new FileOutputStream(newfile);
 	            os.write(res.getBytes(), 0, res.length());
 	        } catch (IOException e) {
 	            e.printStackTrace();
