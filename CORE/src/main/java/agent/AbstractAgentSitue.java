@@ -109,9 +109,4 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         plateau.ramasserEntite(this, entite);
     }
 
-    /**
-     * Effectue l'action durant le tour de l'agent.
-     */
-    public abstract void actionTour();
-
 }
