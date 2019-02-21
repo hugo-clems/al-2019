@@ -1,10 +1,10 @@
-package domain;
+package domaine;
 
 import javax.sound.sampled.Port;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Composant  {
+public class Composant {
 
     private String nom;
 
@@ -42,11 +42,11 @@ public class Composant  {
         this.portRequis = portRequis;
     }
 
-    public void addPortFournit (Port p){
+    public void addPortFournit(Port p) {
         portFournis.add(p);
     }
 
-    public void addPortRequit (Port p) {
+    public void addPortRequit(Port p) {
         portRequis.add(p);
     }
 

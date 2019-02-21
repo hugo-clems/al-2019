@@ -1,4 +1,4 @@
-package java.domain;
+package domaine;
 
 public class Connexion extends Recommandable {
 

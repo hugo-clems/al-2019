@@ -1,4 +1,4 @@
-package java.domain;
+package domaine;
 
 public abstract  class Recommandable {
 
