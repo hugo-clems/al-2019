@@ -32,12 +32,9 @@ public class MainPanel extends JPanel {
 
     }
 
-    public void setStart(JButton start) {
-        this.infraControlPanel.setStart(start);
+    public void addButton(JButton button) {
+        this.infraControlPanel.addButton(button);
     }
 
-    public void setStop(JButton stop) {
-        this.infraControlPanel.setStart(stop);
-    }
 }
 

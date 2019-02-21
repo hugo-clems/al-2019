@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Strategie implements IStrategie {
     private Runner runner;
-    private Thread t;
+    private Thread t = null;
 
     /**
      * La liste des agents à ordonnancer.
@@ -17,14 +17,24 @@ public class Strategie implements IStrategie {
 
     @Override
     public void lancer() {
-        this.runner = new Runner(this.listeAgents);
-        this.t = new Thread(this.runner);
-        this.t.start();
+        if (this.t == null) {
+            this.runner = new Runner(this.listeAgents);
+            this.t = new Thread(this.runner);
+            this.t.start();
+        } else {
+            this.t.resume();
+        }
+
     }
 
     @Override
     public void arreter() {
         this.runner.setRunning(false);
+    }
+
+    @Override
+    public void pause() {
+        this.t.suspend();
     }
 
     @Override

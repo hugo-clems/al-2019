@@ -45,4 +45,8 @@ public class Runner implements Runnable {
     public void setRunning(boolean running) {
         this.isRunning = running;
     }
+
+    public void suspend() {
+
+    }
 }

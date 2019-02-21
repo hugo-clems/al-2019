@@ -15,6 +15,11 @@ public interface IStrategie {
     void arreter();
 
     /**
+     * Mettre en pause l'ordonnancement.
+     */
+    void pause();
+
+    /**
      * Ajoute un agent à l'ordonnanceur.
      * @param agent l'agent à ajouter
      */

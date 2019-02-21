@@ -24,6 +24,7 @@ public class Window {
 
     private JButton start;
     private JButton stop;
+    private JButton pause;
 
     private Strategie strategie;
 
@@ -48,6 +49,10 @@ public class Window {
         this.stop.addActionListener(this::stopStrategie);
         this.stop.setText("Stop");
 
+        this.pause = new JButton();
+        this.pause.addActionListener(this::pauseStrategie);
+        this.pause.setText("Pause");
+
         this.strategie = new Strategie();
     }
 
@@ -63,38 +68,13 @@ public class Window {
         this.frame.setVisible(true);
     }
 
-    /**
-     * Main.
-     *
-     * @param args args
-     */
-    public static void main(final String[] args) {
-        Plateau plateau = new Plateau("NamePlateau", 40, 50);
-        for (int x = 0; x < 50; x++) {
-            for (int y = 0; y < 40; y++) {
-                Position p = new Position(x, y);
-                //Ajout obstacles au bord
-                if (x < 30 && y > 10 && y < 13) {
-                    Obstacle o = new Obstacle("Obstacle" + x + y, plateau);
-                    plateau.placerAgentite(p, o);
-                }
-                if (x == 2 && y == 3 || x == 30 && y == 39) {
-                    AbstractEntite agent = new AbstractEntite("agent", plateau) {
-                    };
-                    plateau.placerAgentite(p, agent);
-                }
-            }
-        }
+    public void start() {
+        MainPanel panel = new MainPanel(this.plateau);
+        panel.addButton(this.start);
+        panel.addButton(this.pause);
+        panel.addButton(this.stop);
 
-        PlateauComponent pc = new PlateauComponent(plateau);
-
-        Window window = new Window(pc);
-
-        MainPanel panel = new MainPanel(window.plateau);
-        panel.setStart(window.start);
-        panel.setStop(window.stop);
-
-        window.setContent(panel);
+        this.setContent(panel);
     }
 
     private void startStrategie(ActionEvent e) {
@@ -103,6 +83,11 @@ public class Window {
 
     private void stopStrategie(ActionEvent e) {
         this.strategie.arreter();
+    }
+
+    private void pauseStrategie(ActionEvent e) {
+        this.strategie.pause();
+        this.pause.setText("Reprendre");
     }
 }
 
