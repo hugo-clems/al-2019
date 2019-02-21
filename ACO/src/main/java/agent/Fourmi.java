@@ -22,6 +22,7 @@ public class Fourmi extends AbstractAgentSitue {
     private final Position positionNid;
 
 
+
     public Position getPositionNid() {
         return positionNid;
     }
@@ -56,24 +57,38 @@ public class Fourmi extends AbstractAgentSitue {
                 // On récupère les agentités de la case
                 List<IAgentite> agentites = myCase.getAgentites();
 
+                boolean caseContientObstacle = false;
+                boolean caseContientPheromone = false;
+                boolean caseContientNourriture = false;
+
                 for (IAgentite agentite:agentites) {
                     // Si la case contient au moins un obstacle
                     if(agentite instanceof Obstacle){
-                        voisinnageObstacles.add(myCase);
+                        caseContientObstacle = true;
                     }
-                    // Sinon on ajoute la direction de la case à la liste des directions sans obstacle
-                    else {
-                        listeDirectionSansObstacle.add(myDirection);
-                    }
-
                     // Si la case contient de la phéromone
                     if(agentite instanceof Pheromone){
-                        voisinnagePheromones.add(myCase);
+                        caseContientPheromone = true;
                     }
                     // Si la case contient de la nourriture
                     if(agentite instanceof Nourriture){
-                        voisinnageNourritures.add(myCase);
+                        caseContientNourriture = true;
                     }
+                }
+
+                if (caseContientObstacle){
+                    voisinnageObstacles.add(myCase);
+                }
+                else {
+                    listeDirectionSansObstacle.add(myDirection);
+                }
+
+                if (caseContientPheromone) {
+                    voisinnagePheromones.add(myCase);
+                }
+
+                if (caseContientNourriture) {
+                    voisinnageNourritures.add(myCase);
                 }
             }
 
@@ -84,6 +99,9 @@ public class Fourmi extends AbstractAgentSitue {
             }
             // Sinon, si on trouve de la nourriture
             else if(!voisinnageNourritures.isEmpty()){
+                // On se tourne vers une des cases qui contient de la nourriture
+                // Direction directionNourriture = ...;
+                // seTournerVers(directionNourriture);
                 // On ramasse la nourriture
                 // ramasser(Nourriture nourriture);
                 transporteNourriture = true;
