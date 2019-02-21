@@ -1,4 +1,4 @@
-package java.domain;
+package domain;
 
 import javax.sound.sampled.Port;
 import java.util.HashSet;
