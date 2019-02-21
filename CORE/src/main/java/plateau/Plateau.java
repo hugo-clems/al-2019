@@ -115,9 +115,8 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     @Override
     public Boolean placerAgentite(Position position, IAgentite agentite) {
 
-        // TODO WALID : check ne pas placer un obstacle sur un agentite
         Case mCase = cases.get(position);
-        if (checkObstacleInCase(mCase))
+        if (checkObstacleInCase(mCase) || (agentite instanceof Obstacle && !mCase.getAgentites().isEmpty()))
             return false;
         mCase.getAgentites().add(agentite);
         listeAgentites.put(agentite, mCase);
