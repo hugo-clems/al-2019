@@ -13,4 +13,7 @@ public abstract  class Recommandable {
     public void setNbApprobation(Integer nbApprobation) {
         this.nbApprobation = nbApprobation;
     }
+
+
+
 }

@@ -26,12 +26,12 @@ public class Composant {
         this.nom = nom;
     }
 
-    public Set<Port> getPortFourni() {
+    public Set<Port> getPortFournis() {
         return portFournis;
     }
 
-    public void setPortFourni(Set<Port> portFourni) {
-        this.portFournis = portFourni;
+    public void setPortFournis(Set<Port> portFournis) {
+        this.portFournis = portFournis;
     }
 
     public Set<Port> getPortRequis() {
@@ -42,11 +42,11 @@ public class Composant {
         this.portRequis = portRequis;
     }
 
-    public void addPortFournit(Port p) {
+    public void addPortFournis(Port p) {
         portFournis.add(p);
     }
 
-    public void addPortRequit(Port p) {
+    public void addPortRequis(Port p) {
         portRequis.add(p);
     }
 
