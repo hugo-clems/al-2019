@@ -3,7 +3,7 @@ package domaine;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Configuration extends Recommandable {
+public class Configuration {
 
     private Set<Connexion> connexions = new HashSet<>();
 
