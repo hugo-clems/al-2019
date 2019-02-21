@@ -8,9 +8,19 @@ import java.util.List;
 public class Strategie implements IStrategie {
 
     /**
+     * La durée d'un tour.
+     */
+    private final int DUREE_TOUR = 666;
+
+    /**
      * La liste des agents à ordonnancer.
      */
     private List<AbstractAgent> listeAgents = new ArrayList<>();
+
+    /**
+     * Etat de l'ordonnanceur.
+     * true si l'ordonnanceur tourne, false sinon
+     */
     private boolean isRunning = false;
 
     @Override
@@ -20,7 +30,7 @@ public class Strategie implements IStrategie {
             // On attends 666ms pour que les tours ne soient pas instantanés
             for (AbstractAgent agent : listeAgents) {
                 try {
-                    Thread.sleep(666);
+                    Thread.sleep(this.DUREE_TOUR);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
