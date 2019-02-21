@@ -14,6 +14,12 @@ public abstract  class Recommandable {
         this.nbApprobation = nbApprobation;
     }
 
+    public Integer getNbOccurence() {
+        return nbOccurence;
+    }
 
+    public void setNbOccurence(Integer nbOccurence) {
+        this.nbOccurence = nbOccurence;
+    }
 
 }
