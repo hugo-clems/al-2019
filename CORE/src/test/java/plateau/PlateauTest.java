@@ -3,6 +3,7 @@ package plateau;
 import agent.AbstractAgent;
 import agent.AbstractAgentSitue;
 import common.Direction;
+import entites.AbstractEntite;
 import entites.Obstacle;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 public class PlateauTest {
 
@@ -21,6 +23,7 @@ public class PlateauTest {
     public void setUp() throws Exception {
         plateau = new Plateau("plateauTest", 5, 5);
         agent = Mockito.mock(AbstractAgentSitue.class, Mockito.CALLS_REAL_METHODS);
+        when(((AbstractAgentSitue) agent).getDirection()).thenReturn(Direction.N);
 
         plateau.getListeAgentites().put(agent, plateau.getCases().get(new Position(2, 3)));
         plateau.getCases().get(new Position(2, 3)).getAgentites().add(agent);
@@ -78,10 +81,40 @@ public class PlateauTest {
 
     @Test
     public void ramasserEntiteTest() {
+        AbstractEntite entite = Mockito.mock(AbstractEntite.class, Mockito.CALLS_REAL_METHODS);
+        AbstractEntite autreEntite = Mockito.mock(AbstractEntite.class, Mockito.CALLS_REAL_METHODS);
+
+        // Test ramasser obstacle
+        assertFalse(plateau.ramasserEntite(agent, new Obstacle("obstacle", plateau)));
+
+        // Test ramasser ramasser entité si déja chargé
+        when(((AbstractAgentSitue) agent).getEntitePortee()).thenReturn(entite);
+        plateau.placerAgentite(new Position(2, 2), entite);
+        assertFalse(plateau.ramasserEntite(agent, entite));
+
+        // Test ramasser entité pas devant
+        when(((AbstractAgentSitue) agent).getDirection()).thenReturn(Direction.SO);
+        assertFalse(plateau.ramasserEntite(agent, entite));
+
+        // Test ramasser entité eloignée
+        plateau.placerAgentite(new Position(1, 1), autreEntite);
+        assertFalse(plateau.ramasserEntite(agent, autreEntite));
+
+        // Test ramasser entité normalement
+        when(((AbstractAgentSitue) agent).getDirection()).thenReturn(Direction.S);
+        when(((AbstractAgentSitue) agent).getEntitePortee()).thenReturn(null);
+        assertTrue(plateau.ramasserEntite(agent, entite));
     }
 
     @Test
     public void deposerEntiteTest() {
+        AbstractEntite entite = Mockito.mock(AbstractEntite.class, Mockito.CALLS_REAL_METHODS);
+        AbstractEntite autreEntite = Mockito.mock(AbstractEntite.class, Mockito.CALLS_REAL_METHODS);
+
+        assertFalse(plateau.deposerEntite(agent, entite));
+        ((AbstractAgentSitue) agent).setEntitePortee(entite);
+        assertTrue(plateau.deposerEntite(agent, entite));
+        assertFalse(plateau.deposerEntite(agent, autreEntite));
     }
 
     @Test
@@ -112,4 +145,5 @@ public class PlateauTest {
     public void getCaseTest() {
         assertEquals(new Case(new Position(2,3)), plateau.getCase(agent));
     }
+
 }
