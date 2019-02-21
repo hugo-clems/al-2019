@@ -1,4 +1,4 @@
-package environnement2d.swinginterface;
+package environnement2d;
 
 import javax.swing.*;
 import java.awt.*;

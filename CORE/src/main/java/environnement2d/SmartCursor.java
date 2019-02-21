@@ -1,4 +1,4 @@
-package environnement2d.swinginterface;
+package environnement2d;
 
 import agent.AbstractAgent;
 import entites.Obstacle;
