@@ -11,11 +11,30 @@ import plateau.Position;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Initialisation {
 
     private Plateau plateauACO;
+
+    class PositionNid{
+        Position position_nid;
+        Nid nid;
+
+        public PositionNid(Position position_nid, Nid nid){
+            this.position_nid=position_nid;
+            this.nid=nid;
+        }
+
+        public Position getPosition_nid() {
+            return position_nid;
+        }
+
+        public Nid getNid() {
+            return nid;
+        }
+    }
 
     public Initialisation(){
 
@@ -45,6 +64,7 @@ public class Initialisation {
                 String name_plateau="";
                 int width_plateau=-1;
                 int height_plateau=-1;
+                PositionNid nid_position = null;
                 for(int i = 0; i < nbCarac; i++) {
                     Node n2 = caracteristiques_plateau.item(i);
                     if(n2 instanceof Element){
@@ -64,17 +84,18 @@ public class Initialisation {
                                 int nbTypeEntite = n.getChildNodes().getLength();
                                 for(int k = 0; k < nbTypeEntite; k++) {
                                     Node type_entite = type_entites.item(k);
-                                    Nid nid=null;
                                     if(type_entite instanceof Element){
                                         switch (type_entite.getNodeName()){
                                             case "nid":
-                                                nid=initNid(type_entite);
+                                                nid_position=initNid(type_entite);
                                                 break;
                                             case "nourritures":
                                                 initNourritures(type_entite);
                                                 break;
                                             case "fourmis":
-                                                initFourmis(type_entite,nid,new Position(0,0));
+                                                    Nid nid = nid_position.getNid();
+                                                    Position posNid = nid_position.getPosition_nid();
+                                                    initFourmis(type_entite,nid,posNid);
                                                 break;
                                         }
                                     }
@@ -91,9 +112,11 @@ public class Initialisation {
         }
     }
 
-    private Nid initNid(Node type_entite) {
-        Nid nid = null;
+    private PositionNid initNid(Node type_entite) {
+        PositionNid posnid = null;
         if(type_entite instanceof Element){
+            Nid nid = null;
+            Position position_nid = null;
             NodeList caracteristiques_nid = type_entite.getChildNodes();
             int nbCarac = caracteristiques_nid.getLength();
             String name_nid="";
@@ -112,9 +135,12 @@ public class Initialisation {
                 }
             }
             nid = new Nid(this.plateauACO,name_nid);
-            this.plateauACO.placerAgentite(new Position(position.get(0),position.get(1)),nid);
+            position_nid = new Position(position.get(0),position.get(1));
+            posnid = new PositionNid(position_nid,nid);
+            this.plateauACO.placerAgentite(position_nid,nid);
+
         }
-        return nid;
+        return posnid;
     }
 
     private ArrayList<Integer> getPosition(Node caracteristique) {
@@ -229,8 +255,7 @@ public class Initialisation {
                             d=Direction.SE;
                             break;
                     }
-                    //voir comment on implémente lifeCycle - IEtat et myMailBoxMmanager pour la fourmi
-                    Fourmi new_fourmi = new Fourmi(name_fourmi,d,false);
+                    Fourmi new_fourmi = new Fourmi(name_fourmi,d,false,false,position_nid);
                     this.plateauACO.placerAgentite(position_nid,new_fourmi);
                 }
             }
