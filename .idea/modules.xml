@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/CORE/CORE.iml" filepath="$PROJECT_DIR$/CORE/CORE.iml" />
       <module fileurl="file://$PROJECT_DIR$/INFRA/INFRA.iml" filepath="$PROJECT_DIR$/INFRA/INFRA.iml" />
       <module fileurl="file://$PROJECT_DIR$/ROB/ROB.iml" filepath="$PROJECT_DIR$/ROB/ROB.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/al-2019v2.iml" filepath="$PROJECT_DIR$/.idea/al-2019v2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/al-2019.iml" filepath="$PROJECT_DIR$/.idea/al-2019.iml" />
     </modules>
   </component>
 </project>

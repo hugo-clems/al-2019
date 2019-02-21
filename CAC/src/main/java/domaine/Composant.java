@@ -1,22 +1,30 @@
 package domaine;
 
-import javax.sound.sampled.Port;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *
+ */
 public class Composant {
 
+    /**
+     * Nom du composant
+     */
     private String nom;
 
-    private Set<Port> portFournis;
-    private Set<Port> portRequis;
+    /**
+     * Port fournis par le composant
+     */
+    private Set<Port> portFournis = new HashSet<>();
+    /**
+     * Port requis par le composant
+     */
+    private Set<Port> portRequis = new HashSet<>();
 
     public Composant(String name) {
         this.nom = name;
-        this.portFournis = new HashSet<>();
-        this.portRequis = new HashSet<>();
     }
-
 
     public String getNom() {
         return nom;
@@ -26,12 +34,12 @@ public class Composant {
         this.nom = nom;
     }
 
-    public Set<Port> getPortFourni() {
+    public Set<Port> getPortFournis() {
         return portFournis;
     }
 
-    public void setPortFourni(Set<Port> portFourni) {
-        this.portFournis = portFourni;
+    public void setPortFournis(Set<Port> portFournis) {
+        this.portFournis = portFournis;
     }
 
     public Set<Port> getPortRequis() {
@@ -42,13 +50,22 @@ public class Composant {
         this.portRequis = portRequis;
     }
 
-    public void addPortFournit(Port p) {
+    /**
+     * Ajouter un port à l'ensemble des ports fournis
+     *
+     * @param p Port à ajouter
+     */
+    public void ajouterPortFourni(Port p) {
         portFournis.add(p);
     }
 
-    public void addPortRequit(Port p) {
+    /**
+     * Ajouter un port à l'ensemble des ports requis
+     *
+     * @param p Port à ajouter
+     */
+    public void ajouterPortRequis(Port p) {
         portRequis.add(p);
     }
-
 
 }

@@ -3,13 +3,9 @@ package domaine;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Configuration extends  Recommandable{
+public class Configuration extends Recommandable {
 
-    private Set<Connexion> connexions;
-
-    public Configuration() {
-        this.connexions = new HashSet<>();
-    }
+    private Set<Connexion> connexions = new HashSet<>();
 
     public Set<Connexion> getConnexions() {
         return connexions;
@@ -19,10 +15,8 @@ public class Configuration extends  Recommandable{
         this.connexions = connexions;
     }
 
-    public void ajouterConnexion (Connexion connexion){
-
+    public void ajouterConnexion(Connexion connexion) {
         connexions.add(connexion);
     }
-
 
 }
