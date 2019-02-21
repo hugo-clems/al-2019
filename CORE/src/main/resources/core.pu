@@ -26,6 +26,14 @@ interface IDeveloppeurPlateau {
     +placerAgentite(Position, IAgentite): boolean
     +enleverAgentite(Position, IAgentite): IAgentite
 }
+
+interface IStrategie{
+    +lancer(): void
+    +arreter(): void
+    +ajouterAgent(AbstractAgent): void
+    +supprimerAgent(AbstractAgent): void
+}
+
 class Case {
     -id: int
     --
@@ -41,7 +49,7 @@ class InfraAgent #grey {
     +readMessages(): List<IMessage>
 }
 abstract class AbstractAgent {
-
+    {abstract} actionTour(): void
 }
 abstract class AbstractEntite {
     -nom: String
@@ -80,7 +88,10 @@ abstract class AbstractAgentSitue {
     detecter(): Map<Direction, Case>
     deposer(AbstractEntite entite): void
     ramasser(AbstractEntite entite): void
-    {abstract} actionTour(): void
+}
+
+class Strategie{
+    isRunning: boolean
 }
 
 AbstractEntiteActive -up-|> AbstractEntite
@@ -100,4 +111,6 @@ AbstractAgent -up-|> InfraAgent
 Obstacle -up-|> AbstractEntitePassive
 AbstractEntite .up.|> IAgentite
 AbstractAgent .up.|> IAgentite
+Strategie .up.|> IStrategie
+Strategie "[1]" --> "[*] agents" AbstractAgent
 @enduml
