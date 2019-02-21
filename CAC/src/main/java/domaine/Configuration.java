@@ -2,12 +2,25 @@ package domaine;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class Configuration extends Recommandable {
 
-    private Set<Connexion> connexions = new HashSet<>();
+	private String id;
 
-    public Set<Connexion> getConnexions() {
+	private Set<Connexion> connexions = new HashSet<>();
+	
+
+    public Configuration(Set<Connexion> connexions) {
+		super();
+		this.connexions = connexions;
+		this.id = UUID.randomUUID().toString(); 
+	}
+    public Configuration() {
+    	
+    }
+
+	public Set<Connexion> getConnexions() {
         return connexions;
     }
 
@@ -18,5 +31,11 @@ public class Configuration extends Recommandable {
     public void ajouterConnexion(Connexion connexion) {
         connexions.add(connexion);
     }
+    public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
 }
