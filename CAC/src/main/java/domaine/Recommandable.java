@@ -1,6 +1,6 @@
 package domaine;
 
-public abstract  class Recommandable {
+public abstract class Recommandable {
 
     private Integer nbApprobation;
 
@@ -13,4 +13,13 @@ public abstract  class Recommandable {
     public void setNbApprobation(Integer nbApprobation) {
         this.nbApprobation = nbApprobation;
     }
+
+    public Integer getNbOccurence() {
+        return nbOccurence;
+    }
+
+    public void setNbOccurence(Integer nbOccurence) {
+        this.nbOccurence = nbOccurence;
+    }
+
 }
