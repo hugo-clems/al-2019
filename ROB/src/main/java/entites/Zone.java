@@ -1,13 +1,13 @@
 package entites;
 
-import plateau.Case;
 import plateau.IEntitePlateau;
+import plateau.Position;
 
 import java.util.List;
 
 public class Zone extends AbstractEntitePassive {
 
-    private List<Case> listeCases;
+    private List<Position> listePositions;
 
     /**
      * Constructeur par défaut.
@@ -15,16 +15,17 @@ public class Zone extends AbstractEntitePassive {
      * @param nom     nom de l'agent
      * @param plateau plateau auquel appartient l'agent
      */
-    public Zone(String nom, IEntitePlateau plateau, List<Case> listeCases) {
+    public Zone(String nom, IEntitePlateau plateau, List<Position> listePositions) {
         super(nom, plateau);
+        this.listePositions = listePositions;
     }
 
-    public List<Case> getListeCases() {
-        return listeCases;
+    public List<Position> getListePositions() {
+        return listePositions;
     }
 
-    public void setListeCases(List<Case> listeCases) {
-        this.listeCases = listeCases;
+    public void setListePositions(List<Position> listePositions) {
+        this.listePositions = listePositions;
     }
 
 }
