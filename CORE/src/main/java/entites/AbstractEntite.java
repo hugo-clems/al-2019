@@ -32,4 +32,13 @@ public abstract class AbstractEntite implements IAgentite {
         this.plateau = plateau;
         this.id = UUID.randomUUID();
     }
+
+    @Override
+    public String toString() {
+        return "AbstractEntite{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", plateau=" + plateau +
+                '}';
+    }
 }
