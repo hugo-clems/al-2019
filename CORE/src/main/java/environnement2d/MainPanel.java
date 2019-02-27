@@ -1,7 +1,6 @@
-package environnement2d.swinginterface;
+package environnement2d;
 
 
-import environnement2d.graphics.PlateauComponent;
 import plateau.Plateau;
 
 import javax.swing.*;
@@ -21,29 +20,24 @@ public class MainPanel extends JPanel {
 
 
     /**
-     * Smart Cursor.
-     */
-    private SmartCursor cursor;
-
-    /**
-     * PlateauPanel.
-     */
-    private PlateauPanel plateauPanel;
-
-    /**
      * Constructor.
      */
-    public MainPanel(PlateauToolsPanel plateauToolsPanel, Plateau plateau) {
-        plateauPanel = new PlateauPanel(plateauToolsPanel, plateau, cursor);
+    public MainPanel(PlateauComponent plateauComponent) {
         infraControlPanel = new InfraControlPanel();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(plateauPanel);
+        this.add(plateauComponent);
         this.add(Box.createRigidArea(new Dimension(0, SPACE)));
         this.add(infraControlPanel);
 
     }
 
+    public void setStart(JButton start) {
+        this.infraControlPanel.setStart(start);
+    }
 
+    public void setStop(JButton stop) {
+        this.infraControlPanel.setStart(stop);
+    }
 }
 
