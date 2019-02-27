@@ -211,7 +211,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
                 Case caseTemp = new Case(positionTemp);
                 cases.put(positionTemp, caseTemp);
                 if (x == 0 || x == colonne - 1 || y == 0 || y == ligne - 1) {
-                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y, this);
+                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y);
                     placerAgentite(positionTemp, obstacle);
                 }
             }

@@ -3,6 +3,7 @@ package agent;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
+import plateau.IAgentPlateau;
 
 import java.util.Map;
 
@@ -29,8 +30,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Constructeur par défaut.
      */
-    public AbstractAgentSitue() {
-        super();
+    public AbstractAgentSitue(IAgentPlateau plateau) {
+        super(plateau);
         this.nom = "";
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -40,8 +41,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Constructeur pour ajouter un nom à l'agent.
      * @param nom le nom de l'agent
      */
-    public AbstractAgentSitue(String nom) {
-        super();
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau) {
+        super(plateau);
         this.nom = nom;
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -52,8 +53,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * @param nom le nom de l'agent
      * @param directionInitiale la direction initiale de l'agent
      */
-    public AbstractAgentSitue(String nom, Direction directionInitiale) {
-        super();
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+        super(plateau);
         this.nom = nom;
         this.direction = directionInitiale;
         this.entitePortee = null;

@@ -1,15 +1,10 @@
 package environnement2d;
 
-import entites.AbstractEntite;
-import entites.Obstacle;
-import plateau.Plateau;
-import plateau.Position;
 import strategie.Strategie;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.*;
 
 /**
  * Main class.
@@ -53,7 +48,7 @@ public class Window {
         this.pause.addActionListener(this::pauseStrategie);
         this.pause.setText("Pause");
 
-        this.strategie = new Strategie();
+        this.strategie = new Strategie(plateau.getAgents());
     }
 
     /**

@@ -14,6 +14,9 @@ public class Strategie implements IStrategie {
      */
     private List<AbstractAgent> listeAgents = new ArrayList<>();
 
+    public Strategie(List<AbstractAgent> listeAgents) {
+        this.listeAgents = listeAgents;
+    }
 
     @Override
     public void lancer() {
