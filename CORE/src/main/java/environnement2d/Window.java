@@ -77,14 +77,16 @@ public class Window {
     }
 
     /**
-     * lancer la strategie
+     * Lancement de la strategie
+     * @param e ActionEvent
      */
     private void startStrategie(ActionEvent e) {
         this.strategie.lancer();
     }
 
     /**
-     * stopper la strategie
+     * Arreter la strategie
+     * @param e ActionEvent
      */
     private void stopStrategie(ActionEvent e) {
         this.strategie.arreter();

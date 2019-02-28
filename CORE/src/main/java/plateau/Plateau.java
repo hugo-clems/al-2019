@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IAgentPlateau {
 
-    //region Attributes
     /**
      * Nom du plateau.
      */
@@ -36,9 +35,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
      * Nombre de ligne du plateau (axe y)
      */
     private int ligne;
-    //endregion
 
-    //region Constructors
     /**
      * Constructeur par défaut.
      * @param nom Le nom du plateau
@@ -55,9 +52,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         // Initialisation du plateau
         this.init();
     }
-    //endregion
 
-    //region Getter
     /**
      * Get le nom du plateau.
      * @return Le nom du plateau
@@ -98,9 +93,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public int getColonne() {
         return colonne;
     }
-    //endregion
-
-    //region Setter
 
     /**
      * Get le nombre de ligne (axe Y)
@@ -109,9 +101,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public int getLigne() {
         return ligne;
     }
-    //endregion
-
-    //region main
 
     /**
      * place agent/entité sur une case
@@ -145,9 +134,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         mCase.getAgentites().remove(agentite);
         return agentite;
     }
-    //endregion
-
-    //region IAgentPlateau
 
     /**
      * Déplace un agent
@@ -244,9 +230,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
-    //endregion
 
-    //region Private methods
     /**
      * Initialisation du plateau
      * Creation de toutes les cases
@@ -307,7 +291,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         }
         return false;
     }
-    //endregion
 
     @Override
     public String toString() {
