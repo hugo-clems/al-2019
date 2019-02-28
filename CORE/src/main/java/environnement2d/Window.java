@@ -59,10 +59,14 @@ public class Window {
     public final void setContent(final JPanel panel) {
         this.frame.setContentPane(panel);
         this.frame.pack();
+        this.frame.setMinimumSize(new Dimension(400,400));
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setVisible(true);
     }
 
+    /**
+     * initialisation de window avec les boutons et le main panel
+     */
     public void start() {
         MainPanel panel = new MainPanel(this.plateau);
         panel.addButton(this.start);
@@ -72,17 +76,41 @@ public class Window {
         this.setContent(panel);
     }
 
+    /**
+     * lancer la strategie
+     */
     private void startStrategie(ActionEvent e) {
         this.strategie.lancer();
     }
 
+    /**
+     * stopper la strategie
+     */
     private void stopStrategie(ActionEvent e) {
         this.strategie.arreter();
     }
 
+    /**
+     * Mettre en pause/reprendre la strategie
+     *
+     * @param e ActionEvent
+     */
     private void pauseStrategie(ActionEvent e) {
-        this.strategie.pause();
-        this.pause.setText("Reprendre");
+        switch (pause.getText()){
+            case "Pause":{
+                this.strategie.pause();
+                this.pause.setText("Reprendre");
+                break;
+            }
+            case "Reprendre":{
+                this.strategie.lancer();
+                this.pause.setText("Pause");
+                break;
+            }
+            default:
+                break;
+        }
+
     }
 }
 

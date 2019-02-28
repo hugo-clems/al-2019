@@ -9,9 +9,14 @@ import java.util.ArrayList;
  * C'est pas beau à cause d'INFRA !
  */
 public abstract class AbstractMessage implements IMessage {
-
+    /**
+     * L'emetteur du message
+     */
     private InfraAgentReference emitter;
 
+    /**
+     * Liste des recepteurs du message
+     */
     private ArrayList<InfraAgentReference> receivers = new ArrayList<>();
 
     @Override

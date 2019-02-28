@@ -6,7 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Strategie implements IStrategie {
+    /**
+    * ordonnanceur
+    */
     private Runner runner;
+
+    /**
+     * thread
+     */
     private Thread t = null;
 
     /**
@@ -14,10 +21,16 @@ public class Strategie implements IStrategie {
      */
     private List<AbstractAgent> listeAgents = new ArrayList<>();
 
+    /**
+     * Constructor.
+     */
     public Strategie(List<AbstractAgent> listeAgents) {
         this.listeAgents = listeAgents;
     }
 
+    /**
+     * Lancement de l'ordonnanceur
+     */
     @Override
     public void lancer() {
         if (this.t == null) {
@@ -30,21 +43,35 @@ public class Strategie implements IStrategie {
 
     }
 
+    /**
+     * Arreter l'ordonnanceur
+     */
     @Override
     public void arreter() {
         this.runner.setRunning(false);
     }
 
+    /**
+     * Mettre en pause l'ordonnanceur
+     */
     @Override
     public void pause() {
         this.t.suspend();
     }
 
+    /**
+     * Ajouter un agent à la liste des agents
+     * @param agent l'agent à ajouter
+     */
     @Override
     public void ajouterAgent(AbstractAgent agent) {
         this.listeAgents.add(agent);
     }
 
+    /**
+     * Supprimer un agent de la liste des agents
+     * @param agent l'agent à supprimer
+     */
     @Override
     public void supprimerAgent(AbstractAgent agent) {
         this.listeAgents.remove(agent);

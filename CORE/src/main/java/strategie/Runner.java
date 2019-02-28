@@ -11,8 +11,17 @@ public class Runner implements Runnable {
      * true si l'ordonnanceur tourne, false sinon
      */
     private boolean isRunning = true;
+
+    /**
+     * Temps d'attente entre les tours
+     */
     private final int DUREE_TOUR = 666;
 
+    /**
+     * Constructor
+     *
+     * @param listeAgents AbstractAgent
+     */
     public Runner(List<AbstractAgent> listeAgents) {
         this.isRunning = isRunning;
         this.listeAgents = listeAgents;
@@ -42,6 +51,11 @@ public class Runner implements Runnable {
         }
     }
 
+    /**
+     * Set l'etat de l'ordonnanceur.
+     *
+     * @param running le nouvel état de l'ordonnanceur
+     */
     public void setRunning(boolean running) {
         this.isRunning = running;
     }

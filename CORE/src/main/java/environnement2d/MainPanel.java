@@ -32,6 +32,11 @@ public class MainPanel extends JPanel {
 
     }
 
+    /**
+     * Ajouter un bouton
+     *
+     * @param button JButton
+     */
     public void addButton(JButton button) {
         this.infraControlPanel.addButton(button);
     }
