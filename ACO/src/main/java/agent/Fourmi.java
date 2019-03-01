@@ -6,8 +6,10 @@ import common.Direction;
 import entites.Nourriture;
 import entites.Obstacle;
 import entites.Pheromone;
+import javafx.print.PageLayout;
 import plateau.Case;
 import plateau.IAgentite;
+import plateau.Plateau;
 import plateau.Position;
 
 import java.util.ArrayList;
@@ -17,11 +19,11 @@ import java.util.Random;
 
 public class Fourmi extends AbstractAgentSitue {
 
-    private boolean transporteNourriture;
     private final Position positionNid;
     private boolean estEnPhaseAller;
     private boolean nourritureTrouvee;
     private boolean estSurNid;
+    private Plateau plateau;
 
     public Position getPositionNid() {
         return positionNid;
@@ -29,11 +31,11 @@ public class Fourmi extends AbstractAgentSitue {
 
     public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
         super(nom, directionInitiale);
-        this.transporteNourriture = transporteNourriture;
         this.positionNid = positionNid;
         this.estEnPhaseAller = estEnPhaseAller;
         this.nourritureTrouvee = nourritureTrouvee;
         this.estSurNid = estSurNid;
+        this.plateau = plateau;
     }
 
 
@@ -123,8 +125,6 @@ public class Fourmi extends AbstractAgentSitue {
         // On analyse le voisinnage
         Map<Direction, Case> voisinnage = detecter();
 
-        List<Case> voisinnageNourritures = new ArrayList<>();
-        List<Direction> listeDirectionsNourriture = new ArrayList<>();
 
         for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()) {
             // Pour chaque item dans la Map, on récupère la Direction et la Case
@@ -134,34 +134,43 @@ public class Fourmi extends AbstractAgentSitue {
             // On récupère les agentités de la case
             List<IAgentite> agentites = myCase.getAgentites();
 
-            boolean caseContientNourriture = false;
+            boolean aRamasseNourriture = false;
 
             for (IAgentite agentite : agentites) {
                 // Si la case contient de la nourriture
                 if (agentite instanceof Nourriture) {
-                    caseContientNourriture = true;
+
+                    //se tourner versla nourriture
+                    seTournerVers(myDirection);
+
+                    //enlever 1pv à la nourriture
+                    int quantiteNourriture = ((Nourriture) agentite).getQuantite();
+                    quantiteNourriture--;
+                    ((Nourriture) agentite).setQuantite(quantiteNourriture);
+
+                    //Si il n'y a plus de nourriture on supprime l'entite
+                    if (quantiteNourriture == 0){
+                        plateau.enleverAgentite(myCase.getPosition(),agentite);
+                    }
+
+                    aRamasseNourriture = true;
+                    break;
                 }
             }
-            if (caseContientNourriture) {
-                voisinnageNourritures.add(myCase);
-                listeDirectionsNourriture.add(myDirection);
+
+            if (aRamasseNourriture == true){
+                break;
             }
         }
-
-//        Nourriture nourriture = ;
-//        Direction direction = ; // direction de la nourriture
-
-//        seTournerVers(direction);
-//        ramasser(nourriture);
-
     }
 
-    public void deposerNourriture(){
 
+    public void deposerNourriture(){
+        estEnPhaseAller = true;
     }
 
     public void revenirAuNid(){
-
+        estEnPhaseAller = false;
     }
 
     public void seDeplacerAleatoirement(List<Direction> listeDirectionsSansObstacle){
