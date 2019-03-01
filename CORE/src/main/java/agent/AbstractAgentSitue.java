@@ -1,8 +1,5 @@
 package agent;
 
-import MASInfrastructure.Communication.ICommunication;
-import MASInfrastructure.Etat.LifeCycle;
-import MASInfrastructure.Infrastructure;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
@@ -114,4 +111,15 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      */
     public abstract void actionTour();
 
+    public String getNom() {
+        return nom;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public AbstractEntite getEntitePortee() {
+        return entitePortee;
+    }
 }
