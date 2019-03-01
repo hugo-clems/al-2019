@@ -10,6 +10,7 @@ import javafx.print.PageLayout;
 import plateau.Case;
 import plateau.IAgentite;
 import plateau.Plateau;
+import plateau.Plateau;
 import plateau.Position;
 
 import java.util.ArrayList;
@@ -23,19 +24,18 @@ public class Fourmi extends AbstractAgentSitue {
     private boolean estEnPhaseAller;
     private boolean nourritureTrouvee;
     private boolean estSurNid;
-    private Plateau plateau;
+    private Plateau plateauAco;
 
     public Position getPositionNid() {
         return positionNid;
     }
 
-    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
-        super(nom, directionInitiale);
+    public Fourmi(Plateau plateauAco, String nom, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
+        super(nom, plateauAco);
         this.positionNid = positionNid;
         this.estEnPhaseAller = estEnPhaseAller;
         this.nourritureTrouvee = nourritureTrouvee;
         this.estSurNid = estSurNid;
-        this.plateau = plateau;
     }
 
 
@@ -150,7 +150,7 @@ public class Fourmi extends AbstractAgentSitue {
 
                     //Si il n'y a plus de nourriture on supprime l'entite
                     if (quantiteNourriture == 0){
-                        plateau.enleverAgentite(myCase.getPosition(),agentite);
+                        plateauAco.enleverAgentite(myCase.getPosition(),agentite);
                     }
 
                     aRamasseNourriture = true;

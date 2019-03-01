@@ -6,8 +6,8 @@ public class Nourriture extends  AbstractEntitePassive {
 
     private int quantite;
 
-    public Nourriture(int quantite , Plateau plateau, String nom){
-        super(nom,plateau);
+    public Nourriture(int quantite, String nom){
+        super(nom);
         this.quantite = quantite;
     }
 
