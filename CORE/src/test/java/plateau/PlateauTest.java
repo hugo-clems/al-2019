@@ -48,7 +48,7 @@ public class PlateauTest {
         assertEquals(1, mCase.getAgentites().size());
 
         // Test placer un obstacle sur une entité
-        assertFalse(plateau.placerAgentite(new Position(2, 3), new Obstacle("obstacleTEst", plateau)));
+        assertFalse(plateau.placerAgentite(new Position(2, 3), new Obstacle("obstacleTEst")));
 
         // Test placer un agent dans une case contenant déjà un agent
         assertTrue(plateau.placerAgentite(position, agent));
@@ -96,7 +96,7 @@ public class PlateauTest {
         AbstractEntite autreEntite = Mockito.mock(AbstractEntite.class, Mockito.CALLS_REAL_METHODS);
 
         // Test ramasser obstacle
-        assertFalse(plateau.ramasserEntite(agent, new Obstacle("obstacle", plateau)));
+        assertFalse(plateau.ramasserEntite(agent, new Obstacle("obstacle")));
 
         // Test ramasser ramasser entité si déja chargé
         when(((AbstractAgentSitue) agent).getEntitePortee()).thenReturn(entite);

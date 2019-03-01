@@ -27,9 +27,10 @@ public abstract class AbstractAgent extends InfraAgent implements IAgentite {
     /**
      * Constructeur par défaut.
      */
-    public AbstractAgent() {
+    public AbstractAgent(IAgentPlateau plateau) {
         super(null, new LifeCycle(null), new Infrastructure());
         this.reference = this.getInfraAgentReference();
+        this.plateau = plateau;
     }
 
     /**

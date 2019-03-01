@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IAgentPlateau {
 
-    //region Attributes
     /**
      * Nom du plateau.
      */
@@ -36,9 +35,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
      * Nombre de ligne du plateau (axe y)
      */
     private int ligne;
-    //endregion
 
-    //region Constructors
     /**
      * Constructeur par défaut.
      * @param nom Le nom du plateau
@@ -55,9 +52,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         // Initialisation du plateau
         this.init();
     }
-    //endregion
 
-    //region Getter
     /**
      * Get le nom du plateau.
      * @return Le nom du plateau
@@ -98,9 +93,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public int getColonne() {
         return colonne;
     }
-    //endregion
-
-    //region Setter
 
     /**
      * Get le nombre de ligne (axe Y)
@@ -109,9 +101,14 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public int getLigne() {
         return ligne;
     }
-    //endregion
 
-    //region main
+    /**
+     * place agent/entité sur une case
+     *
+     * @param position Position
+     * @param agentite IAgentite
+     * @return true si l'agent/entité est placé(e) sur la case sinon false
+     */
     public Boolean placerAgentite(Position position, IAgentite agentite) {
 
         Case mCase = cases.get(position);
@@ -122,7 +119,13 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return true;
     }
 
-
+    /**
+     * Enlève l'agent/entité de la case
+     *
+     * @param position Position
+     * @param agentite IAgentite
+     * @return null si la case ne contient pas l'agent/entité sinon l'agent/entité
+     */
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
         if (listeAgentites.isEmpty() || listeAgentites.get(agentite) == null) {
             return null;
@@ -131,9 +134,14 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         mCase.getAgentites().remove(agentite);
         return agentite;
     }
-    //endregion
 
-    //region IAgentPlateau
+    /**
+     * Déplace un agent
+     *
+     * @param agent l'agent à déplacer
+     * @param direction la direction vers laquelle déplacer l'agent
+     * @return false si la case est occupée par un obstacle true sinon
+     */
     @Override
     public Boolean deplacerAgent(AbstractAgent agent, Direction direction) {
         Case c = getCaseByDirectionForAgent(direction, getCase(agent));
@@ -150,6 +158,13 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return true;
     }
 
+    /**
+     * Ramasse une entité
+     *
+     * @param agent l'agent qui ramasse l'entité
+     * @param entite l'entité à ramasser
+     * @return true si l'agent ramasse l'entité false sinon
+     */
     @Override
     public Boolean ramasserEntite(AbstractAgent agent, AbstractEntite entite) {
         if (agent instanceof AbstractAgentSitue) {
@@ -170,6 +185,13 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return false;
     }
 
+    /**
+     * Déposer une entité
+     *
+     * @param agent l'agent qui dépose l'entité
+     * @param entite l'entité à déposer
+     * @return true si l'agent dépose une entité false sinon
+     */
     @Override
     public Boolean deposerEntite(AbstractAgent agent, AbstractEntite entite) {
         if (agent instanceof AbstractAgentSitue) {
@@ -183,6 +205,12 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return false;
     }
 
+    /**
+     * Récupère le voisinage d'un agent les 8 cases
+     *
+     * @param agent l'agent qui veut connaître son voisinage
+     * @return une map qui contient la direction et la case
+     */
     @Override
     public Map <Direction, Case> getVoisinage(AbstractAgent agent) {
         Map<Direction, Case> map = new HashMap<>();
@@ -192,13 +220,17 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return map;
     }
 
+    /**
+     * Récupère la case de l'agent
+     *
+     * @param agent l'agent qui veut connaître sa case
+     * @return Case sur laquelle se trouve l'agent
+     */
     @Override
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
-    //endregion
 
-    //region Private methods
     /**
      * Initialisation du plateau
      * Creation de toutes les cases
@@ -211,7 +243,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
                 Case caseTemp = new Case(positionTemp);
                 cases.put(positionTemp, caseTemp);
                 if (x == 0 || x == colonne - 1 || y == 0 || y == ligne - 1) {
-                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y, this);
+                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y);
                     placerAgentite(positionTemp, obstacle);
                 }
             }
@@ -259,7 +291,6 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         }
         return false;
     }
-    //endregion
 
     @Override
     public String toString() {
