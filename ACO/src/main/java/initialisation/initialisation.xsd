@@ -45,20 +45,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="fourmis">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="fourmi" maxOccurs="unbounded" minOccurs="0">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element type="xs:string" name="nom"/>
-                                                    <xs:element type="xs:string" name="direction_initiale"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
+                            <xs:element type="xs:byte" name="fourmis"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

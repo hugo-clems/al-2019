@@ -30,16 +30,7 @@
                 </position>
             </nourriture>
         </nourritures>
-        <fourmis>
-            <fourmi>
-                <nom>Fourmi 1</nom>
-                <direction_initiale>NO</direction_initiale>
-            </fourmi>
-            <fourmi>
-                <nom>Fourmi 2</nom>
-                <direction_initiale>S</direction_initiale>
-            </fourmi>
-        </fourmis>
+        <fourmis>2</fourmis>
     </liste_agentite>
 
 </plateau>

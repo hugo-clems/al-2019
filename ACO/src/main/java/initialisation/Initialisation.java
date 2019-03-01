@@ -6,6 +6,8 @@ import common.Direction;
 import entites.Nid;
 import entites.Nourriture;
 import org.w3c.dom.*;
+import plateau.Case;
+import plateau.IAgentite;
 import plateau.Plateau;
 import plateau.Position;
 
@@ -36,10 +38,7 @@ public class Initialisation {
         }
     }
 
-    public Initialisation(){
-
-        String xml_location="ACO/src/main/java/initialisation/";
-        String xml_filename="initialisation.xml";
+    public Initialisation(String xml_location,String xml_filename){
 
         Document document = null;
         DocumentBuilderFactory factory = null;
@@ -77,7 +76,7 @@ public class Initialisation {
                                 break;
                             case "heigth":
                                 height_plateau=Integer.parseInt(n2.getTextContent());
-                                this.plateauACO = new Plateau(name_plateau,width_plateau,height_plateau);
+                                this.plateauACO = new Plateau(name_plateau,height_plateau,width_plateau);
                                 break;
                             case "liste_agentite":
                                 NodeList type_entites = n2.getChildNodes();
@@ -134,7 +133,7 @@ public class Initialisation {
                     }
                 }
             }
-            nid = new Nid(this.plateauACO,name_nid);
+            nid = new Nid(name_nid);
             position_nid = new Position(position.get(0),position.get(1));
             posnid = new PositionNid(position_nid,nid);
             this.plateauACO.placerAgentite(position_nid,nid);
@@ -197,7 +196,7 @@ public class Initialisation {
                         }
                     }
                     Position position_nourriture = new Position(position.get(0),position.get(1));
-                    Nourriture food = new Nourriture(quantite_nourriture,this.plateauACO,name_nourriture);
+                    Nourriture food = new Nourriture(quantite_nourriture,name_nourriture);
                     this.plateauACO.placerAgentite(position_nourriture,food);
                 }
             }
@@ -207,7 +206,9 @@ public class Initialisation {
 
     private void initFourmis(Node type_entite, Nid nid, Position position_nid) {
         if(type_entite instanceof Element) {
-            NodeList fourmis = type_entite.getChildNodes();
+            int nb_fourmis = Integer.parseInt(type_entite.getTextContent());
+            System.out.println(nb_fourmis);
+            /*NodeList fourmis = type_entite.getChildNodes();
             int nbFourmis = fourmis.getLength();
             for(int i = 0; i < nbFourmis; i++) {
                 Node fourmi = fourmis.item(i);
@@ -215,7 +216,6 @@ public class Initialisation {
                     NodeList caracteristiques_fourmi = fourmi.getChildNodes();
                     int nbCaracteristique = caracteristiques_fourmi.getLength();
                     String name_fourmi="";
-                    String direction_intiale_fourmi="";
                     for(int k = 0; k < nbCaracteristique; k++) {
                         Node caracteristique_fourmi = fourmis.item(i);
                         if(caracteristique_fourmi instanceof Element){
@@ -223,49 +223,36 @@ public class Initialisation {
                                 case "nom":
                                     name_fourmi=caracteristique_fourmi.getTextContent();
                                     break;
-                                case "direction_initiale":
-                                    direction_intiale_fourmi = caracteristique_fourmi.getTextContent();
                             }
                         }
                     }
-                    Direction d=null;
-                    switch (direction_intiale_fourmi){
-                        case "N":
-                            d=Direction.N;
-                            break;
-                        case "E":
-                            d=Direction.E;
-                            break;
-                        case "S":
-                            d=Direction.S;
-                            break;
-                        case "O":
-                            d=Direction.O;
-                            break;
-                        case "NO":
-                            d=Direction.NO;
-                            break;
-                        case "NE":
-                            d=Direction.NE;
-                            break;
-                        case "SO":
-                            d=Direction.SO;
-                            break;
-                        case "SE":
-                            d=Direction.SE;
-                            break;
-                    }
-                    Fourmi new_fourmi = new Fourmi(name_fourmi,d,false,false,position_nid);
+                    Fourmi new_fourmi = new Fourmi(this.plateauACO,name_fourmi,
+                            false,position_nid,true,false,true);
                     this.plateauACO.placerAgentite(position_nid,new_fourmi);
                 }
             }
-
+            */
         }
     }
 
 
+    public Plateau getPlateauACO() {
+        return plateauACO;
+    }
+
+    public boolean nidPresentDansCase (Case caseNid) {
+        for( IAgentite agentite : caseNid.getAgentites()) {
+            if(agentite instanceof Nid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String [] args){
-        Initialisation init = new Initialisation();
+        String xml_location="ACO/src/main/java/initialisation/";
+        String xml_filename="initialisation.xml";
+        Initialisation init = new Initialisation(xml_location,xml_filename);
     }
 
 }
