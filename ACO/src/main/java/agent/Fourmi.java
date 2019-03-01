@@ -8,6 +8,7 @@ import entites.Obstacle;
 import entites.Pheromone;
 import plateau.Case;
 import plateau.IAgentite;
+import plateau.Plateau;
 import plateau.Position;
 
 import java.util.ArrayList;
@@ -22,13 +23,14 @@ public class Fourmi extends AbstractAgentSitue {
     private boolean estEnPhaseAller;
     private boolean nourritureTrouvee;
     private boolean estSurNid;
+    private Plateau plateauAco;
 
     public Position getPositionNid() {
         return positionNid;
     }
 
-    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
-        super(nom, directionInitiale);
+    public Fourmi(Plateau plateauAco, String nom, boolean transporteNourriture, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
+        super(nom, plateauAco);
         this.transporteNourriture = transporteNourriture;
         this.positionNid = positionNid;
         this.estEnPhaseAller = estEnPhaseAller;
@@ -190,5 +192,21 @@ public class Fourmi extends AbstractAgentSitue {
             }
         }
 
+    }
+
+    public Plateau getPlateauAco() {
+        return plateauAco;
+    }
+
+    public void setPlateauAco(Plateau plateauAco) {
+        this.plateauAco = plateauAco;
+    }
+
+    public boolean isTransporteNourriture() {
+        return transporteNourriture;
+    }
+
+    public void setTransporteNourriture(boolean transporteNourriture) {
+        this.transporteNourriture = transporteNourriture;
     }
 }
