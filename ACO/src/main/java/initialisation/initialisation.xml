@@ -12,9 +12,9 @@
                 <y>20</y>
             </position>
         </nid>
+        <fourmis>2</fourmis>
         <nourritures>
             <nourriture>
-                <nom>Source Nourriture 1</nom>
                 <quantite>50</quantite>
                 <position>
                     <x>10</x>
@@ -22,7 +22,6 @@
                 </position>
             </nourriture>
             <nourriture>
-                <nom>Source Nourriture 2</nom>
                 <quantite>60</quantite>
                 <position>
                     <x>15</x>
@@ -30,7 +29,20 @@
                 </position>
             </nourriture>
         </nourritures>
-        <fourmis>2</fourmis>
+        <obstacles>
+            <obstacle>
+                <position>
+                    <x>5</x>
+                    <y>5</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>5</x>
+                    <y>6</y>
+                </position>
+            </obstacle>
+        </obstacles>
     </liste_agentite>
 
 </plateau>

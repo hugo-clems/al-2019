@@ -5,6 +5,7 @@ import agent.Fourmi;
 import common.Direction;
 import entites.Nid;
 import entites.Nourriture;
+import entites.Obstacle;
 import org.w3c.dom.*;
 import plateau.Case;
 import plateau.IAgentite;
@@ -96,6 +97,9 @@ public class Initialisation {
                                                     Position posNid = nid_position.getPosition_nid();
                                                     initFourmis(type_entite,nid,posNid);
                                                 break;
+                                            case "obstacles":
+                                                initObstacles(type_entite);
+                                                break;
                                         }
                                     }
                                 }
@@ -172,21 +176,20 @@ public class Initialisation {
         if(type_entite instanceof Element) {
             NodeList nourritures = type_entite.getChildNodes();
             int nbNourriture = nourritures.getLength();
-            for(int i = 0; i < nbNourriture; i++) {
+            int nb=0;
+            for(int i = 0; i < nbNourriture; i++){
                 Node nourriture = nourritures.item(i);
                 if(nourriture instanceof Element){
                     NodeList caracteristiques_nourriture = nourriture.getChildNodes();
                     int nbCaracteristique = caracteristiques_nourriture.getLength();
-                    String name_nourriture="";
+                    String name_nourriture="Nourriture_"+nb;
+                    nb+=1;
                     int quantite_nourriture=-1;
                     ArrayList<Integer> position= new ArrayList<Integer>();
                     for(int k = 0; k < nbCaracteristique; k++) {
                         Node caracteristique_nourriture = caracteristiques_nourriture.item(k);
                         if(caracteristique_nourriture instanceof Element){
                             switch (caracteristique_nourriture.getNodeName()){
-                                case "nom":
-                                    name_nourriture=caracteristique_nourriture.getTextContent();
-                                    break;
                                 case "quantite":
                                     quantite_nourriture=Integer.parseInt(caracteristique_nourriture.getTextContent());
                                 case "position":
@@ -207,31 +210,43 @@ public class Initialisation {
     private void initFourmis(Node type_entite, Nid nid, Position position_nid) {
         if(type_entite instanceof Element) {
             int nb_fourmis = Integer.parseInt(type_entite.getTextContent());
-            System.out.println(nb_fourmis);
-            /*NodeList fourmis = type_entite.getChildNodes();
-            int nbFourmis = fourmis.getLength();
-            for(int i = 0; i < nbFourmis; i++) {
-                Node fourmi = fourmis.item(i);
-                if(fourmi instanceof Element){
-                    NodeList caracteristiques_fourmi = fourmi.getChildNodes();
-                    int nbCaracteristique = caracteristiques_fourmi.getLength();
-                    String name_fourmi="";
+            for(int k=0;k<nb_fourmis;k++) {
+                String name_fourmi = "Fourmi_"+k;
+                Fourmi new_fourmi = new Fourmi(this.plateauACO,name_fourmi,position_nid,true,false,true);
+                this.plateauACO.placerAgentite(position_nid,new_fourmi);
+            }
+        }
+    }
+
+    private void initObstacles(Node type_entite) {
+        if(type_entite instanceof Element) {
+            NodeList obstacles = type_entite.getChildNodes();
+            int nbObstacles = obstacles.getLength();
+            int nb=0;
+            for(int i = 0; i < nbObstacles; i++){
+                Node obstacle = obstacles.item(i);
+                if(obstacle instanceof Element){
+                    NodeList caracteristiques_obstacle = obstacle.getChildNodes();
+                    int nbCaracteristique = caracteristiques_obstacle.getLength();
+                    String name_obstacle="Obstacle_"+nb;
+                    nb+=1;
+                    ArrayList<Integer> position= new ArrayList<Integer>();
                     for(int k = 0; k < nbCaracteristique; k++) {
-                        Node caracteristique_fourmi = fourmis.item(i);
-                        if(caracteristique_fourmi instanceof Element){
-                            switch (caracteristique_fourmi.getNodeName()){
-                                case "nom":
-                                    name_fourmi=caracteristique_fourmi.getTextContent();
+                        Node caracteristique_obstacle = caracteristiques_obstacle.item(k);
+                        if(caracteristique_obstacle instanceof Element){
+                            switch (caracteristique_obstacle.getNodeName()){
+                                case "position":
+                                    position=getPosition(caracteristique_obstacle);
                                     break;
                             }
                         }
                     }
-                    Fourmi new_fourmi = new Fourmi(this.plateauACO,name_fourmi,
-                            false,position_nid,true,false,true);
-                    this.plateauACO.placerAgentite(position_nid,new_fourmi);
+                    Position position_obstacle = new Position(position.get(0),position.get(1));
+                    Obstacle obs = new Obstacle(name_obstacle);
+                    this.plateauACO.placerAgentite(position_obstacle,obs);
                 }
             }
-            */
+
         }
     }
 
