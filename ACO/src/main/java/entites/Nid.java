@@ -6,9 +6,9 @@ public class Nid extends AbstractEntitePassive {
 
     private int nbFourmis;
 
-    public Nid(String nom){
+    public Nid(String nom, int nbFourmis){
         super(nom);
-        this.nbFourmis=5;
+        this.nbFourmis=nbFourmis;
     }
 
     public int getNbFourmis() {

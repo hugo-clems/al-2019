@@ -39,6 +39,12 @@ public class Initialisation {
         }
     }
 
+    /**
+     * Lis le fichier xml et initialise les différents éléments en conséquences
+     * Nid - Fourmi - Nourriture - Obstacle
+     * @param xml_location
+     * @param xml_filename
+     */
     public Initialisation(String xml_location,String xml_filename){
 
         Document document = null;
@@ -95,7 +101,8 @@ public class Initialisation {
                                             case "fourmis":
                                                     Nid nid = nid_position.getNid();
                                                     Position posNid = nid_position.getPosition_nid();
-                                                    initFourmis(type_entite,nid,posNid);
+                                                    int nb_fourmis = initFourmis(type_entite,nid,posNid);
+                                                    nid.setNbFourmis(nb_fourmis);
                                                 break;
                                             case "obstacles":
                                                 initObstacles(type_entite);
@@ -137,7 +144,7 @@ public class Initialisation {
                     }
                 }
             }
-            nid = new Nid(name_nid);
+            nid = new Nid(name_nid,0);
             position_nid = new Position(position.get(0),position.get(1));
             posnid = new PositionNid(position_nid,nid);
             this.plateauACO.placerAgentite(position_nid,nid);
@@ -207,15 +214,17 @@ public class Initialisation {
         }
     }
 
-    private void initFourmis(Node type_entite, Nid nid, Position position_nid) {
+    private int initFourmis(Node type_entite, Nid nid, Position position_nid) {
+        int nb_fourmis = 0;
         if(type_entite instanceof Element) {
-            int nb_fourmis = Integer.parseInt(type_entite.getTextContent());
+            nb_fourmis = Integer.parseInt(type_entite.getTextContent());
             for(int k=0;k<nb_fourmis;k++) {
                 String name_fourmi = "Fourmi_"+k;
                 Fourmi new_fourmi = new Fourmi(this.plateauACO,name_fourmi,position_nid,true,false,true);
                 this.plateauACO.placerAgentite(position_nid,new_fourmi);
             }
         }
+        return nb_fourmis;
     }
 
     private void initObstacles(Node type_entite) {
@@ -258,6 +267,15 @@ public class Initialisation {
     public boolean nidPresentDansCase (Case caseNid) {
         for( IAgentite agentite : caseNid.getAgentites()) {
             if(agentite instanceof Nid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean obstaclePresentDansCase (Case caseObstacle) {
+        for( IAgentite agentite : caseObstacle.getAgentites()) {
+            if(agentite instanceof Obstacle) {
                 return true;
             }
         }
