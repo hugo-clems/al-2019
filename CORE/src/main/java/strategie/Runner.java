@@ -2,7 +2,6 @@ package strategie;
 
 import agent.AbstractAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Runner implements Runnable {
@@ -17,14 +16,17 @@ public class Runner implements Runnable {
      */
     private final int DUREE_TOUR = 666;
 
+    private TourListener tourListener;
+
     /**
      * Constructor
      *
      * @param listeAgents AbstractAgent
      */
-    public Runner(List<AbstractAgent> listeAgents) {
+    public Runner(List<AbstractAgent> listeAgents, TourListener tourListener) {
         this.isRunning = isRunning;
         this.listeAgents = listeAgents;
+        this.tourListener = tourListener;
     }
 
     /**
@@ -41,6 +43,7 @@ public class Runner implements Runnable {
             for (AbstractAgent agent : listeAgents) {
                 agent.actionTour();     // Effectue l'action du tour
                 // TODO envoie info fin de tour au 2D
+                this.tourListener.refresh();
             }
             try {
                 Thread.sleep(this.DUREE_TOUR);
@@ -62,5 +65,9 @@ public class Runner implements Runnable {
 
     public void suspend() {
 
+    }
+
+    public interface TourListener {
+        void refresh();
     }
 }
