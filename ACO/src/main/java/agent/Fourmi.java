@@ -36,6 +36,7 @@ public class Fourmi extends AbstractAgentSitue {
         this.estEnPhaseAller = estEnPhaseAller;
         this.nourritureTrouvee = nourritureTrouvee;
         this.estSurNid = estSurNid;
+        this.plateauAco = plateauAco;
     }
 
 
@@ -64,42 +65,27 @@ public class Fourmi extends AbstractAgentSitue {
             // On récupère les agentités de la case
             List<IAgentite> agentites = myCase.getAgentites();
 
-            boolean caseContientObstacle = false;
-            boolean caseContientPheromone = false;
-            boolean caseContientNourriture = false;
 
             for (IAgentite agentite:agentites) {
                 // Si la case contient au moins un obstacle
                 if(agentite instanceof Obstacle){
-                    caseContientObstacle = true;
+                    voisinnageObstacles.add(myCase);
                 }
                 // Si la case contient de la phéromone
                 if(agentite instanceof Pheromone){
-                    caseContientPheromone = true;
+
+                    //si la direction eloigne du nid alors on l'ajoute, sinon ca veut dire que la pheromone est derniere la fourmi et on ne doit pas la suivre
+
+
+                    voisinnagePheromones.add(myCase);
+                    listeDirectionsPheromone.add(myDirection);
                 }
                 // Si la case contient de la nourriture
                 if(agentite instanceof Nourriture){
-                    caseContientNourriture = true;
+                    voisinnageNourritures.add(myCase);
+                    listeDirectionsNourriture.add(myDirection);
                 }
             }
-
-            if (caseContientObstacle){
-                voisinnageObstacles.add(myCase);
-            }
-            else {
-                listeDirectionsSansObstacle.add(myDirection);
-            }
-
-            if (caseContientPheromone) {
-                voisinnagePheromones.add(myCase);
-                listeDirectionsPheromone.add(myDirection);
-            }
-
-            if (caseContientNourriture) {
-                voisinnageNourritures.add(myCase);
-                listeDirectionsNourriture.add(myDirection);
-            }
-
 
             //si nourriture a proximité
             if(!voisinnageNourritures.isEmpty()){
@@ -179,6 +165,23 @@ public class Fourmi extends AbstractAgentSitue {
         // Et on se déplace dans cette direction
         seDeplacerVers(direction);
 //        chercher  Nourriture();
+
+    }
+
+    public void evaporationPheromone(){
+
+        Map<IAgentite, Case> agentities = plateauAco.getListeAgentites();
+
+        for(Map.Entry<IAgentite, Case> entry : agentities.entrySet()) {
+            // Pour chaque item dans la Map, on récupère l'entite
+            IAgentite agentite = entry.getKey();
+
+            if (agentite instanceof Pheromone) {
+                int tauxPheromone = ((Pheromone) agentite).getTauxPheromone();
+                tauxPheromone--;
+                ((Pheromone) agentite).setTauxPheromone(tauxPheromone);
+            }
+        }
 
     }
 
