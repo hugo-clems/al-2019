@@ -16,12 +16,17 @@ public class Main {
         Application application = new Application("test", 20, 20);
 
         //region Initialisation du plateau
-        application.placerAgentite(new Position(3, 3), new Obstacle("test"));
+        application.placerAgentite(new Position(17, 6), new Obstacle("testObstacle"));
         application.placerAgentite(new Position(10, 1), new AgentDemo(application.getIAgentPlateau()));
 
         AgentDemo agent2 = new AgentDemo(application.getIAgentPlateau());
         agent2.setDirection(Direction.E);
         application.placerAgentite(new Position(6, 6), agent2);
+
+        AgentDemo agent3 = new AgentDemo(application.getIAgentPlateau());
+        agent3.setDirection(Direction.SE);
+        application.placerAgentite(new Position(1, 1), agent3);
+
         application.placerAgentite(new Position(10, 10), new EntitePasiveDemo("pasiveTest"));
         //endregion
 

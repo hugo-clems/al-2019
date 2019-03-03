@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class Plateau implements IEntitePlateau, IAgentPlateau {
 
+    //region Attributes
     /**
      * Nom du plateau.
      */
@@ -35,7 +36,9 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
      * Nombre de ligne du plateau (axe y)
      */
     private int ligne;
+    //endregion
 
+    //region Contructors
     /**
      * Constructeur par défaut.
      * @param nom Le nom du plateau
@@ -52,7 +55,9 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         // Initialisation du plateau
         this.init();
     }
+    //endregion
 
+    //region Getters/Setters
     /**
      * Get le nom du plateau.
      * @return Le nom du plateau
@@ -101,6 +106,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public int getLigne() {
         return ligne;
     }
+    //endregion
 
     /**
      * place agent/entité sur une case
@@ -260,21 +266,21 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         Position agentPosition = caseAgent.getPosition();
         switch (direction) {
             case N:
-                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() - 1));
             case NE:
-                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() - 1));
             case E:
                 return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY()));
             case SE:
-                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() + 1));
             case S:
-                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() + 1));
             case SO:
-                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
             case O:
                 return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY()));
             case NO:
-                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() - 1));
         }
         return null;
     }

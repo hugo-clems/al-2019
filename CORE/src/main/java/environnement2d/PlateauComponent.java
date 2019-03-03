@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 
 public class PlateauComponent extends JComponent {
 
+    //region Attributes
     /**
      * Taille de la case
      */
@@ -28,8 +29,10 @@ public class PlateauComponent extends JComponent {
 
     private CasePaint casePaint = (caseToPaint, g, x, y, sizeMax) -> {
     };
+    //endregion
 
 
+    //region Contructors
     /**
      * Constructor
      *
@@ -49,7 +52,9 @@ public class PlateauComponent extends JComponent {
         this.plateau = plateau;
         this.casePaint = casePaint;
     }
+    //endregion
 
+    //region Getters
     /**
      * Get liste des agents
      * @return liste des agents
@@ -64,7 +69,9 @@ public class PlateauComponent extends JComponent {
         }
         return agents;
     }
+    //endregion
 
+    //region Setters
     /**
      * Set casePaint
      *
@@ -84,6 +91,7 @@ public class PlateauComponent extends JComponent {
             this.caseSize = size;
         }
     }
+    //endregion
 
     /**
      * Permet de dessiner le plateau
