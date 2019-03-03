@@ -7,11 +7,8 @@ import entites.Nourriture;
 import entites.Obstacle;
 import entites.Pheromone;
 import javafx.print.PageLayout;
-import plateau.Case;
-import plateau.IAgentite;
+import plateau.*;
 import plateau.Plateau;
-import plateau.Plateau;
-import plateau.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +21,13 @@ public class Fourmi extends AbstractAgentSitue {
     private boolean estEnPhaseAller;
     private boolean nourritureTrouvee;
     private boolean estSurNid;
-    private Plateau plateauAco;
+    private IAgentPlateau plateauAco;
 
     public Position getPositionNid() {
         return positionNid;
     }
 
-    public Fourmi(Plateau plateauAco, String nom, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
+    public Fourmi(IAgentPlateau plateauAco, String nom, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
         super(nom, plateauAco);
         this.positionNid = positionNid;
         this.estEnPhaseAller = estEnPhaseAller;
