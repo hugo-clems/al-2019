@@ -3,23 +3,24 @@ package initialisation;
 
 import agent.Fourmi;
 import common.Direction;
+import demo.AgentDemo;
+import demo.EntitePasiveDemo;
 import entites.Nid;
 import entites.Nourriture;
 import entites.Obstacle;
 import org.w3c.dom.*;
-import plateau.Case;
-import plateau.IAgentite;
-import plateau.Plateau;
-import plateau.Position;
+import plateau.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Initialisation {
 
-    private Plateau plateauACO;
+    private Application application;
 
     class PositionNid{
         Position position_nid;
@@ -83,7 +84,7 @@ public class Initialisation {
                                 break;
                             case "heigth":
                                 height_plateau=Integer.parseInt(n2.getTextContent());
-                                this.plateauACO = new Plateau(name_plateau,height_plateau,width_plateau);
+                                this.application = new Application(name_plateau,height_plateau,width_plateau);
                                 break;
                             case "liste_agentite":
                                 NodeList type_entites = n2.getChildNodes();
@@ -147,7 +148,7 @@ public class Initialisation {
             nid = new Nid(name_nid,0);
             position_nid = new Position(position.get(0),position.get(1));
             posnid = new PositionNid(position_nid,nid);
-            this.plateauACO.placerAgentite(position_nid,nid);
+            this.application.placerAgentite(position_nid,nid);
 
         }
         return posnid;
@@ -207,7 +208,7 @@ public class Initialisation {
                     }
                     Position position_nourriture = new Position(position.get(0),position.get(1));
                     Nourriture food = new Nourriture(quantite_nourriture,name_nourriture);
-                    this.plateauACO.placerAgentite(position_nourriture,food);
+                    this.application.placerAgentite(position_nourriture,food);
                 }
             }
 
@@ -220,8 +221,8 @@ public class Initialisation {
             nb_fourmis = Integer.parseInt(type_entite.getTextContent());
             for(int k=0;k<nb_fourmis;k++) {
                 String name_fourmi = "Fourmi_"+k;
-                Fourmi new_fourmi = new Fourmi(this.plateauACO,name_fourmi,position_nid,true,false,true);
-                this.plateauACO.placerAgentite(position_nid,new_fourmi);
+                Fourmi new_fourmi = new Fourmi(this.application.getIAgentPlateau(),name_fourmi,position_nid,true,false,true);
+                this.application.placerAgentite(position_nid,new_fourmi);
             }
         }
         return nb_fourmis;
@@ -252,17 +253,13 @@ public class Initialisation {
                     }
                     Position position_obstacle = new Position(position.get(0),position.get(1));
                     Obstacle obs = new Obstacle(name_obstacle);
-                    this.plateauACO.placerAgentite(position_obstacle,obs);
+                    this.application.placerAgentite(position_obstacle,obs);
                 }
             }
 
         }
     }
 
-
-    public Plateau getPlateauACO() {
-        return plateauACO;
-    }
 
     public boolean nidPresentDansCase (Case caseNid) {
         for( IAgentite agentite : caseNid.getAgentites()) {
@@ -286,6 +283,19 @@ public class Initialisation {
         String xml_location="ACO/src/main/java/initialisation/";
         String xml_filename="initialisation.xml";
         Initialisation init = new Initialisation(xml_location,xml_filename);
+
+        Application application = init.application;
+/*
+        application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
+            Stream<IAgentite> iAgentiteStream = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nid);
+            if (iAgentiteStream.count() > 0) {
+                graphics.setColor(Color.GREEN);
+                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
+            }
+        });
+
+        */
+        application.run();
     }
 
 }
