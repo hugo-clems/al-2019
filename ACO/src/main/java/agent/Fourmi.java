@@ -61,6 +61,9 @@ public class Fourmi extends AbstractAgentSitue {
 
             // On récupère les agentités de la case
             List<IAgentite> agentites = myCase.getAgentites();
+            if(agentites.size()==0){
+                caseSansObstacle=true;
+            }
 
 
             for (IAgentite agentite : agentites) {
