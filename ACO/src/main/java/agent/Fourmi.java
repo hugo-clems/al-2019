@@ -3,6 +3,7 @@ package agent;
 import MASInfrastructure.Communication.ICommunication;
 import MASInfrastructure.Etat.LifeCycle;
 import common.Direction;
+import entites.AbstractEntite;
 import entites.Nourriture;
 import entites.Obstacle;
 import entites.Pheromone;
@@ -15,25 +16,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static common.Direction.*;
+
 public class Fourmi extends AbstractAgentSitue {
 
     private final Position positionNid;
-    private boolean estEnPhaseAller;
-    private boolean nourritureTrouvee;
-    private boolean estSurNid;
-    private IAgentPlateau plateauAco;
+    private boolean estEnPhaseAller = true;
+    private boolean nourritureTrouvee = false;
+    private boolean estSurNid = true;
+    private Boolean suitPheromoneAller = false;
+    private IAgentPlateau iAgentPlateau;
 
-    public Position getPositionNid() {
-        return positionNid;
-    }
 
-    public Fourmi(IAgentPlateau plateauAco, String nom, Position positionNid, boolean estEnPhaseAller, boolean nourritureTrouvee, boolean estSurNid) {
-        super(nom, plateauAco);
+    public Fourmi(String nom, IAgentPlateau iAgentPlateau, Position positionNid) {
+        super(nom, iAgentPlateau);
+        this.iAgentPlateau = iAgentPlateau;
         this.positionNid = positionNid;
-        this.estEnPhaseAller = estEnPhaseAller;
-        this.nourritureTrouvee = nourritureTrouvee;
-        this.estSurNid = estSurNid;
-        this.plateauAco = plateauAco;
     }
 
 
@@ -71,11 +69,19 @@ public class Fourmi extends AbstractAgentSitue {
                 // Si la case contient de la phéromone
                 if(agentite instanceof Pheromone){
 
-                    //si la direction eloigne du nid alors on l'ajoute, sinon ca veut dire que la pheromone est derniere la fourmi et on ne doit pas la suivre
+                    //Si la fourmi rencontre sa 1ere pheromone
+                    if (!suitPheromoneAller){
+                        voisinnagePheromones.add(myCase);
+                        listeDirectionsPheromone.add(myDirection);
+                    }else{
+                        //Si la fourmi suivait déjà de la pheromone alors elle pointe vers la direction de son dernier déplacement et ne doit pas revenir en arriere
+                        if (directionOpposee(this.getDirection()) != myDirection){
+                            voisinnagePheromones.add(myCase);
+                            listeDirectionsPheromone.add(myDirection);
+                        }
+                    }
 
 
-                    voisinnagePheromones.add(myCase);
-                    listeDirectionsPheromone.add(myDirection);
                 }
                 // Si la case contient de la nourriture
                 if(agentite instanceof Nourriture){
@@ -96,11 +102,10 @@ public class Fourmi extends AbstractAgentSitue {
         }
     }
 
-    /*
-        TODO FAIRE EN SORTE QUE QUAND ON SUIT LA PHEROMONE ON AILLE DANS LE SENS INVERSE DU NID
-     */
+
     public void suivrePheromone(List<Direction> listeDirectionsPheromone){
         Direction direction = listeDirectionsPheromone.get(new Random().nextInt(listeDirectionsPheromone.size()));
+        seTournerVers(direction);
         seDeplacerVers(direction);
     }
 
@@ -131,9 +136,9 @@ public class Fourmi extends AbstractAgentSitue {
                     quantiteNourriture--;
                     ((Nourriture) agentite).setQuantite(quantiteNourriture);
 
-                    //Si il n'y a plus de nourriture on supprime l'entite
+                    //Si il n'y a plus de nourriture on ramasse l'entite
                     if (quantiteNourriture == 0){
-                        plateauAco.enleverAgentite(myCase.getPosition(),agentite);
+                        this.ramasser((AbstractEntite) agentite);
                     }
 
                     aRamasseNourriture = true;
@@ -150,21 +155,35 @@ public class Fourmi extends AbstractAgentSitue {
 
     public void deposerNourriture(){
         estEnPhaseAller = true;
+        nourritureTrouvee = false;
     }
 
     public void revenirAuNid(){
         estEnPhaseAller = false;
+
+
+        //Si la fourmi se contentait de suivre de la pheromone à l'aller, maintenant qu'elle retourne au nid elle ne suit plus la pheromone à la trace
+        if (suitPheromoneAller){
+            suitPheromoneAller = false;
+        }
+
+        //Si la fourmis est sur le nid alors
+        if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
+            estSurNid = true;
+        }
+
     }
 
     public void seDeplacerAleatoirement(List<Direction> listeDirectionsSansObstacle){
         // On choisit une direction au hasard
         Direction direction = listeDirectionsSansObstacle.get(new Random().nextInt(listeDirectionsSansObstacle.size()));
         // Et on se déplace dans cette direction
+        seTournerVers(direction);
         seDeplacerVers(direction);
-//        chercher  Nourriture();
-
     }
 
+
+    /*
     public void evaporationPheromone(){
 
         Map<IAgentite, Case> agentities = plateauAco.getListeAgentites();
@@ -180,7 +199,43 @@ public class Fourmi extends AbstractAgentSitue {
             }
         }
 
+    }*/
+
+
+    public Direction directionOpposee(Direction d){
+
+        Direction directionOpposee = null;
+
+        switch (d) {
+            case NO:
+                directionOpposee = SE;
+                break;
+            case N:
+                directionOpposee = S;
+                break;
+            case NE:
+                directionOpposee = SO;
+                break;
+            case E:
+                directionOpposee = O;
+                break;
+            case SE:
+                directionOpposee = NO;
+                break;
+            case S:
+                directionOpposee = N;
+                break;
+            case SO:
+                directionOpposee = NE;
+                break;
+            case O:
+                directionOpposee = E;
+                break;
+        }
+
+        return directionOpposee;
     }
+
 
     @Override
     public void actionTour() {
