@@ -6,8 +6,8 @@ public class Pheromone extends AbstractEntiteActive {
 
     private int tauxPheromone;
 
-    public Pheromone(int tauxPheromone, Plateau plateau, String nom){
-        super(nom,plateau);
+    public Pheromone(int tauxPheromone,String nom){
+        super(nom);
         this.tauxPheromone = tauxPheromone;
     }
 

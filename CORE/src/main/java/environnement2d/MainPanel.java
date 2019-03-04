@@ -1,8 +1,6 @@
-package environnement2d.swinginterface;
+package environnement2d;
 
-
-import environnement2d.graphics.PlateauComponent;
-import plateau.Plateau;
+import strategie.Runner;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,31 +17,33 @@ public class MainPanel extends JPanel {
 
     private InfraControlPanel infraControlPanel;
 
+    private Runner.TourListener tourListener = () -> MainPanel.super.updateUI();
 
-    /**
-     * Smart Cursor.
-     */
-    private SmartCursor cursor;
-
-    /**
-     * PlateauPanel.
-     */
-    private PlateauPanel plateauPanel;
+    public Runner.TourListener getTourListener() {
+        return tourListener;
+    }
 
     /**
      * Constructor.
      */
-    public MainPanel(PlateauToolsPanel plateauToolsPanel, Plateau plateau) {
-        plateauPanel = new PlateauPanel(plateauToolsPanel, plateau, cursor);
+    public MainPanel(PlateauComponent plateauComponent) {
         infraControlPanel = new InfraControlPanel();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(plateauPanel);
+        this.add(plateauComponent);
         this.add(Box.createRigidArea(new Dimension(0, SPACE)));
         this.add(infraControlPanel);
 
     }
 
+    /**
+     * Ajouter un bouton
+     *
+     * @param button JButton
+     */
+    public void addButton(JButton button) {
+        this.infraControlPanel.addButton(button);
+    }
 
 }
 

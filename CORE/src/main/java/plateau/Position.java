@@ -75,4 +75,12 @@ public class Position {
     public int hashCode() {
         return x * 10 + y;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

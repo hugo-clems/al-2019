@@ -1,11 +1,9 @@
 package agent;
 
-import MASInfrastructure.Communication.ICommunication;
-import MASInfrastructure.Etat.LifeCycle;
-import MASInfrastructure.Infrastructure;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
+import plateau.IAgentPlateau;
 
 import java.util.Map;
 
@@ -32,8 +30,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Constructeur par défaut.
      */
-    public AbstractAgentSitue() {
-        super();
+    public AbstractAgentSitue(IAgentPlateau plateau) {
+        super(plateau);
         this.nom = "";
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -43,8 +41,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Constructeur pour ajouter un nom à l'agent.
      * @param nom le nom de l'agent
      */
-    public AbstractAgentSitue(String nom) {
-        super();
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau) {
+        super(plateau);
         this.nom = nom;
         this.direction = Direction.N;
         this.entitePortee = null;
@@ -55,20 +53,46 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * @param nom le nom de l'agent
      * @param directionInitiale la direction initiale de l'agent
      */
-    public AbstractAgentSitue(String nom, Direction directionInitiale) {
-        super();
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+        super(plateau);
         this.nom = nom;
         this.direction = directionInitiale;
         this.entitePortee = null;
     }
 
+    //region Getter/Setter
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public AbstractEntite getEntitePortee() {
+        return entitePortee;
+    }
+
+    public void setEntitePortee(AbstractEntite entitePortee) {
+        this.entitePortee = entitePortee;
+    }
+    //endregion
+
     /**
      * Se tourne et se déplace vers une direction.
      * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
      */
-    public void seDeplacerVers(Direction nouvelleDirection) {
+    public boolean seDeplacerVers(Direction nouvelleDirection) {
         this.seTournerVers(nouvelleDirection);
-        this.avancer();
+        return this.avancer();
     }
 
     /**
@@ -82,8 +106,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Se déplacer dans la direction de l'agent.
      */
-    public void avancer() {
-        plateau.deplacerAgent(this, this.direction);
+    public boolean avancer() {
+        return plateau.deplacerAgent(this, this.direction);
     }
 
     /**
@@ -97,16 +121,16 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Dépose l'entité sur la case où se situe l'agent.
      */
-    public void deposer(AbstractEntite entite) {
-        plateau.deposerEntite(this, entite);
+    public boolean deposer(AbstractEntite entite) {
+        return plateau.deposerEntite(this, entite);
     }
 
     /**
      * Ramasse l'entité qui se trouve devant l'agent.
      * @param entite l'entité à ramasser
      */
-    public void ramasser(AbstractEntite entite) {
-        plateau.ramasserEntite(this, entite);
+    public boolean ramasser(AbstractEntite entite) {
+        return plateau.ramasserEntite(this, entite);
     }
 
     /**
@@ -114,4 +138,12 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      */
     public abstract void actionTour();
 
+    @Override
+    public String toString() {
+        return "AbstractAgentSitue{" +
+                "nom='" + nom + '\'' +
+                ", direction=" + direction +
+                ", entitePortee=" + entitePortee +
+                '}';
+    }
 }

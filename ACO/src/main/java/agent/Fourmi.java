@@ -1,12 +1,12 @@
 package agent;
 
-import MASInfrastructure.Communication.ICommunication;
-import MASInfrastructure.Etat.LifeCycle;
 import common.Direction;
+import entites.AbstractEntite;
 import entites.Nourriture;
 import entites.Obstacle;
 import entites.Pheromone;
 import plateau.Case;
+import plateau.IAgentPlateau;
 import plateau.IAgentite;
 import plateau.Position;
 
@@ -15,124 +15,243 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static common.Direction.*;
+
 public class Fourmi extends AbstractAgentSitue {
 
-    private boolean transporteNourriture;
-    private boolean suitPheromone;
     private final Position positionNid;
+    private boolean estEnPhaseAller = true;
+    private boolean nourritureTrouvee = false;
+    private boolean estSurNid = true;
+    private Boolean suitPheromoneAller = false;
+    private IAgentPlateau iAgentPlateau;
 
 
-
-    public Position getPositionNid() {
-        return positionNid;
+    public Fourmi(String nom, IAgentPlateau iAgentPlateau, Position positionNid) {
+        super(nom, iAgentPlateau);
+        this.iAgentPlateau = iAgentPlateau;
+        this.positionNid = positionNid;
     }
 
-    public Fourmi(String nom, Direction directionInitiale, boolean transporteNourriture, boolean suitPheromone, Position position_nid) {
-        super(nom, directionInitiale);
-        this.transporteNourriture = transporteNourriture;
-        this.suitPheromone = suitPheromone;
-        this.positionNid=position_nid;
-    }
+
 
     public void chercherNourriture(){
 
-        // Tant que la fourmi ne transporte pas de nourriture && n'a pas trouvé de traces de phéromones
-        while(!transporteNourriture && !suitPheromone){
+        // Si la fourmi ne transporte pas de nourriture && n'a pas trouvé de traces de phéromones
 
-            // On analyse le voisinnage
-            Map<Direction, Case> voisinnage = detecter();
+        // On analyse le voisinnage
+        Map<Direction, Case> voisinnage = detecter();
 
-            // On garde en mémoire ce qu'il y a dans les cases autour
-            List<Case> voisinnageObstacles = new ArrayList<>();
-            List<Case> voisinnagePheromones = new ArrayList<>();
-            List<Case> voisinnageNourritures = new ArrayList<>();
-            // Liste des direction dont la case est sans obstacle
-            List<Direction> listeDirectionSansObstacle = new ArrayList<>();
+        // On garde en mémoire ce qu'il y a dans les cases autour
+        List<Case> voisinnageObstacles = new ArrayList<>();
+        List<Case> voisinnagePheromones = new ArrayList<>();
+        List<Case> voisinnageNourritures = new ArrayList<>();
+        // Liste des directions
+        List<Direction> listeDirectionsSansObstacle = new ArrayList<>();
+        List<Direction> listeDirectionsNourriture = new ArrayList<>();
+        List<Direction> listeDirectionsPheromone = new ArrayList<>();
 
-            for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()){
-                // Pour chaque item dans la Map, on récupère la Direction et la Case
-                Case myCase = entry.getValue();
-                Direction myDirection = entry.getKey();
+        for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()){
+            // Pour chaque item dans la Map, on récupère la Direction et la Case
+            Case myCase = entry.getValue();
+            Direction myDirection = entry.getKey();
 
-                // On récupère les agentités de la case
-                List<IAgentite> agentites = myCase.getAgentites();
+            // On récupère les agentités de la case
+            List<IAgentite> agentites = myCase.getAgentites();
 
-                boolean caseContientObstacle = false;
-                boolean caseContientPheromone = false;
-                boolean caseContientNourriture = false;
 
-                for (IAgentite agentite:agentites) {
-                    // Si la case contient au moins un obstacle
-                    if(agentite instanceof Obstacle){
-                        caseContientObstacle = true;
-                    }
-                    // Si la case contient de la phéromone
-                    if(agentite instanceof Pheromone){
-                        caseContientPheromone = true;
-                    }
-                    // Si la case contient de la nourriture
-                    if(agentite instanceof Nourriture){
-                        caseContientNourriture = true;
-                    }
-                }
-
-                if (caseContientObstacle){
+            for (IAgentite agentite:agentites) {
+                // Si la case contient au moins un obstacle
+                if(agentite instanceof Obstacle){
                     voisinnageObstacles.add(myCase);
                 }
-                else {
-                    listeDirectionSansObstacle.add(myDirection);
-                }
+                // Si la case contient de la phéromone
+                if(agentite instanceof Pheromone){
 
-                if (caseContientPheromone) {
-                    voisinnagePheromones.add(myCase);
-                }
+                    //Si la fourmi rencontre sa 1ere pheromone
+                    if (!suitPheromoneAller){
+                        voisinnagePheromones.add(myCase);
+                        listeDirectionsPheromone.add(myDirection);
+                    }else{
+                        //Si la fourmi suivait déjà de la pheromone alors elle pointe vers la direction de son dernier déplacement et ne doit pas revenir en arriere
+                        if (directionOpposee(this.getDirection()) != myDirection){
+                            voisinnagePheromones.add(myCase);
+                            listeDirectionsPheromone.add(myDirection);
+                        }
+                    }
 
-                if (caseContientNourriture) {
+
+                }
+                // Si la case contient de la nourriture
+                if(agentite instanceof Nourriture){
                     voisinnageNourritures.add(myCase);
+                    listeDirectionsNourriture.add(myDirection);
                 }
             }
 
-            // Si dans le voisinnage de la fourmi, il n'y a ni phéromone, ni nourriture
-            if(voisinnageNourritures.isEmpty() && voisinnagePheromones.isEmpty()){
-                // On continue de se déplacer aléatoirement parmi les cases où il n'y a pas d'obstacles
-                seDeplacerAleatoirement(listeDirectionSansObstacle);
-            }
-            // Sinon, si on trouve de la nourriture
-            else if(!voisinnageNourritures.isEmpty()){
-                // On se tourne vers une des cases qui contient de la nourriture
-                // Direction directionNourriture = ...;
-                // seTournerVers(directionNourriture);
-                // On ramasse la nourriture
-                // ramasser(Nourriture nourriture);
-                transporteNourriture = true;
-                // Et on retourne vers le nid
-                revenirAuNid();
-            }
-            // Sinon, si on trouve de la phéromone
-            else if(!voisinnagePheromones.isEmpty()){
-                // On suit une des traces de phéromones
-                suitPheromone = true;
-                // Direction direction = ...;
-                // seDeplacerVers(direction);
+            //si nourriture a proximité
+            if(!voisinnageNourritures.isEmpty()){
+                nourritureTrouvee = true;
+            }else if(!voisinnagePheromones.isEmpty()){
+                suivrePheromone(listeDirectionsPheromone);
+            }else{
+                seDeplacerAleatoirement(listeDirectionsSansObstacle);
             }
 
         }
     }
 
-    public void revenirAuNid(){
 
-    }
-
-    public void seDeplacerAleatoirement(List<Direction> listeDirectionSansObstacle){
-        // On choisit une direction au hasard
-        Direction direction = listeDirectionSansObstacle.get(new Random().nextInt(listeDirectionSansObstacle.size()));
-        // Et on se déplace dans cette direction
+    public void suivrePheromone(List<Direction> listeDirectionsPheromone){
+        Direction direction = listeDirectionsPheromone.get(new Random().nextInt(listeDirectionsPheromone.size()));
+        seTournerVers(direction);
         seDeplacerVers(direction);
+    }
+
+    public void prendreNourriture(){
+        // On analyse le voisinnage
+        Map<Direction, Case> voisinnage = detecter();
+
+
+        for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()) {
+            // Pour chaque item dans la Map, on récupère la Direction et la Case
+            Case myCase = entry.getValue();
+            Direction myDirection = entry.getKey();
+
+            // On récupère les agentités de la case
+            List<IAgentite> agentites = myCase.getAgentites();
+
+            boolean aRamasseNourriture = false;
+
+            for (IAgentite agentite : agentites) {
+                // Si la case contient de la nourriture
+                if (agentite instanceof Nourriture) {
+
+                    //se tourner versla nourriture
+                    seTournerVers(myDirection);
+
+                    //enlever 1pv à la nourriture
+                    int quantiteNourriture = ((Nourriture) agentite).getQuantite();
+                    quantiteNourriture--;
+                    ((Nourriture) agentite).setQuantite(quantiteNourriture);
+
+                    //Si il n'y a plus de nourriture on ramasse l'entite
+                    if (quantiteNourriture == 0){
+                        this.ramasser((AbstractEntite) agentite);
+                    }
+
+                    aRamasseNourriture = true;
+                    break;
+                }
+            }
+
+            if (aRamasseNourriture == true){
+                break;
+            }
+        }
+    }
+
+
+    public void deposerNourriture(){
+        estEnPhaseAller = true;
+        nourritureTrouvee = false;
+    }
+
+    public void revenirAuNid(){
+        estEnPhaseAller = false;
+
+
+        //Si la fourmi se contentait de suivre de la pheromone à l'aller, maintenant qu'elle retourne au nid elle ne suit plus la pheromone à la trace
+        if (suitPheromoneAller){
+            suitPheromoneAller = false;
+        }
+
+        //Si la fourmis est sur le nid alors
+        if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
+            estSurNid = true;
+        }
 
     }
+
+    public void seDeplacerAleatoirement(List<Direction> listeDirectionsSansObstacle){
+        // On choisit une direction au hasard
+        Direction direction = listeDirectionsSansObstacle.get(new Random().nextInt(listeDirectionsSansObstacle.size()));
+        // Et on se déplace dans cette direction
+        seTournerVers(direction);
+        seDeplacerVers(direction);
+    }
+
+
+    /*
+    public void evaporationPheromone(){
+
+        Map<IAgentite, Case> agentities = plateauAco.getListeAgentites();
+
+        for(Map.Entry<IAgentite, Case> entry : agentities.entrySet()) {
+            // Pour chaque item dans la Map, on récupère l'entite
+            IAgentite agentite = entry.getKey();
+
+            if (agentite instanceof Pheromone) {
+                int tauxPheromone = ((Pheromone) agentite).getTauxPheromone();
+                tauxPheromone--;
+                ((Pheromone) agentite).setTauxPheromone(tauxPheromone);
+            }
+        }
+
+    }*/
+
+
+    public Direction directionOpposee(Direction d){
+
+        Direction directionOpposee = null;
+
+        switch (d) {
+            case NO:
+                directionOpposee = SE;
+                break;
+            case N:
+                directionOpposee = S;
+                break;
+            case NE:
+                directionOpposee = SO;
+                break;
+            case E:
+                directionOpposee = O;
+                break;
+            case SE:
+                directionOpposee = NO;
+                break;
+            case S:
+                directionOpposee = N;
+                break;
+            case SO:
+                directionOpposee = NE;
+                break;
+            case O:
+                directionOpposee = E;
+                break;
+        }
+
+        return directionOpposee;
+    }
+
 
     @Override
     public void actionTour() {
+
+        if(estEnPhaseAller){
+            if(nourritureTrouvee){
+                prendreNourriture();
+            }else{
+                chercherNourriture();
+            }
+        }else{
+            if(estSurNid){
+                deposerNourriture();
+            }else{
+                revenirAuNid();
+            }
+        }
 
     }
 }
