@@ -33,5 +33,29 @@ public class Connexion extends Recommandable implements Serializable {
     public void setRequis(Port requis) {
         this.requis = requis;
     }
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Connexion other = (Connexion) obj;
+		if (fourni == null) {
+			if (other.fourni != null)
+				return false;
+		} else if (!fourni.equals(other.fourni))
+			return false;
+		if (requis == null) {
+			if (other.requis != null)
+				return false;
+		} else if (!requis.equals(other.requis))
+			return false;
+		return true;
+	}
+    
+    
 
 }

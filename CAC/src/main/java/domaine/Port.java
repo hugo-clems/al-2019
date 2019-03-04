@@ -34,4 +34,28 @@ public class Port implements Serializable{
     public void setComposant(Composant composant) {
         this.composant = composant;
     }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Port other = (Port) obj;
+		if (composant == null) {
+			if (other.composant != null)
+				return false;
+		} else if (!composant.equals(other.composant))
+			return false;
+		if (service == null) {
+			if (other.service != null)
+				return false;
+		} else if (!service.equals(other.service))
+			return false;
+		return true;
+	}
+    
+    
 }

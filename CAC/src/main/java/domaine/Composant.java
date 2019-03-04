@@ -74,5 +74,34 @@ public class Composant implements Serializable{
     public void ajouterPortRequis(Port p) {
         portRequis.add(p);
     }
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Composant other = (Composant) obj;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		if (portFournis == null) {
+			if (other.portFournis != null)
+				return false;
+		} else if (!portFournis.equals(other.portFournis))
+			return false;
+		if (portRequis == null) {
+			if (other.portRequis != null)
+				return false;
+		} else if (!portRequis.equals(other.portRequis))
+			return false;
+		return true;
+	}
+    
+    
 
 }
