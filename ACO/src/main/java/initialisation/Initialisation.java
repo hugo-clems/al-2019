@@ -226,7 +226,7 @@ public class Initialisation {
             nb_fourmis = Integer.parseInt(type_entite.getTextContent());
             for(int k=0;k<nb_fourmis;k++) {
                 String name_fourmi = "Fourmi_"+k;
-                Fourmi new_fourmi = new Fourmi(this.application.getIAgentPlateau(),name_fourmi,position_nid,true,false,true);
+                Fourmi new_fourmi = new Fourmi(name_fourmi,this.application.getIAgentPlateau(),position_nid);
                 this.application.placerAgentite(position_nid,new_fourmi);
             }
         }
@@ -277,13 +277,13 @@ public class Initialisation {
 
             Stream<IAgentite> streamFourmi = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Fourmi);
             if (streamFourmi.count() > 0) {
-                graphics.setColor(Color.BLUE);
+                graphics.setColor(Color.CYAN);
                 graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
             }
 
             Stream<IAgentite> streamNid = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nid);
             if (streamNid.count() > 0) {
-                graphics.setColor(Color.DARK_GRAY);
+                graphics.setColor(Color.BLACK);
                 graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
             }
 
