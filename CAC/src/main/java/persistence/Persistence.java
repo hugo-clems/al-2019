@@ -1,9 +1,11 @@
 package persistence;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -48,8 +50,14 @@ public class Persistence implements IPersistence{
 
 	@Override
 	public boolean supprimerTout() {
-		// TODO Auto-generated method stub
-		return false;
+		PrintWriter pw;
+		try {
+			pw = new PrintWriter("src/main/resources/bdd.json");
+			pw.close();			
+		} catch (FileNotFoundException e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
