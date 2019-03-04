@@ -3,20 +3,29 @@ package initialisation;
 
 import agent.Fourmi;
 import common.Direction;
+import demo.AgentDemo;
+import demo.EntitePasiveDemo;
 import entites.Nid;
 import entites.Nourriture;
+import entites.Obstacle;
+import entites.Pheromone;
 import org.w3c.dom.*;
-import plateau.Plateau;
-import plateau.Position;
+import plateau.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Initialisation {
 
-    private Plateau plateauACO;
+    private Application application;
+
+    public Application getApplication() {
+        return application;
+    }
 
     class PositionNid{
         Position position_nid;
@@ -36,10 +45,13 @@ public class Initialisation {
         }
     }
 
-    public Initialisation(){
-
-        String xml_location="ACO/src/main/java/initialisation/";
-        String xml_filename="initialisation.xml";
+    /**
+     * Lis le fichier xml et initialise les différents éléments en conséquences
+     * Nid - Fourmi - Nourriture - Obstacle
+     * @param xml_location
+     * @param xml_filename
+     */
+    public Initialisation(String xml_location,String xml_filename){
 
         Document document = null;
         DocumentBuilderFactory factory = null;
@@ -77,7 +89,7 @@ public class Initialisation {
                                 break;
                             case "heigth":
                                 height_plateau=Integer.parseInt(n2.getTextContent());
-                                this.plateauACO = new Plateau(name_plateau,width_plateau,height_plateau);
+                                this.application = new Application(name_plateau,height_plateau,width_plateau);
                                 break;
                             case "liste_agentite":
                                 NodeList type_entites = n2.getChildNodes();
@@ -95,7 +107,11 @@ public class Initialisation {
                                             case "fourmis":
                                                     Nid nid = nid_position.getNid();
                                                     Position posNid = nid_position.getPosition_nid();
-                                                    initFourmis(type_entite,nid,posNid);
+                                                    int nb_fourmis = initFourmis(type_entite,nid,posNid);
+                                                    nid.setNbFourmis(nb_fourmis);
+                                                break;
+                                            case "obstacles":
+                                                initObstacles(type_entite);
                                                 break;
                                         }
                                     }
@@ -134,10 +150,10 @@ public class Initialisation {
                     }
                 }
             }
-            nid = new Nid(this.plateauACO,name_nid);
+            nid = new Nid(name_nid,0);
             position_nid = new Position(position.get(0),position.get(1));
             posnid = new PositionNid(position_nid,nid);
-            this.plateauACO.placerAgentite(position_nid,nid);
+            this.application.placerAgentite(position_nid,nid);
 
         }
         return posnid;
@@ -173,21 +189,20 @@ public class Initialisation {
         if(type_entite instanceof Element) {
             NodeList nourritures = type_entite.getChildNodes();
             int nbNourriture = nourritures.getLength();
-            for(int i = 0; i < nbNourriture; i++) {
+            int nb=0;
+            for(int i = 0; i < nbNourriture; i++){
                 Node nourriture = nourritures.item(i);
                 if(nourriture instanceof Element){
                     NodeList caracteristiques_nourriture = nourriture.getChildNodes();
                     int nbCaracteristique = caracteristiques_nourriture.getLength();
-                    String name_nourriture="";
+                    String name_nourriture="Nourriture_"+nb;
+                    nb+=1;
                     int quantite_nourriture=-1;
                     ArrayList<Integer> position= new ArrayList<Integer>();
                     for(int k = 0; k < nbCaracteristique; k++) {
                         Node caracteristique_nourriture = caracteristiques_nourriture.item(k);
                         if(caracteristique_nourriture instanceof Element){
                             switch (caracteristique_nourriture.getNodeName()){
-                                case "nom":
-                                    name_nourriture=caracteristique_nourriture.getTextContent();
-                                    break;
                                 case "quantite":
                                     quantite_nourriture=Integer.parseInt(caracteristique_nourriture.getTextContent());
                                 case "position":
@@ -197,66 +212,53 @@ public class Initialisation {
                         }
                     }
                     Position position_nourriture = new Position(position.get(0),position.get(1));
-                    Nourriture food = new Nourriture(quantite_nourriture,this.plateauACO,name_nourriture);
-                    this.plateauACO.placerAgentite(position_nourriture,food);
+                    Nourriture food = new Nourriture(quantite_nourriture,name_nourriture);
+                    this.application.placerAgentite(position_nourriture,food);
                 }
             }
 
         }
     }
 
-    private void initFourmis(Node type_entite, Nid nid, Position position_nid) {
+    private int initFourmis(Node type_entite, Nid nid, Position position_nid) {
+        int nb_fourmis = 0;
         if(type_entite instanceof Element) {
-            NodeList fourmis = type_entite.getChildNodes();
-            int nbFourmis = fourmis.getLength();
-            for(int i = 0; i < nbFourmis; i++) {
-                Node fourmi = fourmis.item(i);
-                if(fourmi instanceof Element){
-                    NodeList caracteristiques_fourmi = fourmi.getChildNodes();
-                    int nbCaracteristique = caracteristiques_fourmi.getLength();
-                    String name_fourmi="";
-                    String direction_intiale_fourmi="";
+            nb_fourmis = Integer.parseInt(type_entite.getTextContent());
+            for(int k=0;k<nb_fourmis;k++) {
+                String name_fourmi = "Fourmi_"+k;
+                Fourmi new_fourmi = new Fourmi(name_fourmi,this.application.getIAgentPlateau(),position_nid);
+                this.application.placerAgentite(position_nid,new_fourmi);
+            }
+        }
+        return nb_fourmis;
+    }
+
+    private void initObstacles(Node type_entite) {
+        if(type_entite instanceof Element) {
+            NodeList obstacles = type_entite.getChildNodes();
+            int nbObstacles = obstacles.getLength();
+            int nb=0;
+            for(int i = 0; i < nbObstacles; i++){
+                Node obstacle = obstacles.item(i);
+                if(obstacle instanceof Element){
+                    NodeList caracteristiques_obstacle = obstacle.getChildNodes();
+                    int nbCaracteristique = caracteristiques_obstacle.getLength();
+                    String name_obstacle="Obstacle_"+nb;
+                    nb+=1;
+                    ArrayList<Integer> position= new ArrayList<Integer>();
                     for(int k = 0; k < nbCaracteristique; k++) {
-                        Node caracteristique_fourmi = fourmis.item(i);
-                        if(caracteristique_fourmi instanceof Element){
-                            switch (caracteristique_fourmi.getNodeName()){
-                                case "nom":
-                                    name_fourmi=caracteristique_fourmi.getTextContent();
+                        Node caracteristique_obstacle = caracteristiques_obstacle.item(k);
+                        if(caracteristique_obstacle instanceof Element){
+                            switch (caracteristique_obstacle.getNodeName()){
+                                case "position":
+                                    position=getPosition(caracteristique_obstacle);
                                     break;
-                                case "direction_initiale":
-                                    direction_intiale_fourmi = caracteristique_fourmi.getTextContent();
                             }
                         }
                     }
-                    Direction d=null;
-                    switch (direction_intiale_fourmi){
-                        case "N":
-                            d=Direction.N;
-                            break;
-                        case "E":
-                            d=Direction.E;
-                            break;
-                        case "S":
-                            d=Direction.S;
-                            break;
-                        case "O":
-                            d=Direction.O;
-                            break;
-                        case "NO":
-                            d=Direction.NO;
-                            break;
-                        case "NE":
-                            d=Direction.NE;
-                            break;
-                        case "SO":
-                            d=Direction.SO;
-                            break;
-                        case "SE":
-                            d=Direction.SE;
-                            break;
-                    }
-                    Fourmi new_fourmi = new Fourmi(name_fourmi,d,false,false,position_nid);
-                    this.plateauACO.placerAgentite(position_nid,new_fourmi);
+                    Position position_obstacle = new Position(position.get(0),position.get(1));
+                    Obstacle obs = new Obstacle(name_obstacle);
+                    this.application.placerAgentite(position_obstacle,obs);
                 }
             }
 
@@ -265,7 +267,41 @@ public class Initialisation {
 
 
     public static void main(String [] args){
-        Initialisation init = new Initialisation();
+        String xml_location="ACO/src/main/java/initialisation/";
+        String xml_filename="initialisation.xml";
+        Initialisation init = new Initialisation(xml_location,xml_filename);
+
+        Application application = init.application;
+
+        application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
+
+            Stream<IAgentite> streamFourmi = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Fourmi);
+            if (streamFourmi.count() > 0) {
+                graphics.setColor(Color.CYAN);
+                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
+            }
+
+            Stream<IAgentite> streamNid = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nid);
+            if (streamNid.count() > 0) {
+                graphics.setColor(Color.BLACK);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+            }
+
+            Stream<IAgentite> streamNourriture = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nourriture);
+            if (streamNourriture.count() > 0) {
+                graphics.setColor(Color.GREEN);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+            }
+
+            Stream<IAgentite> streamPheromone = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Pheromone);
+            if (streamPheromone.count() > 0) {
+                graphics.setColor(Color.RED);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+            }
+        });
+
+
+        application.run();
     }
 
 }

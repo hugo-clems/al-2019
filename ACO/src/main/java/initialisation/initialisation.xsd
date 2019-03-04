@@ -23,13 +23,13 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
+                            <xs:element type="xs:byte" name="fourmis"/>
                             <xs:element name="nourritures">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="nourriture" maxOccurs="unbounded" minOccurs="0">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element type="xs:string" name="nom"/>
                                                     <xs:element type="xs:byte" name="quantite"/>
                                                     <xs:element name="position">
                                                         <xs:complexType>
@@ -45,14 +45,20 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="fourmis">
+                            <xs:element name="obstacles" minOccurs="0" maxOccurs="1">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="fourmi" maxOccurs="unbounded" minOccurs="0">
+                                        <xs:element name="obstacle" maxOccurs="unbounded">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element type="xs:string" name="nom"/>
-                                                    <xs:element type="xs:string" name="direction_initiale"/>
+                                                    <xs:element name="position">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element type="xs:byte" name="x"/>
+                                                                <xs:element type="xs:byte" name="y"/>
+                                                            </xs:sequence>
+                                                        </xs:complexType>
+                                                    </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

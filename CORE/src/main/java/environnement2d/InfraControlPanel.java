@@ -1,16 +1,25 @@
-package environnement2d.swinginterface;
+package environnement2d;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class InfraControlPanel extends JPanel {
     private static final int SPACE = 5;
-    public InfraControlPanel() {
-        JButton start = new JButton();
-        start.setText("Start");
 
+    /**
+     * Constructor
+     */
+    public InfraControlPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(Box.createRigidArea(new Dimension(SPACE, 0)));
-        this.add(start);
+    }
+
+    /**
+     * Ajouter un bouton
+     *
+     * @param button JButton
+     */
+    public void addButton(JButton button) {
+        this.add(button);
     }
 }

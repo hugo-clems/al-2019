@@ -46,5 +46,4 @@ public interface IAgentPlateau {
      */
     Case getCase(AbstractAgent agent);
 
-
 }

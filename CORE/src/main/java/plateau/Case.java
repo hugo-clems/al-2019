@@ -67,6 +67,10 @@ public class Case {
         return position.hashCode();
     }
 
+    /**
+     * Méthode toString de la case.
+     * @return la position de la case
+     */
     @Override
     public String toString() {
         return "Case{\n\tposition: (" + position.getX() + "," + position.getY() + ")\n}";

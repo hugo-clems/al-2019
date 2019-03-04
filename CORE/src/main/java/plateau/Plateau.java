@@ -1,6 +1,7 @@
 package plateau;
 
 import agent.AbstractAgent;
+import agent.AbstractAgentSitue;
 import common.Direction;
 import entites.AbstractEntite;
 import entites.Obstacle;
@@ -8,7 +9,7 @@ import entites.Obstacle;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlateau {
+public class Plateau implements IEntitePlateau, IAgentPlateau {
 
     //region Attributes
     /**
@@ -37,7 +38,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     private int ligne;
     //endregion
 
-    //region Constructors
+    //region Contructors
     /**
      * Constructeur par défaut.
      * @param nom Le nom du plateau
@@ -56,7 +57,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     }
     //endregion
 
-    //region Getter
+    //region Getters/Setters
     /**
      * Get le nom du plateau.
      * @return Le nom du plateau
@@ -97,9 +98,6 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     public int getColonne() {
         return colonne;
     }
-    //endregion
-
-    //region Setter
 
     /**
      * Get le nombre de ligne (axe Y)
@@ -110,19 +108,30 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
     }
     //endregion
 
-    //region IDeveloppeurPlateau
-    @Override
+    /**
+     * place agent/entité sur une case
+     *
+     * @param position Position
+     * @param agentite IAgentite
+     * @return true si l'agent/entité est placé(e) sur la case sinon false
+     */
     public Boolean placerAgentite(Position position, IAgentite agentite) {
 
         Case mCase = cases.get(position);
-        if (checkObstacleInCase(mCase))
+        if (checkObstacleInCase(mCase) || (agentite instanceof Obstacle && !mCase.getAgentites().isEmpty()))
             return false;
         mCase.getAgentites().add(agentite);
         listeAgentites.put(agentite, mCase);
         return true;
     }
 
-    @Override
+    /**
+     * Enlève l'agent/entité de la case
+     *
+     * @param position Position
+     * @param agentite IAgentite
+     * @return null si la case ne contient pas l'agent/entité sinon l'agent/entité
+     */
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
         if (listeAgentites.isEmpty() || listeAgentites.get(agentite) == null) {
             return null;
@@ -131,9 +140,14 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         mCase.getAgentites().remove(agentite);
         return agentite;
     }
-    //endregion
 
-    //region IAgentPlateau
+    /**
+     * Déplace un agent
+     *
+     * @param agent l'agent à déplacer
+     * @param direction la direction vers laquelle déplacer l'agent
+     * @return false si la case est occupée par un obstacle true sinon
+     */
     @Override
     public Boolean deplacerAgent(AbstractAgent agent, Direction direction) {
         Case c = getCaseByDirectionForAgent(direction, getCase(agent));
@@ -150,16 +164,59 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return true;
     }
 
+    /**
+     * Ramasse une entité
+     *
+     * @param agent l'agent qui ramasse l'entité
+     * @param entite l'entité à ramasser
+     * @return true si l'agent ramasse l'entité false sinon
+     */
     @Override
     public Boolean ramasserEntite(AbstractAgent agent, AbstractEntite entite) {
-        return null;
+        if (agent instanceof AbstractAgentSitue) {
+            AbstractAgentSitue agentSitue = (AbstractAgentSitue) agent;
+            Case devantAgent = getCaseByDirectionForAgent(agentSitue.getDirection(), this.getCase(agentSitue));
+            if (devantAgent != null) {
+                if (agentSitue.getEntitePortee() == null
+                        && !(entite instanceof Obstacle)
+                        && devantAgent.getAgentites().contains(entite)) {
+                    agentSitue.setEntitePortee((AbstractEntite) this.enleverAgentite(
+                            devantAgent.getPosition(), entite));
+                    return true;
+                }
+            }
+
+
+        }
+        return false;
     }
 
+    /**
+     * Déposer une entité
+     *
+     * @param agent l'agent qui dépose l'entité
+     * @param entite l'entité à déposer
+     * @return true si l'agent dépose une entité false sinon
+     */
     @Override
     public Boolean deposerEntite(AbstractAgent agent, AbstractEntite entite) {
-        return null;
+        if (agent instanceof AbstractAgentSitue) {
+            AbstractAgentSitue agentSitue = (AbstractAgentSitue) agent;
+            if (entite.equals(agentSitue.getEntitePortee())) {
+                ((AbstractAgentSitue) agent).setEntitePortee(null);
+                this.placerAgentite(getCase(agent).getPosition(), entite);
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * Récupère le voisinage d'un agent les 8 cases
+     *
+     * @param agent l'agent qui veut connaître son voisinage
+     * @return une map qui contient la direction et la case
+     */
     @Override
     public Map <Direction, Case> getVoisinage(AbstractAgent agent) {
         Map<Direction, Case> map = new HashMap<>();
@@ -169,13 +226,17 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         return map;
     }
 
+    /**
+     * Récupère la case de l'agent
+     *
+     * @param agent l'agent qui veut connaître sa case
+     * @return Case sur laquelle se trouve l'agent
+     */
     @Override
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
-    //endregion
 
-    //region Private methods
     /**
      * Initialisation du plateau
      * Creation de toutes les cases
@@ -188,7 +249,7 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
                 Case caseTemp = new Case(positionTemp);
                 cases.put(positionTemp, caseTemp);
                 if (x == 0 || x == colonne - 1 || y == 0 || y == ligne - 1) {
-                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y, this);
+                    Obstacle obstacle = new Obstacle("Obstacle" + x + "_" + y);
                     placerAgentite(positionTemp, obstacle);
                 }
             }
@@ -205,21 +266,21 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         Position agentPosition = caseAgent.getPosition();
         switch (direction) {
             case N:
-                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() - 1));
             case NE:
-                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() - 1));
             case E:
                 return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY()));
             case SE:
-                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX() + 1, agentPosition.getY() + 1));
             case S:
-                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX(), agentPosition.getY() + 1));
             case SO:
-                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() - 1));
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
             case O:
                 return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY()));
             case NO:
-                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() + 1));
+                return cases.get(new Position(agentPosition.getX() - 1, agentPosition.getY() - 1));
         }
         return null;
     }
@@ -236,5 +297,13 @@ public class Plateau implements IEntitePlateau, IDeveloppeurPlateau, IAgentPlate
         }
         return false;
     }
-    //endregion
+
+    @Override
+    public String toString() {
+        return "Plateau{" +
+                "nom='" + nom + '\'' +
+                ", colonne=" + colonne +
+                ", ligne=" + ligne +
+                '}';
+    }
 }
