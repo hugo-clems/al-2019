@@ -65,7 +65,7 @@ public class PersistenceTest {
 //	            }
 //		 }
 		 //to empty test file
-		 PrintWriter pw = new PrintWriter("filepath.txt");
+		 PrintWriter pw = new PrintWriter("src/main/resources/bdd.json");
 		 pw.close();
 			 System.out.println("hey");
 //		 assert(hey.read() != -1);
