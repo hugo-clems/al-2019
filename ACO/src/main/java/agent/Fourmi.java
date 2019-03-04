@@ -150,7 +150,7 @@ public class Fourmi extends AbstractAgentSitue {
 
         posX = this.plateau.getCase(this).getPosition().getX();
         posY = this.plateau.getCase(this).getPosition().getY();
-        while (posX != getPositionNid().getX() && posY != getPositionNid().getY()) {
+        if (posX != getPositionNid().getX() && posY != getPositionNid().getY()) {
             initPoinds(this.getDirection());
 
             //On analyse le voisinnage
