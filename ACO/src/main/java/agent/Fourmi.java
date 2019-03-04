@@ -38,6 +38,8 @@ public class Fourmi extends AbstractAgentSitue {
 
     public void chercherNourriture(){
 
+
+        boolean caseSansObstacle = false;
         // Si la fourmi ne transporte pas de nourriture && n'a pas trouvé de traces de phéromones
 
         // On analyse le voisinnage
@@ -52,7 +54,7 @@ public class Fourmi extends AbstractAgentSitue {
         List<Direction> listeDirectionsNourriture = new ArrayList<>();
         List<Direction> listeDirectionsPheromone = new ArrayList<>();
 
-        for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()){
+        for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()) {
             // Pour chaque item dans la Map, on récupère la Direction et la Case
             Case myCase = entry.getValue();
             Direction myDirection = entry.getKey();
@@ -61,24 +63,27 @@ public class Fourmi extends AbstractAgentSitue {
             List<IAgentite> agentites = myCase.getAgentites();
 
 
-            for (IAgentite agentite:agentites) {
+            for (IAgentite agentite : agentites) {
+
+
                 // Si la case contient au moins un obstacle
-                if(agentite instanceof Obstacle){
+                if (agentite instanceof Obstacle) {
+                    caseSansObstacle = false;
                     voisinnageObstacles.add(myCase);
-                }else {
-                    listeDirectionsSansObstacle.add(myDirection);
+                }else{
+                    caseSansObstacle = true;
                 }
-                
+
                 // Si la case contient de la phéromone
-                if(agentite instanceof Pheromone){
+                if (agentite instanceof Pheromone) {
 
                     //Si la fourmi rencontre sa 1ere pheromone
-                    if (!suitPheromoneAller){
+                    if (!suitPheromoneAller) {
                         voisinnagePheromones.add(myCase);
                         listeDirectionsPheromone.add(myDirection);
-                    }else{
+                    } else {
                         //Si la fourmi suivait déjà de la pheromone alors elle pointe vers la direction de son dernier déplacement et ne doit pas revenir en arriere
-                        if (directionOpposee(this.getDirection()) != myDirection){
+                        if (directionOpposee(this.getDirection()) != myDirection) {
                             voisinnagePheromones.add(myCase);
                             listeDirectionsPheromone.add(myDirection);
                         }
@@ -87,22 +92,28 @@ public class Fourmi extends AbstractAgentSitue {
 
                 }
                 // Si la case contient de la nourriture
-                if(agentite instanceof Nourriture){
+                if (agentite instanceof Nourriture) {
                     voisinnageNourritures.add(myCase);
                     listeDirectionsNourriture.add(myDirection);
                 }
             }
 
-            //si nourriture a proximité
-            if(!voisinnageNourritures.isEmpty()){
-                nourritureTrouvee = true;
-            }else if(!voisinnagePheromones.isEmpty()){
-                suivrePheromone(listeDirectionsPheromone);
-            }else{
-                seDeplacerAleatoirement(listeDirectionsSansObstacle);
+            if (caseSansObstacle){
+                listeDirectionsSansObstacle.add(myDirection);
             }
 
         }
+
+        //si nourriture a proximité
+        if(!voisinnageNourritures.isEmpty()){
+            nourritureTrouvee = true;
+        }else if(!voisinnagePheromones.isEmpty()){
+            suivrePheromone(listeDirectionsPheromone);
+        }else{
+            seDeplacerAleatoirement(listeDirectionsSansObstacle);
+        }
+
+
     }
 
 

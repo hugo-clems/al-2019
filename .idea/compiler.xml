@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ACO" />
+        <module name="CAC" />
+        <module name="CORE" />
+        <module name="INFRA" />
+        <module name="ROB" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ACO" target="1.8" />
+      <module name="al2019" target="1.8" />
+      <module name="CAC" target="1.8" />
+      <module name="CORE" target="1.8" />
+      <module name="INFRA" target="1.8" />
+      <module name="ROB" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
