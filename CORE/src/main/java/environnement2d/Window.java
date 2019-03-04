@@ -1,15 +1,10 @@
 package environnement2d;
 
-import entites.AbstractEntite;
-import entites.Obstacle;
-import plateau.Plateau;
-import plateau.Position;
 import strategie.Strategie;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.*;
 
 /**
  * Main class.
@@ -24,6 +19,7 @@ public class Window {
 
     private JButton start;
     private JButton stop;
+    private JButton pause;
 
     private Strategie strategie;
 
@@ -48,7 +44,11 @@ public class Window {
         this.stop.addActionListener(this::stopStrategie);
         this.stop.setText("Stop");
 
-        this.strategie = new Strategie();
+        this.pause = new JButton();
+        this.pause.addActionListener(this::pauseStrategie);
+        this.pause.setText("Pause");
+
+        this.strategie = new Strategie(plateau.getAgents());
     }
 
     /**
@@ -59,50 +59,62 @@ public class Window {
     public final void setContent(final JPanel panel) {
         this.frame.setContentPane(panel);
         this.frame.pack();
+        this.frame.setMinimumSize(new Dimension(400,400));
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setVisible(true);
     }
 
     /**
-     * Main.
-     *
-     * @param args args
+     * initialisation de window avec les boutons et le main panel
      */
-    public static void main(final String[] args) {
-        Plateau plateau = new Plateau("NamePlateau", 40, 50);
-        for (int x = 0; x < 50; x++) {
-            for (int y = 0; y < 40; y++) {
-                Position p = new Position(x, y);
-                //Ajout obstacles au bord
-                if (x < 30 && y > 10 && y < 13) {
-                    Obstacle o = new Obstacle("Obstacle" + x + y, plateau);
-                    plateau.placerAgentite(p, o);
-                }
-                if (x == 2 && y == 3 || x == 30 && y == 39) {
-                    AbstractEntite agent = new AbstractEntite("agent", plateau) {
-                    };
-                    plateau.placerAgentite(p, agent);
-                }
-            }
-        }
+    public void start() {
+        MainPanel panel = new MainPanel(this.plateau);
+        panel.addButton(this.start);
+        panel.addButton(this.pause);
+        panel.addButton(this.stop);
 
-        PlateauComponent pc = new PlateauComponent(plateau);
+        strategie.setTourListener(panel.getTourListener());
 
-        Window window = new Window(pc);
-
-        MainPanel panel = new MainPanel(window.plateau);
-        panel.setStart(window.start);
-        panel.setStop(window.stop);
-
-        window.setContent(panel);
+        this.setContent(panel);
     }
 
+    /**
+     * Lancement de la strategie
+     * @param e ActionEvent
+     */
     private void startStrategie(ActionEvent e) {
         this.strategie.lancer();
     }
 
+    /**
+     * Arreter la strategie
+     * @param e ActionEvent
+     */
     private void stopStrategie(ActionEvent e) {
         this.strategie.arreter();
+    }
+
+    /**
+     * Mettre en pause/reprendre la strategie
+     *
+     * @param e ActionEvent
+     */
+    private void pauseStrategie(ActionEvent e) {
+        switch (pause.getText()){
+            case "Pause":{
+                this.strategie.pause();
+                this.pause.setText("Reprendre");
+                break;
+            }
+            case "Reprendre":{
+                this.strategie.lancer();
+                this.pause.setText("Pause");
+                break;
+            }
+            default:
+                break;
+        }
+
     }
 }
 

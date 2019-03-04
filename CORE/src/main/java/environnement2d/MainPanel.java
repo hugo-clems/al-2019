@@ -1,7 +1,6 @@
 package environnement2d;
 
-
-import plateau.Plateau;
+import strategie.Runner;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +17,11 @@ public class MainPanel extends JPanel {
 
     private InfraControlPanel infraControlPanel;
 
+    private Runner.TourListener tourListener = () -> MainPanel.super.updateUI();
+
+    public Runner.TourListener getTourListener() {
+        return tourListener;
+    }
 
     /**
      * Constructor.
@@ -32,12 +36,14 @@ public class MainPanel extends JPanel {
 
     }
 
-    public void setStart(JButton start) {
-        this.infraControlPanel.setStart(start);
+    /**
+     * Ajouter un bouton
+     *
+     * @param button JButton
+     */
+    public void addButton(JButton button) {
+        this.infraControlPanel.addButton(button);
     }
 
-    public void setStop(JButton stop) {
-        this.infraControlPanel.setStart(stop);
-    }
 }
 

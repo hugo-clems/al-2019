@@ -5,6 +5,7 @@ import MASInfrastructure.Agent.InfraAgentReference;
 import MASInfrastructure.Annuaire.Annuaire;
 import MASInfrastructure.Communication.IMessage;
 import communication.AbstractMessage;
+import plateau.IAgentPlateau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public abstract class AbstractAgentSocial extends AbstractAgent {
     /**
      * Constructeur par défaut.
      */
-    public AbstractAgentSocial() {
-        super();
+    public AbstractAgentSocial(IAgentPlateau plateau) {
+        super(plateau);
         this.annuaire = Annuaire.getInstance();
         this.annuaire.addAgent(this);
         this.agentsDansAnnuaire = annuaire.getAgents();
