@@ -65,7 +65,10 @@ public class Fourmi extends AbstractAgentSitue {
                 // Si la case contient au moins un obstacle
                 if(agentite instanceof Obstacle){
                     voisinnageObstacles.add(myCase);
+                }else {
+                    listeDirectionsSansObstacle.add(myDirection);
                 }
+                
                 // Si la case contient de la phéromone
                 if(agentite instanceof Pheromone){
 
