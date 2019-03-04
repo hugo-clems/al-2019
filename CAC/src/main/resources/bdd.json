@@ -1,1 +1,1 @@
-[{"@class":"domaine.Configuration","connexions":[{"@class":"domaine.Connexion","fourni":{"@class":"domaine.Port","service":"s1"},"requis":{"@class":"domaine.Port","service":"s1"}}]}]
+[{"connexions":[{"fourni":{"service":"s1"},"requis":{"service":"s1"}}]}]

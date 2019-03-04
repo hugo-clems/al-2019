@@ -1,13 +1,10 @@
 package persistence;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,8 +64,18 @@ public class PersistenceTest {
 //	                e.printStackTrace();
 //	            }
 //		 }
+		 //to empty test file
+		 PrintWriter pw = new PrintWriter("filepath.txt");
+		 pw.close();
 			 System.out.println("hey");
 //		 assert(hey.read() != -1);
 	 }
-//	}
+	@Test
+    public void testTrouverTous() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		 configurationsAPersister.add(configuration);
+		 persistance.sauvegarder(configurationsAPersister);
+		 ArrayList<Configuration> getted = persistance.trouverTous();
+		 assert(configurationsAPersister.equals(getted));
+	}
 }
