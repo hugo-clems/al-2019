@@ -57,7 +57,7 @@ public class Configuration extends Recommandable implements Serializable {
 		if (connexions == null) {
 			if (other.connexions != null)
 				return false;
-		} else if (!connexions.equals(other.connexions))
+		} else if (!connexions.containsAll(other.connexions))
 			return false;
 		if (id == null) {
 			if (other.id != null)

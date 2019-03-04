@@ -41,6 +41,7 @@ public class PersistenceTest {
 		connexion = new Connexion(portF, portR);
 
 		configuration = new Configuration();
+		configuration.setId("01");
 		configuration.ajouterConnexion(connexion);
 		persistance = new Persistence();
 	}
@@ -79,9 +80,16 @@ public class PersistenceTest {
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		ArrayList<Configuration> getted = persistance.trouverTous();
-		assert(configurationsAPersister.equals(getted));
+		assert(configurationsAPersister.containsAll(getted));
 	}
-
+	@Test
+	public void testTrouverParId() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		Configuration getted = persistance.trouverParID(configuration.getId());
+		assert(configuration.equals(getted));
+	}
 	@Test
 	public void testSupprimerToutFonctionner() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
