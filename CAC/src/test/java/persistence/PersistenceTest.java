@@ -1,9 +1,12 @@
 package persistence;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -71,11 +74,41 @@ public class PersistenceTest {
 //		 assert(hey.read() != -1);
 	 }
 	@Test
-    public void testTrouverTous() throws IOException {
+	public void testTrouverTous() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		 configurationsAPersister.add(configuration);
-		 persistance.sauvegarder(configurationsAPersister);
-		 ArrayList<Configuration> getted = persistance.trouverTous();
-		 assert(configurationsAPersister.equals(getted));
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		ArrayList<Configuration> getted = persistance.trouverTous();
+		assert(configurationsAPersister.equals(getted));
+	}
+
+	@Test
+	public void testSupprimerToutFonctionner() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		assertTrue(persistance.supprimerTout());
+	}
+
+	@Test
+	public void testSupprimerToutListeVide() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		persistance.supprimerTout();
+		
+		ArrayList<Configuration> retrieved = persistance.trouverTous();
+		assertTrue(retrieved.size() == 0);
+	}
+
+	@Test
+	public void testSupprimerToutVideFichier() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		persistance.supprimerTout();
+		
+		String content = Persistence.readFile("src/main/resources/bdd.json", StandardCharsets.UTF_8);
+		assertTrue(content.isEmpty());
 	}
 }
