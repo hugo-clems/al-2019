@@ -8,6 +8,7 @@ import demo.EntitePasiveDemo;
 import entites.Nid;
 import entites.Nourriture;
 import entites.Obstacle;
+import entites.Pheromone;
 import org.w3c.dom.*;
 import plateau.*;
 
@@ -21,6 +22,10 @@ import java.util.stream.Stream;
 public class Initialisation {
 
     private Application application;
+
+    public Application getApplication() {
+        return application;
+    }
 
     class PositionNid{
         Position position_nid;
@@ -261,40 +266,41 @@ public class Initialisation {
     }
 
 
-    public boolean nidPresentDansCase (Case caseNid) {
-        for( IAgentite agentite : caseNid.getAgentites()) {
-            if(agentite instanceof Nid) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean obstaclePresentDansCase (Case caseObstacle) {
-        for( IAgentite agentite : caseObstacle.getAgentites()) {
-            if(agentite instanceof Obstacle) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static void main(String [] args){
         String xml_location="ACO/src/main/java/initialisation/";
         String xml_filename="initialisation.xml";
         Initialisation init = new Initialisation(xml_location,xml_filename);
 
         Application application = init.application;
-/*
+
         application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
-            Stream<IAgentite> iAgentiteStream = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nid);
-            if (iAgentiteStream.count() > 0) {
-                graphics.setColor(Color.GREEN);
+
+            Stream<IAgentite> streamFourmi = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Fourmi);
+            if (streamFourmi.count() > 0) {
+                graphics.setColor(Color.BLUE);
                 graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
+            }
+
+            Stream<IAgentite> streamNid = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nid);
+            if (streamNid.count() > 0) {
+                graphics.setColor(Color.DARK_GRAY);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+            }
+
+            Stream<IAgentite> streamNourriture = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Nourriture);
+            if (streamNourriture.count() > 0) {
+                graphics.setColor(Color.GREEN);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+            }
+
+            Stream<IAgentite> streamPheromone = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Pheromone);
+            if (streamPheromone.count() > 0) {
+                graphics.setColor(Color.RED);
+                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
             }
         });
 
-        */
+
         application.run();
     }
 
