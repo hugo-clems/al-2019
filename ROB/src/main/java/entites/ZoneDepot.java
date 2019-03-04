@@ -10,8 +10,8 @@ public class ZoneDepot extends Zone {
      * @param nom        nom de l'agent
      * @param plateau    plateau auquel appartient l'agent
      */
-    public ZoneDepot(String nom, IEntitePlateau plateau) {
-        super(nom, plateau);
+    public ZoneDepot(String nom) {
+        super(nom);
     }
 
 }

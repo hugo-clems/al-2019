@@ -1,6 +1,8 @@
 package entites;
 
 import agent.AbstractAgentSitue;
+import common.Direction;
+import plateau.IAgentPlateau;
 import plateau.Position;
 
 import java.util.List;
@@ -19,7 +21,8 @@ public class Robot extends AbstractAgentSitue {
 
     private Position caseCollecte;
 
-    public Robot() {
+    public Robot(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+        super(nom, plateau, directionInitiale);
         this.nbActions = 0;
         this.nbDeplacements = 0;
     }

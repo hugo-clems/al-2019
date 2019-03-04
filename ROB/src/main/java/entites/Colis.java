@@ -10,8 +10,8 @@ public class Colis extends AbstractEntitePassive {
      * @param nom     nom de l'agent
      * @param plateau plateau auquel appartient l'agent
      */
-    public Colis(String nom, IEntitePlateau plateau) {
-        super(nom, plateau);
+    public Colis(String nom) {
+        super(nom);
     }
 
 }

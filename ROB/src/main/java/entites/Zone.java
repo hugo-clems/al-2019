@@ -10,8 +10,8 @@ public class Zone extends AbstractEntitePassive {
      * @param nom     nom de l'agent
      * @param plateau plateau auquel appartient l'agent
      */
-    public Zone(String nom, IEntitePlateau plateau) {
-        super(nom, plateau);
+    public Zone(String nom) {
+        super(nom);
     }
 
 }
