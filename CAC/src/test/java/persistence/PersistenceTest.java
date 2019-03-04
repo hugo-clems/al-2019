@@ -25,7 +25,7 @@ public class PersistenceTest {
 	private Configuration configuration;
 	private Connexion connexion;
 	private Persistence persistance;
-
+	
 	@Before
 	public void setUp() {
 
