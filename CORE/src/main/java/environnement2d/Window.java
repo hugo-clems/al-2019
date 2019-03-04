@@ -73,6 +73,8 @@ public class Window {
         panel.addButton(this.pause);
         panel.addButton(this.stop);
 
+        strategie.setTourListener(panel.getTourListener());
+
         this.setContent(panel);
     }
 

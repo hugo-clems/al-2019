@@ -90,9 +90,9 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      * Se tourne et se déplace vers une direction.
      * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
      */
-    public void seDeplacerVers(Direction nouvelleDirection) {
+    public boolean seDeplacerVers(Direction nouvelleDirection) {
         this.seTournerVers(nouvelleDirection);
-        this.avancer();
+        return this.avancer();
     }
 
     /**
@@ -106,8 +106,8 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Se déplacer dans la direction de l'agent.
      */
-    public void avancer() {
-        plateau.deplacerAgent(this, this.direction);
+    public boolean avancer() {
+        return plateau.deplacerAgent(this, this.direction);
     }
 
     /**
@@ -121,16 +121,16 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Dépose l'entité sur la case où se situe l'agent.
      */
-    public void deposer(AbstractEntite entite) {
-        plateau.deposerEntite(this, entite);
+    public boolean deposer(AbstractEntite entite) {
+        return plateau.deposerEntite(this, entite);
     }
 
     /**
      * Ramasse l'entité qui se trouve devant l'agent.
      * @param entite l'entité à ramasser
      */
-    public void ramasser(AbstractEntite entite) {
-        plateau.ramasserEntite(this, entite);
+    public boolean ramasser(AbstractEntite entite) {
+        return plateau.ramasserEntite(this, entite);
     }
 
     /**

@@ -5,6 +5,7 @@ import environnement2d.Window;
 
 public class Application {
 
+    //region Attributes
     /**
      * Plateau
      */
@@ -14,8 +15,9 @@ public class Application {
      * l'arène
      */
     private PlateauComponent plateauComponent;
+    //endregion
 
-
+    //region Constructors
     /**
      * Constructor
      *
@@ -40,7 +42,9 @@ public class Application {
         this.mPlateau = new Plateau(nomPlateau, ligne, colonne);
         plateauComponent = new PlateauComponent(mPlateau, casePaint);
     }
+    //endregion
 
+    //region Setters
     /**
      * Set casePaint sur plateau
      * @param casePaint
@@ -48,7 +52,9 @@ public class Application {
     public void setCasePaint(PlateauComponent.CasePaint casePaint) {
         plateauComponent.setCasePaint(casePaint);
     }
+    //endregion
 
+    //region Getters
     /**
      * Get Plateau
      * @return plateau IAgentPlateau
@@ -56,7 +62,9 @@ public class Application {
     public IAgentPlateau getIAgentPlateau() {
         return this.mPlateau;
     }
+    //endregion
 
+    //region Plateau Managment
     /**
      * Initialisation du plateau
      * ajout d'un agent sur le plateau
@@ -78,6 +86,7 @@ public class Application {
     public IAgentite enleverAgentite(Position position, IAgentite agentite) {
         return mPlateau.enleverAgentite(position, agentite);
     }
+    //endregion
 
     /**
      * Lancement de l'interface 2D

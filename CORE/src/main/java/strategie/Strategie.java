@@ -16,6 +16,8 @@ public class Strategie implements IStrategie {
      */
     private Thread t = null;
 
+    private Runner.TourListener tourListener;
+
     /**
      * La liste des agents à ordonnancer.
      */
@@ -34,7 +36,7 @@ public class Strategie implements IStrategie {
     @Override
     public void lancer() {
         if (this.t == null) {
-            this.runner = new Runner(this.listeAgents);
+            this.runner = new Runner(this.listeAgents, this.tourListener);
             this.t = new Thread(this.runner);
             this.t.start();
         } else {
@@ -77,4 +79,7 @@ public class Strategie implements IStrategie {
         this.listeAgents.remove(agent);
     }
 
+    public void setTourListener(Runner.TourListener tourListener) {
+        this.tourListener = tourListener;
+    }
 }
