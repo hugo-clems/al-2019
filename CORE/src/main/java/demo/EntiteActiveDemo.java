@@ -1,6 +1,7 @@
 package demo;
 
 import entites.AbstractEntiteActive;
+import plateau.IEntitePlateau;
 
 public class EntiteActiveDemo extends AbstractEntiteActive {
 
@@ -11,8 +12,8 @@ public class EntiteActiveDemo extends AbstractEntiteActive {
      *
      * @param nom nom de l'agent
      */
-    public EntiteActiveDemo(String nom, int value) {
-        super(nom);
+    public EntiteActiveDemo(String nom, int value, IEntitePlateau iEntitePlateau) {
+        super(nom, iEntitePlateau);
         this.value = value % 3;
     }
 
