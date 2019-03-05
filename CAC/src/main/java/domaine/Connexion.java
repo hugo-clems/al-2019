@@ -4,36 +4,39 @@ import java.io.Serializable;
 
 public class Connexion extends Recommandable implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7856893215103074382L;
 	private Port fourni;
-    private Port requis;
+	private Port requis;
+	private int nbLikes;
 
-    public Connexion(Port fourni, Port requis) {
-        this.fourni = fourni;
-        this.requis = requis;
-    }
-    public Connexion() {
-    }
+	public Connexion(Port fourni, Port requis) {
+		this.fourni = fourni;
+		this.requis = requis;
+		this.nbLikes = 0;
+	}
 
-    public Port getFourni() {
-        return fourni;
-    }
+	public Connexion() {
+	}
 
-    public void setFourni(Port fourni) {
-        this.fourni = fourni;
-    }
+	public Port getFourni() {
+		return fourni;
+	}
 
-    public Port getRequis() {
-        return requis;
-    }
+	public void setFourni(Port fourni) {
+		this.fourni = fourni;
+	}
 
-    public void setRequis(Port requis) {
-        this.requis = requis;
-    }
-	
+	public Port getRequis() {
+		return requis;
+	}
+
+	public void setRequis(Port requis) {
+		this.requis = requis;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -42,7 +45,7 @@ public class Connexion extends Recommandable implements Serializable {
 		result = prime * result + ((requis == null) ? 0 : requis.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,6 +67,7 @@ public class Connexion extends Recommandable implements Serializable {
 			return false;
 		return true;
 	}
+
 	public boolean equalsIdPort(Object obj) {
 		if (this == obj)
 			return true;
@@ -78,7 +82,27 @@ public class Connexion extends Recommandable implements Serializable {
 				&& other.getRequis().getId() !=null 
 				&&  other.getFourni().getId().equals(this.getFourni().getId()) 
 				&& other.getRequis().getId().equals(this.getRequis().getId()));
-		
-		}
+
+	}
+	
+	public void incrementerNote() {
+		this.nbLikes++;
+	}
+	
+	public void decrementerNote() {
+		this.nbLikes--;
+	}
+
+	public int getNbLikes() {
+		return nbLikes;
+	}
+
+	/**
+	 * Ne jamais passer null en paramètre ici sous peine d'exception en masse
+	 * @param nbLikes
+	 */
+	public void setNbLikes(int nbLikes) {
+		this.nbLikes = nbLikes;
+	}
 
 }
