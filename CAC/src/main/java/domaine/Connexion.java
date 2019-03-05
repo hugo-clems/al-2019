@@ -80,7 +80,5 @@ public class Connexion extends Recommandable implements Serializable {
 				&& other.getRequis().getId().equals(this.getRequis().getId()));
 		
 		}
-	}
-    
 
 }
