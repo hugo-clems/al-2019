@@ -61,7 +61,7 @@ public class AgentComposant extends AbstractAgentSocial  implements IConnexion {
     private void compareRequisFournis(Set<Port> requis, Set<Port> fournis) {
         for (Port portRequis : requis) {
             for (Port portFournis : fournis) {
-                if (portRequis.equals(portFournis)) {
+                if (portRequis.estCompatible(portFournis)) {
                     connexionsPossible.add(new Connexion(portFournis,portRequis));
                 }
             }

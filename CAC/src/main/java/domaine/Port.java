@@ -38,9 +38,15 @@ public class Port {
         this.uuid = uuid;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Port p =(Port) obj;
+    public boolean equals(Port port) {
+        return this.uuid.equals(port.getUuid());
+    }
+
+    public int hashCode() {
+        return uuid.hashCode();
+    }
+
+    public boolean estCompatible(Port p) {
         if (p.service.equals(this.service) && !this.composant.getNom().equals(p.composant.getNom()) )
             return true ;
         else {
