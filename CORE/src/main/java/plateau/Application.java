@@ -66,6 +66,10 @@ public class Application {
     public IAgentPlateau getIAgentPlateau() {
         return this.mPlateau;
     }
+
+    public IEntitePlateau getIEntitePlateau() {
+        return this.mPlateau;
+    }
     //endregion
 
     //region Plateau Managment

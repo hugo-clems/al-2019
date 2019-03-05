@@ -29,8 +29,9 @@ public class Main {
         agent3.setDirection(Direction.SE);
         application.placerAgentite(new Position(1, 1), agent3);
 
-        application.placerAgentite(new Position(3, 3), new EntiteActiveDemo("activeTest", 0));
-        application.placerAgentite(new Position(8, 3), new EntiteActiveDemo("activeTest", 2));
+        application.placerAgentite(new Position(3, 3), new EntiteActiveDemo("activeTest", 0, application.getIEntitePlateau()));
+        application.placerAgentite(new Position(8, 3), new EntiteActiveDemo("activeTest", 2, application.getIEntitePlateau()));
+        application.placerAgentite(new Position(8, 5), new EntitéActiveSuicidaireDemo("activeTest", application.getIEntitePlateau(), 5));
 
         application.placerAgentite(new Position(10, 10), new EntitePasiveDemo("passiveTest"));
         //endregion
@@ -71,6 +72,12 @@ public class Main {
                     graphics.fillRoundRect(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6, 5, 5);
                 });
             }
+            iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof EntitéActiveSuicidaireDemo);
+            if (iAgentiteStream.get().count() > 0) {
+                graphics.setColor(Color.ORANGE);
+                graphics.fillRoundRect(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6, 5, 5);
+            }
+            iAgentiteStream.get().close();
         });
         //endregion
 

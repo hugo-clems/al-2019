@@ -131,11 +131,13 @@ public class PlateauComponent extends JComponent {
             for (int y = 0; y < this.plateau.getLigne(); y++) {
                 Case c = positionCaseMap.get(new Position(x, y));
                 if (c.getAgentites().size() != 0) {
-                    Stream<IAgentite> iAgentiteStream = c.getAgentites().stream().filter(aCase -> aCase instanceof AbstractEntiteActive);
+                    List<IAgentite> copy = new ArrayList<>(c.getAgentites());
+                    Stream<IAgentite> iAgentiteStream = copy.stream().filter(aCase -> aCase instanceof AbstractEntiteActive);
 
                     iAgentiteStream.forEach(iAgentite -> {
                         ((AbstractEntiteActive) iAgentite).ActionTour();
                     });
+                    iAgentiteStream.close();
                 }
             }
         }
