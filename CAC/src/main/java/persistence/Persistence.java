@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
-
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 import com.owlike.genson.GensonBuilder;
@@ -23,7 +21,16 @@ import com.owlike.genson.GensonBuilder;
 import domaine.Configuration;
 import interfaces.IPersistence;
 
+/**
+ * Cette classe est le composant offrant les services de persistence
+ * Pour se faire, elle écrit dans un fichier qu'il ne faut pas modifier !!
+ * cf . attribut filename
+ * @author rialy
+ * L'enregistrement se fait à l'aide de la sérialization Genson 
+ */
 public class Persistence implements IPersistence {
+	
+	private static final String FILENAME = "src/main/resources/bdd.json";
 
 	static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
@@ -35,7 +42,7 @@ public class Persistence implements IPersistence {
 		// TODO Auto-generated method stub
 		ArrayList<Configuration> res = new ArrayList<Configuration>();
 		try {
-			String content = readFile("src/main/resources/bdd.json", StandardCharsets.UTF_8);
+			String content = readFile(FILENAME, StandardCharsets.UTF_8);
 			Genson genson = new GensonBuilder().setSkipNull(true)/* .useClassMetadata(true) */.useRuntimeType(true)
 					.create();
 
@@ -65,7 +72,7 @@ public class Persistence implements IPersistence {
 	public boolean supprimerTout() {
 		PrintWriter pw;
 		try {
-			pw = new PrintWriter("src/main/resources/bdd.json");
+			pw = new PrintWriter(FILENAME);
 			pw.close();
 		} catch (FileNotFoundException e) {
 			return false;
@@ -83,12 +90,13 @@ public class Persistence implements IPersistence {
 
 		OutputStream os = null;
 		try {
-			File newfile = new File("src/main/resources/bdd.json");
-			System.out.println(newfile.canRead());
+			File newfile = new File(FILENAME);
 			os = new FileOutputStream(newfile);
 			os.write(res.getBytes(), 0, res.length());
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				os.close();
@@ -96,7 +104,6 @@ public class Persistence implements IPersistence {
 				e.printStackTrace();
 			}
 		}
-		return false;
 	}
 
 }
