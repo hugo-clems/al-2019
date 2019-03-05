@@ -1,11 +1,13 @@
 package environnement2d;
 
 import agent.AbstractAgent;
+import entites.AbstractEntiteActive;
 import entites.Obstacle;
 import plateau.Case;
 import plateau.IAgentite;
 import plateau.Plateau;
 import plateau.Position;
+import strategie.Runner;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +32,6 @@ public class PlateauComponent extends JComponent {
     private CasePaint casePaint = (caseToPaint, g, x, y, sizeMax) -> {
     };
     //endregion
-
 
     //region Contructors
     /**
@@ -121,5 +122,30 @@ public class PlateauComponent extends JComponent {
 
     public interface CasePaint {
         void onDraw(Case caseToPaint, Graphics g, int positionX, int positionY, int sizeMax);
+    }
+
+    private Runner.TourListener tourListener = () -> {
+        Map<Position, Case> positionCaseMap = this.plateau.getCases();
+
+        for (int x = 0; x < this.plateau.getColonne(); x++) {
+            for (int y = 0; y < this.plateau.getLigne(); y++) {
+                Case c = positionCaseMap.get(new Position(x, y));
+                if (c.getAgentites().size() != 0) {
+                    List<IAgentite> copy = new ArrayList<>(c.getAgentites());
+                    Stream<IAgentite> iAgentiteStream = copy.stream().filter(aCase -> aCase instanceof AbstractEntiteActive);
+
+                    iAgentiteStream.forEach(iAgentite -> {
+                        ((AbstractEntiteActive) iAgentite).ActionTour();
+                    });
+                    iAgentiteStream.close();
+                }
+            }
+        }
+
+        this.repaint();
+    };
+
+    public Runner.TourListener getTourListener() {
+        return tourListener;
     }
 }

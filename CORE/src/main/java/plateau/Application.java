@@ -52,6 +52,10 @@ public class Application {
     public void setCasePaint(PlateauComponent.CasePaint casePaint) {
         plateauComponent.setCasePaint(casePaint);
     }
+
+    public void setCaseSize(int size) {
+        plateauComponent.setCaseSize(size);
+    }
     //endregion
 
     //region Getters
@@ -60,6 +64,10 @@ public class Application {
      * @return plateau IAgentPlateau
      */
     public IAgentPlateau getIAgentPlateau() {
+        return this.mPlateau;
+    }
+
+    public IEntitePlateau getIEntitePlateau() {
         return this.mPlateau;
     }
     //endregion

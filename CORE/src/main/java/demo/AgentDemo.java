@@ -27,7 +27,7 @@ public class AgentDemo extends AbstractAgentSitue {
         Map<Direction, Case> environnement = this.detecter();
         if (this.getEntitePortee() != null) {
             count++;
-            if (count >= 3) {
+            if (count >= 5) {
                 count = 0;
                 this.deposer(this.getEntitePortee());
                 return;
