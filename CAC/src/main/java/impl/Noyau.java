@@ -1,35 +1,38 @@
 package impl;
 
 
+import MASInfrastructure.Communication.IMessage;
 import agent.AbstractAgentSocial;
 import domaine.AgentComposant;
 import domaine.Composant;
 import domaine.Configuration;
 import domaine.Connexion;
 import ihm.IVue;
-import ihm.VueImpl;
 import interfaces.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Noyau extends AbstractAgentSocial implements IEval{
 
+
+    private IVue iVue;
+    private IConnexion iConnexion;
+    private IPersistence iPersistence;
+    private SystemeRecommandation systemeRecommandation;
+
     private ArrayList<Configuration> configurations;
+    private ArrayList<Configuration> configurationsPossibles;
+    private ArrayList<Connexion> connexionsPossibles;
     private ArrayList<Configuration> configurationsASauvegarder;
 
-     private IVue iVue;
-     private IConnexion iConnexion;
-     private IPersistence iPersistence;
-     private SystemeRecommandation systemeRecommandation;
+
 
     public Noyau (IVue iVue,IConnexion iConnexion) {
-        this.iVue = new VueImpl();
+        this.iVue = iVue;
         this.iConnexion = iConnexion;
-        List<Configuration> configurationsASauvegarder = new ArrayList<>();
-        List<Configuration> configurations = new ArrayList<>();
-
+        configurationsASauvegarder = new ArrayList<>();
+        connexionsPossibles = new ArrayList<>();
     }
 
     private List<AgentComposant> creerAgents(){
@@ -47,40 +50,49 @@ public class Noyau extends AbstractAgentSocial implements IEval{
 
     @Override
     public void noterConfiguration(int configuration, Appreciation appreciation) {
-          /*  Configuration configurationASauvegarder = configurations.get(configuration);
+
+            Configuration configurationASauvegarder = configurations.get(configuration);
             Set <Connexion> connexions = configurationASauvegarder.getConnexions();
             ArrayList<Connexion> connexionsASauvegarder = new ArrayList<>();
-            connexionsASauvegarder.addAll(connexions);
+
             if(appreciation.equals(Appreciation.JAIME)){
-                for(Connexion connexion : connexions)
-              //      connexion.incrementerNote();
+                for(Connexion connexion : connexions){
+                    connexion.incrementerNote();
+                    connexions.add(connexion);
+                }
             }else{
-                for(Connexion connexion : connexions)
-                //    connexion.decrementerNote();
+
+                for(Connexion connexion : connexions){
+                    connexion.decrementerNote();
+                    connexions.add(connexion);
+                }
             }
-            //if (configuration == configurations.size());
-           // iPersistence.sauvegarder(connexionsASauvegarder);*/
+
+            if (configuration == configurations.size()){
+                connexionsASauvegarder.addAll(connexions);
+                iPersistence.sauvegarderConnexion(connexionsASauvegarder);
+            }
     }
+
 
     @Override
-    public List<Configuration> Configurations() {
-        return null;
+    public List<Configuration> configurations() {
+        connexionsPossibles = null;
+        return null;//iPersistence.trouverConnexion(connexionsPossibles);
     }
 
-    /*public List<Configuration> recevoirConnexionPossibles(){
 
-    }
-*/
+   /* public List<MessageAgentAuNoyeau> recevoirMessage() {
 
+        for (AbstractMessage msg : super.recevoirMessages()) {
+            if ( msg instanceof  MessageAgentAuNoyeau){
+                MessageAgentAuNoyeau message = (MessageAgentAuNoyeau) msg;
+                messageRecus.add(message);
+                connexionsPossbile.addAll(message.getCouplePossible());
+            }
+        }
+        return messageRecus;
 
-    public List<Configuration> configurations(){
-        List<Configuration> configurations = new ArrayList<>();
-        List<Configuration> configurationsRecommandees = new ArrayList<>();
-        configurations = iPersistence.trouverTous();
-        //configurationsRecommandees = systemeRecommandation.choisirConfiguration(configurations);
-        return null;
-
-    }
-
+    }*/
 
 }

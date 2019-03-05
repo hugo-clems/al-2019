@@ -9,5 +9,5 @@ public interface IEval {
 
     void noterConfiguration(int configuration, Appreciation appreciation);
 
-    List<Configuration> Configurations();
+    List<Configuration> configurations();
 }
