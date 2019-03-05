@@ -15,10 +15,10 @@ import static common.Direction.E;
 public class Fourmi extends AbstractAgentSitue {
 
     private final Position positionNid;
-    private boolean estEnPhaseAller = true;
-    private boolean nourritureTrouvee = false;
-    private boolean estSurNid = true;
-    private Boolean suitPheromoneAller = false;
+    private boolean estEnPhaseAller;
+    private boolean nourritureTrouvee;
+    private boolean estSurNid;
+    private Boolean suitPheromoneAller;
     private IAgentPlateau iAgentPlateau;
 
     private Map<Direction, Integer> poids;
@@ -31,6 +31,10 @@ public class Fourmi extends AbstractAgentSitue {
         super(nom, iAgentPlateau);
         this.iAgentPlateau = iAgentPlateau;
         this.positionNid = positionNid;
+        estEnPhaseAller = true;
+        nourritureTrouvee = false;
+        estSurNid = true;
+        suitPheromoneAller = false;
         poids = createMap();
     }
 
@@ -156,7 +160,7 @@ public class Fourmi extends AbstractAgentSitue {
                 // Si la case contient de la nourriture
                 if (agentite instanceof Nourriture) {
 
-                    //se tourner versla nourriture
+                    //se tourner vers la nourriture
                     seTournerVers(myDirection);
 
                     //enlever 1pv à la nourriture
@@ -170,6 +174,8 @@ public class Fourmi extends AbstractAgentSitue {
                     }
 
                     aRamasseNourriture = true;
+                    estEnPhaseAller = false;
+                    estSurNid = false;
                     break;
                 }
             }
@@ -185,11 +191,6 @@ public class Fourmi extends AbstractAgentSitue {
         int rnd = 0; //Variable aleatoire pour calculer le deplacement
         int tmp = 0;
         Map<Direction, Integer> poidsTaux = new HashMap<Direction, Integer>();
-        int posX = 0;
-        int posY = 0;
-
-        posX = this.plateau.getCase(this).getPosition().getX();
-        posY = this.plateau.getCase(this).getPosition().getY();
 
         estEnPhaseAller = false;
 
@@ -203,8 +204,7 @@ public class Fourmi extends AbstractAgentSitue {
         if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
             estSurNid = true;
         }
-
-        if (posX != getPositionNid().getX() && posY != getPositionNid().getY()) {
+        else {
             initPoinds(this.getDirection());
 
             //On analyse le voisinnage
@@ -248,7 +248,7 @@ public class Fourmi extends AbstractAgentSitue {
      */
     public int calculerSomme(){
         int somme = 0;
-        int taux = 0;
+
         // On analyse le voisinnage
         Map<Direction, Case> voisinnage = detecter();
         for(Map.Entry<Direction, Case> entry : voisinnage.entrySet()) {
@@ -265,84 +265,84 @@ public class Fourmi extends AbstractAgentSitue {
     public void initPoinds(Direction d){
         switch (d) {
             case NO:
-                poids.put(Direction.O, 20);
-                poids.put(Direction.NO, 20);
-                poids.put(Direction.N, 20);
-                poids.put(Direction.NE, 10);
-                poids.put(Direction.E, 5);
-                poids.put(Direction.SE, 5);
-                poids.put(Direction.S, 5);
-                poids.put(Direction.SO, 10);
+                poids.replace(Direction.O, 20);
+                poids.replace(Direction.NO, 20);
+                poids.replace(Direction.N, 20);
+                poids.replace(Direction.NE, 10);
+                poids.replace(Direction.E, 5);
+                poids.replace(Direction.SE, 5);
+                poids.replace(Direction.S, 5);
+                poids.replace(Direction.SO, 10);
                 break;
             case N:
-                poids.put(Direction.O, 10);
-                poids.put(Direction.NO, 20);
-                poids.put(Direction.N, 20);
-                poids.put(Direction.NE, 20);
-                poids.put(Direction.E, 10);
-                poids.put(Direction.SE, 5);
-                poids.put(Direction.S, 5);
-                poids.put(Direction.SO, 5);
+                poids.replace(Direction.O, 10);
+                poids.replace(Direction.NO, 20);
+                poids.replace(Direction.N, 20);
+                poids.replace(Direction.NE, 20);
+                poids.replace(Direction.E, 10);
+                poids.replace(Direction.SE, 5);
+                poids.replace(Direction.S, 5);
+                poids.replace(Direction.SO, 5);
                 break;
             case NE:
-                poids.put(Direction.O, 5);
-                poids.put(Direction.NO, 10);
-                poids.put(Direction.N, 20);
-                poids.put(Direction.NE, 20);
-                poids.put(Direction.E, 20);
-                poids.put(Direction.SE, 10);
-                poids.put(Direction.S, 5);
-                poids.put(Direction.SO, 5);
+                poids.replace(Direction.O, 5);
+                poids.replace(Direction.NO, 10);
+                poids.replace(Direction.N, 20);
+                poids.replace(Direction.NE, 20);
+                poids.replace(Direction.E, 20);
+                poids.replace(Direction.SE, 10);
+                poids.replace(Direction.S, 5);
+                poids.replace(Direction.SO, 5);
                 break;
             case E:
-                poids.put(Direction.O, 5);
-                poids.put(Direction.NO, 5);
-                poids.put(Direction.N, 10);
-                poids.put(Direction.NE, 20);
-                poids.put(Direction.E, 20);
-                poids.put(Direction.SE, 20);
-                poids.put(Direction.S, 10);
-                poids.put(Direction.SO, 5);
+                poids.replace(Direction.O, 5);
+                poids.replace(Direction.NO, 5);
+                poids.replace(Direction.N, 10);
+                poids.replace(Direction.NE, 20);
+                poids.replace(Direction.E, 20);
+                poids.replace(Direction.SE, 20);
+                poids.replace(Direction.S, 10);
+                poids.replace(Direction.SO, 5);
                 break;
             case SE:
-                poids.put(Direction.O, 5);
-                poids.put(Direction.NO, 5);
-                poids.put(Direction.N, 5);
-                poids.put(Direction.NE, 10);
-                poids.put(Direction.E, 20);
-                poids.put(Direction.SE, 20);
-                poids.put(Direction.S, 20);
-                poids.put(Direction.SO, 10);
+                poids.replace(Direction.O, 5);
+                poids.replace(Direction.NO, 5);
+                poids.replace(Direction.N, 5);
+                poids.replace(Direction.NE, 10);
+                poids.replace(Direction.E, 20);
+                poids.replace(Direction.SE, 20);
+                poids.replace(Direction.S, 20);
+                poids.replace(Direction.SO, 10);
                 break;
             case S:
-                poids.put(Direction.O, 10);
-                poids.put(Direction.NO, 5);
-                poids.put(Direction.N, 5);
-                poids.put(Direction.NE, 5);
-                poids.put(Direction.E, 10);
-                poids.put(Direction.SE, 20);
-                poids.put(Direction.S, 20);
-                poids.put(Direction.SO, 20);
+                poids.replace(Direction.O, 10);
+                poids.replace(Direction.NO, 5);
+                poids.replace(Direction.N, 5);
+                poids.replace(Direction.NE, 5);
+                poids.replace(Direction.E, 10);
+                poids.replace(Direction.SE, 20);
+                poids.replace(Direction.S, 20);
+                poids.replace(Direction.SO, 20);
                 break;
             case SO:
-                poids.put(Direction.O, 20);
-                poids.put(Direction.NO, 10);
-                poids.put(Direction.N, 5);
-                poids.put(Direction.NE, 5);
-                poids.put(Direction.E, 5);
-                poids.put(Direction.SE, 10);
-                poids.put(Direction.S, 20);
-                poids.put(Direction.SO, 20);
+                poids.replace(Direction.O, 20);
+                poids.replace(Direction.NO, 10);
+                poids.replace(Direction.N, 5);
+                poids.replace(Direction.NE, 5);
+                poids.replace(Direction.E, 5);
+                poids.replace(Direction.SE, 10);
+                poids.replace(Direction.S, 20);
+                poids.replace(Direction.SO, 20);
                 break;
             case O:
-                poids.put(Direction.O, 20);
-                poids.put(Direction.NO, 20);
-                poids.put(Direction.N, 10);
-                poids.put(Direction.NE, 5);
-                poids.put(Direction.E, 5);
-                poids.put(Direction.SE, 5);
-                poids.put(Direction.S, 10);
-                poids.put(Direction.SO, 20);
+                poids.replace(Direction.O, 20);
+                poids.replace(Direction.NO, 20);
+                poids.replace(Direction.N, 10);
+                poids.replace(Direction.NE, 5);
+                poids.replace(Direction.E, 5);
+                poids.replace(Direction.SE, 5);
+                poids.replace(Direction.S, 10);
+                poids.replace(Direction.SO, 20);
                 break;
         }
     }
