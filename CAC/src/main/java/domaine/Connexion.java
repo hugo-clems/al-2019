@@ -64,7 +64,23 @@ public class Connexion extends Recommandable implements Serializable {
 			return false;
 		return true;
 	}
-    
+	public boolean equalsIdPort(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Connexion other = (Connexion) obj;
+		return (other.getFourni() != null 
+				&& other.getFourni().getId() !=null 
+				&&other.getRequis() != null 
+				&& other.getRequis().getId() !=null 
+				&&  other.getFourni().getId().equals(this.getFourni().getId()) 
+				&& other.getRequis().getId().equals(this.getRequis().getId()));
+		
+		}
+	}
     
 
 }

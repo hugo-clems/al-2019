@@ -145,7 +145,7 @@ public class Persistence implements IPersistence {
 			});
 			for(Connexion c : resultv) {
 				for(Connexion a : array)
-				if(c.equals(a)) {
+				if(c.equalsIdPort(a)) {
 					res.add(c);
 				}
 			}
