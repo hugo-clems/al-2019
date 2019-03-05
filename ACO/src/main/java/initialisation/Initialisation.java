@@ -23,8 +23,15 @@ public class Initialisation {
 
     private Application application;
 
+    //Pour les nuances de couleur de phéromones
+    private int nbFourmis;
+
     public Application getApplication() {
         return application;
+    }
+
+    public int getNbFourmis() {
+        return this.nbFourmis;
     }
 
     class PositionNid{
@@ -109,6 +116,7 @@ public class Initialisation {
                                                     Position posNid = nid_position.getPosition_nid();
                                                     int nb_fourmis = initFourmis(type_entite,nid,posNid);
                                                     nid.setNbFourmis(nb_fourmis);
+                                                    this.nbFourmis=nb_fourmis;
                                                 break;
                                             case "obstacles":
                                                 initObstacles(type_entite);
@@ -273,6 +281,8 @@ public class Initialisation {
 
         Application application = init.application;
 
+        int nbFourmi=init.getNbFourmis();
+
         application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
 
             Stream<IAgentite> streamFourmi = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Fourmi);
@@ -293,10 +303,27 @@ public class Initialisation {
                 graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
             }
 
+            int pallierPheromone = nbFourmi/3;
+            if(nbFourmi<3){
+                pallierPheromone=1;
+            }
+
             Stream<IAgentite> streamPheromone = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Pheromone);
             if (streamPheromone.count() > 0) {
-                graphics.setColor(Color.RED);
-                graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                Pheromone p = (Pheromone)caseToPaint.getAgentites().get(0);
+                int tauxPheromone = p.getTauxPheromone();
+                if(tauxPheromone>0 && tauxPheromone<pallierPheromone){
+                    graphics.setColor(Color.decode("#F0D581"));
+                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                }
+                if(tauxPheromone>pallierPheromone && tauxPheromone<(pallierPheromone*2)){
+                    graphics.setColor(Color.decode("#FF8903"));
+                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                }
+                if(tauxPheromone>(pallierPheromone*2)){
+                    graphics.setColor(Color.decode("#FF0000"));
+                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                }
             }
         });
 

@@ -12,7 +12,7 @@
                 <y>4</y>
             </position>
         </nid>
-        <fourmis>2</fourmis>
+        <fourmis>100</fourmis>
         <nourritures>
             <nourriture>
                 <quantite>50</quantite>
@@ -25,7 +25,7 @@
                 <quantite>60</quantite>
                 <position>
                     <x>15</x>
-                    <y>15</y>
+                    <y>10</y>
                 </position>
             </nourriture>
         </nourritures>
