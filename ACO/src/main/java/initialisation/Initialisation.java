@@ -310,20 +310,25 @@ public class Initialisation {
 
             Stream<IAgentite> streamPheromone = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Pheromone);
             if (streamPheromone.count() > 0) {
-                Pheromone p = (Pheromone)caseToPaint.getAgentites().get(0);
-                int tauxPheromone = p.getTauxPheromone();
-                if(tauxPheromone>0 && tauxPheromone<pallierPheromone){
-                    graphics.setColor(Color.decode("#F0D581"));
-                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                for(IAgentite agentite:caseToPaint.getAgentites()) {
+                    if(agentite instanceof Pheromone){
+                        Pheromone p = (Pheromone)agentite;
+                        int tauxPheromone = p.getTauxPheromone();
+                        if(tauxPheromone>0 && tauxPheromone<pallierPheromone){
+                            graphics.setColor(Color.decode("#F0D581"));
+                            graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                        }
+                        if(tauxPheromone>pallierPheromone && tauxPheromone<(pallierPheromone*2)){
+                            graphics.setColor(Color.decode("#FF8903"));
+                            graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                        }
+                        if(tauxPheromone>(pallierPheromone*2)){
+                            graphics.setColor(Color.decode("#FF0000"));
+                            graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                        }
+                    }
                 }
-                if(tauxPheromone>pallierPheromone && tauxPheromone<(pallierPheromone*2)){
-                    graphics.setColor(Color.decode("#FF8903"));
-                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
-                }
-                if(tauxPheromone>(pallierPheromone*2)){
-                    graphics.setColor(Color.decode("#FF0000"));
-                    graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
-                }
+
             }
         });
 
