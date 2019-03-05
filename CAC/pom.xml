@@ -29,5 +29,12 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.owlike/genson -->
+	<dependency>
+    <groupId>com.owlike</groupId>
+    <artifactId>genson</artifactId>
+    <version>1.4</version>
+</dependency>
+
     </dependencies>
 </project>

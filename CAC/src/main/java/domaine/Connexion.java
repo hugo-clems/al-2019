@@ -1,13 +1,21 @@
 package domaine;
 
-public class Connexion extends Recommandable {
+import java.io.Serializable;
 
-    private Port fourni;
+public class Connexion extends Recommandable implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7856893215103074382L;
+	private Port fourni;
     private Port requis;
 
     public Connexion(Port fourni, Port requis) {
         this.fourni = fourni;
         this.requis = requis;
+    }
+    public Connexion() {
     }
 
     public Port getFourni() {
@@ -25,6 +33,39 @@ public class Connexion extends Recommandable {
     public void setRequis(Port requis) {
         this.requis = requis;
     }
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fourni == null) ? 0 : fourni.hashCode());
+		result = prime * result + ((requis == null) ? 0 : requis.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Connexion other = (Connexion) obj;
+		if (fourni == null) {
+			if (other.fourni != null)
+				return false;
+		} else if (!fourni.equals(other.fourni))
+			return false;
+		if (requis == null) {
+			if (other.requis != null)
+				return false;
+		} else if (!requis.equals(other.requis))
+			return false;
+		return true;
+	}
+    
+    
 
     @Override
     public String toString(){

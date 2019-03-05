@@ -1,14 +1,20 @@
 package domaine;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  *
  */
-public class Composant {
+public class Composant implements Serializable{
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5585017048919772280L;
+
+	/**
      * Nom du composant
      */
     private String nom;
@@ -25,7 +31,8 @@ public class Composant {
     public Composant(String name) {
         this.nom = name;
     }
-
+    public Composant() {
+    }
     public String getNom() {
         return nom;
     }
@@ -67,5 +74,43 @@ public class Composant {
     public void ajouterPortRequis(Port p) {
         portRequis.add(p);
     }
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		result = prime * result + ((portFournis == null) ? 0 : portFournis.hashCode());
+		result = prime * result + ((portRequis == null) ? 0 : portRequis.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Composant other = (Composant) obj;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		if (portFournis == null) {
+			if (other.portFournis != null)
+				return false;
+		} else if (!portFournis.equals(other.portFournis))
+			return false;
+		if (portRequis == null) {
+			if (other.portRequis != null)
+				return false;
+		} else if (!portRequis.equals(other.portRequis))
+			return false;
+		return true;
+	}
+    
+    
 
 }
