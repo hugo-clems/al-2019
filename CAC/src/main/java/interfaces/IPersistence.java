@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import domaine.Configuration;
 
 public interface IPersistence {
-		
+	
+	/**
+	 * Retourne toutes les configurations qui ont été persistées
+	 * @return La liste des configuration dans la base de données
+	 */
 	public ArrayList<Configuration> trouverTous();
 	
 	/**
@@ -15,8 +19,17 @@ public interface IPersistence {
 	 */
 	public Configuration trouverParID(String id);
 	
-	
+	/**
+	 * Persiste une configuration en l'écrivant dans le fichier
+	 * @param configurationAPersister
+	 * @return true si la sauvegarde s'est bien passé
+	 */
 	public boolean sauvegarder(ArrayList<Configuration> configurationAPersister);
+	
+	/**
+	 * Vide la base de données
+	 * @return true si la suppression s'est bien passé
+	 */
 	public boolean supprimerTout();
 
 }
