@@ -36,6 +36,15 @@ public class Port implements Serializable{
     }
     
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((composant == null) ? 0 : composant.hashCode());
+		result = prime * result + ((service == null) ? 0 : service.hashCode());
+		return result;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

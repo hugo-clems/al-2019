@@ -82,6 +82,7 @@ public class PersistenceTest {
 		ArrayList<Configuration> getted = persistance.trouverTous();
 		assert(configurationsAPersister.containsAll(getted));
 	}
+	
 	@Test
 	public void testTrouverParId() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
@@ -106,7 +107,7 @@ public class PersistenceTest {
 		persistance.supprimerTout();
 		
 		ArrayList<Configuration> retrieved = persistance.trouverTous();
-		assertTrue(retrieved.size() == 0);
+		assertTrue(retrieved == null);
 	}
 
 	@Test
