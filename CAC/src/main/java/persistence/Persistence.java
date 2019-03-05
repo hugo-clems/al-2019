@@ -30,7 +30,7 @@ import interfaces.IPersistence;
  */
 public class Persistence implements IPersistence {
 	
-	private static final String FILENAME = "src/main/resources/bdd.json";
+	public static final String FILENAME = "src/main/resources/bdd.json";
 
 	static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));

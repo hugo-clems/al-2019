@@ -3,8 +3,6 @@ package persistence;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -53,7 +51,7 @@ public class PersistenceTest {
 		persistance.sauvegarder(configurationsAPersister);
 		ArrayList<Configuration> getted = persistance.trouverTous();
 		assert (configurationsAPersister.containsAll(getted));
-		PrintWriter pw = new PrintWriter("src/main/resources/bdd.json");
+		PrintWriter pw = new PrintWriter(Persistence.FILENAME);
 		pw.close();
 	}
 
@@ -99,7 +97,7 @@ public class PersistenceTest {
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		persistance.supprimerTout();
-		String content = Persistence.readFile("src/main/resources/bdd.json", StandardCharsets.UTF_8);
+		String content = Persistence.readFile(Persistence.FILENAME, StandardCharsets.UTF_8);
 		assertTrue(content.isEmpty());
 	}
 }
