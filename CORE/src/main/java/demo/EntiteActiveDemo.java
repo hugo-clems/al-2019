@@ -11,4 +11,9 @@ public class EntiteActiveDemo extends AbstractEntiteActive {
     public EntiteActiveDemo(String nom) {
         super(nom);
     }
+
+    @Override
+    public void ActionTour() {
+
+    }
 }

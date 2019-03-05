@@ -60,7 +60,6 @@ public class Window {
         this.frame.setContentPane(panel);
         this.frame.pack();
         this.frame.setMinimumSize(new Dimension(400,400));
-        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setVisible(true);
     }
 
@@ -73,7 +72,7 @@ public class Window {
         panel.addButton(this.pause);
         panel.addButton(this.stop);
 
-        strategie.setTourListener(panel.getTourListener());
+        strategie.setTourListener(plateau.getTourListener());
 
         this.setContent(panel);
     }

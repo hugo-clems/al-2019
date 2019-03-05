@@ -27,7 +27,13 @@ public class Main {
         agent3.setDirection(Direction.SE);
         application.placerAgentite(new Position(1, 1), agent3);
 
-        application.placerAgentite(new Position(10, 10), new EntitePasiveDemo("pasiveTest"));
+        AgentDemo agent4 = new AgentDemo(application.getIAgentPlateau());
+        agent4.setDirection(Direction.NE);
+        application.placerAgentite(new Position(3, 3), agent4);
+
+        application.placerAgentite(new Position(3, 3), new EntiteActiveDemo("activeTest"));
+
+        application.placerAgentite(new Position(10, 10), new EntitePasiveDemo("passiveTest"));
         //endregion
 
         //region Personalisation de l'affichage

@@ -9,4 +9,8 @@ public abstract class AbstractEntiteActive extends AbstractEntite {
     public AbstractEntiteActive(String nom) {
         super(nom);
     }
+
+    public void ActionTour() {
+        // todo walid
+    }
 }
