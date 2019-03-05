@@ -27,15 +27,15 @@ public class AgentComposantTest {
     public void setUp (){
 
         composant1 = new Composant("comp1");
-        composant1.ajouterPortRequis(new Port(composant1,"s1", UUID.randomUUID()));
+        composant1.ajouterPortRequis(new Port(composant1,"s1"));
 
         composant2 = new Composant("comp2");
-        composant2.ajouterPortFourni(new Port(composant2,"s1", UUID.randomUUID()));
-        composant2.ajouterPortFourni(new Port(composant2,"s2", UUID.randomUUID()));
+        composant2.ajouterPortFourni(new Port(composant2,"s1"));
+        composant2.ajouterPortFourni(new Port(composant2,"s2"));
 
         composant3 = new Composant("comp3");
-        composant3.ajouterPortFourni(new Port(composant3,"s1", UUID.randomUUID()));
-        composant3.ajouterPortRequis(new Port(composant3,"s2", UUID.randomUUID()));
+        composant3.ajouterPortFourni(new Port(composant3,"s1"));
+        composant3.ajouterPortRequis(new Port(composant3,"s2"));
 
         agent1 = new AgentComposant(composant1,noyeau);
         agent2 = new AgentComposant(composant2,noyeau);

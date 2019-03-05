@@ -4,21 +4,14 @@ import java.util.UUID;
 
 public class Port {
 
-    private UUID uuid;
     private Composant composant;
     private String service;
+    private UUID uuid ;
 
     public Port(Composant composant, String service) {
         this.composant = composant;
         this.service = service;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+        this.uuid= UUID.randomUUID();
     }
 
     public String getService() {
@@ -37,12 +30,21 @@ public class Port {
         this.composant = composant;
     }
 
-    public boolean equals(Port port) {
-        return this.uuid.equals(port.getUuid());
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public int hashCode() {
-        return uuid.hashCode();
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Port p =(Port) obj;
+        if (p.service.equals(this.service) && !this.composant.getNom().equals(p.composant.getNom()) )
+            return true ;
+        else {
+            return false;
+        }
+    }
 }
