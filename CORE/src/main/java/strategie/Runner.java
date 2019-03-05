@@ -60,10 +60,6 @@ public class Runner implements Runnable {
         this.isRunning = running;
     }
 
-    public void suspend() {
-
-    }
-
     public interface TourListener {
         void refresh();
     }

@@ -83,6 +83,7 @@ public class Window {
      */
     private void startStrategie(ActionEvent e) {
         this.strategie.lancer();
+        this.pause.setEnabled(true);
     }
 
     /**
@@ -91,6 +92,8 @@ public class Window {
      */
     private void stopStrategie(ActionEvent e) {
         this.strategie.arreter();
+        this.pause.setEnabled(false);
+        this.pause.setText("Pause");
     }
 
     /**
