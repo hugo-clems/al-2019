@@ -10,16 +10,26 @@ public class Port implements Serializable{
 	private static final long serialVersionUID = -9056062783144620502L;
 	private Composant composant;
     private String service;
-
-    public Port(Composant composant, String service) {
+    private String id;
+    public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public Port(Composant composant, String service, String id) {
         this.composant = composant;
         this.service = service;
+        this.id = id;
     }
     public Port() {
     	
     }
 
-    public String getService() {
+    public Port(Composant composant, String service) {
+		this(composant, service, "");
+	}
+	public String getService() {
         return service;
     }
 

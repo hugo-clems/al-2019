@@ -30,8 +30,8 @@ public class PersistenceTest {
 		composant1 = new Composant("comp1");
 		composant2 = new Composant("comp2");
 
-		portR = new Port(null, "s1");
-		portF = new Port(null, "s1");
+		portR = new Port(null, "s1", "idR");
+		portF = new Port(null, "s1", "idF");
 
 		composant1.ajouterPortRequis(portR);
 		composant2.ajouterPortFourni(portF);
@@ -46,58 +46,84 @@ public class PersistenceTest {
 
 	@Test
 	public void testSauvegarder() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
-		ArrayList<Configuration> getted = persistance.trouverTous();
-		assert (configurationsAPersister.containsAll(getted));
+		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+		connexionsAPersister.add(connexion);
+		persistance.sauvegarderConnexion(connexionsAPersister);
+		ArrayList<Connexion> getted = persistance.trouverTous();
+		assert (connexionsAPersister.containsAll(getted));
 		PrintWriter pw = new PrintWriter(Persistence.FILENAME);
 		pw.close();
 	}
 
 	@Test
 	public void testTrouverTous() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
-		ArrayList<Configuration> getted = persistance.trouverTous();
-		assert (configurationsAPersister.containsAll(getted));
+		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+		connexionsAPersister.add(connexion);
+		persistance.sauvegarderConnexion(connexionsAPersister);
+		ArrayList<Connexion> getted = persistance.trouverTous();
+		assert (connexionsAPersister.containsAll(getted));
 	}
 
-	@Test
-	public void testTrouverParId() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
-		Configuration getted = persistance.trouverParID(configuration.getId());
-		assert (configuration.equals(getted));
-	}
+//	@Test
+//	public void testTrouverParId() throws IOException {
+//		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+//		connexionsAPersister.add(connexion);
+//		persistance.sauvegarderConnexion(connexionsAPersister);
+//		Configuration getted = persistance.trouverParID(configuration.getId());
+//		assert (configuration.equals(getted));
+//	}
 
 	@Test
 	public void testSupprimerToutFonctionner() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
+		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+		connexionsAPersister.add(connexion);
+		persistance.sauvegarderConnexion(connexionsAPersister);
 		assertTrue(persistance.supprimerTout());
 	}
 
 	@Test
 	public void testSupprimerToutListeVide() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
+		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+		connexionsAPersister.add(connexion);
+		persistance.sauvegarderConnexion(connexionsAPersister);
 		persistance.supprimerTout();
-		ArrayList<Configuration> retrieved = persistance.trouverTous();
+		ArrayList<Connexion> retrieved = persistance.trouverTous();
 		assertTrue(retrieved.isEmpty());
 	}
 
 	@Test
 	public void testSupprimerToutVideFichier() throws IOException {
-		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		configurationsAPersister.add(configuration);
-		persistance.sauvegarder(configurationsAPersister);
+		ArrayList<Connexion> connexionsAPersister = new ArrayList<Connexion>();
+		connexionsAPersister.add(connexion);
+		persistance.sauvegarderConnexion(connexionsAPersister);
 		persistance.supprimerTout();
 		String content = Persistence.readFile(Persistence.FILENAME, StandardCharsets.UTF_8);
 		assertTrue(content.isEmpty());
+	}
+
+	@Test
+	public void testTrouverConnexion() throws IOException {
+		ArrayList<Connexion> expectedList = new ArrayList<Connexion>();
+		ArrayList<Connexion> actualList = new ArrayList<Connexion>();
+		
+		/* On met la note à 1 */
+		connexion.incrementerNote();
+		
+		/* On l'ajoute à la liste à persister */
+		expectedList.add(connexion);
+		
+		/* On la persiste */
+//		System.out.println(connexion.getNbLikes());
+		persistance.sauvegarderConnexion(expectedList);
+		
+		/* Et on met sa note à 0 */
+		connexion.setNbLikes(0);
+		
+		/* Lorsqu'on passe la liste en paramètre */
+		actualList = persistance.trouverConnexion(expectedList);
+//		System.out.println(actualList.get(0).getNbLikes());
+		
+		/*on doit avoir la note remise à jour */
+		assertTrue(actualList.get(0).getNbLikes() == 1);
 	}
 }

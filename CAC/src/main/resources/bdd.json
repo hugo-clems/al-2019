@@ -1,1 +1,1 @@
-[{"connexions":[{"fourni":{"service":"s1"},"requis":{"service":"s1"}}],"id":"01"}]
+[{"fourni":{"id":"idF","service":"s1"},"nbLikes":1,"requis":{"id":"idR","service":"s1"}}]
