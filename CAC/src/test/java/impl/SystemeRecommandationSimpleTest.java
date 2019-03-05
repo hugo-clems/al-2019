@@ -7,6 +7,8 @@ import domaine.Port;
 import interfaces.SystemeRecommandation;
 import org.junit.*;
 
+import java.util.UUID;
+
 public class SystemeRecommandationSimpleTest {
 
     private SystemeRecommandation systemeRecommandation;
@@ -24,8 +26,8 @@ public class SystemeRecommandationSimpleTest {
         composant1 = new Composant("comp1");
         composant2 = new Composant("comp2");
 
-        portR = new Port(composant1,"s1");
-        portF = new Port(composant2,"s1");
+        portR = new Port(composant1,"s1", UUID.randomUUID());
+        portF = new Port(composant2,"s1",UUID.randomUUID());
 
         composant1.ajouterPortRequis(portR);
         composant2.ajouterPortFourni(portF);
