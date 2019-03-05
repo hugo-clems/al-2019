@@ -1,6 +1,11 @@
 package interfaces;
 
+import domaine.Configuration;
+import domaine.Connexion;
 import domaine.Recommandable;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface SystemeRecommandation {
 
@@ -11,5 +16,6 @@ public interface SystemeRecommandation {
      * @return valeur d'intérêt d'un Recommandable exprimée en pourcentage
      */
     int calculValeurInteret(Recommandable recommandable);
+    List<Configuration> choisirConfiguration(HashMap<Connexion,Integer> connexionsNotees);
 
 }

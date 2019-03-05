@@ -7,17 +7,19 @@ import domaine.Composant;
 import domaine.Configuration;
 import ihm.IVue;
 import ihm.VueImpl;
-import interfaces.IConnexion;
-import interfaces.IEval;
+import interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Noyau extends AbstractAgentSocial implements IEval{
 
+    private List<AgentComposant> listAgents;
+
      private IVue iVue;
      private IConnexion iConnexion;
-     //private IPersistence iPersistence;
+     private IPersistence iPersistence;
+     private SystemeRecommandation systemeRecommandation;
 
     public Noyau (IVue iVue,IConnexion iConnexion) {
         this.iVue = new VueImpl();
@@ -27,7 +29,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     private List<AgentComposant> creerAgents(){
 
         List<Composant> composants = iVue.entrerConfiguration();
-        List<AgentComposant> listAgents = new ArrayList<>();
+        listAgents = new ArrayList<>();
         AgentComposant abstractAgentSocial;
         for(Composant composant : composants){
             abstractAgentSocial = new AgentComposant(composant, this);
@@ -37,14 +39,27 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     }
 
 
+    @Override
+    public void noterConfiguration(int indice, Appreciation a) {
+
+        if (indice == listAgents.size()){
+
+        }
+    }
 
     /*public List<Configuration> recevoirConnexionPossibles(){
 
     }
 */
-    @Override
-    public List<Configuration> noterConfiguration() {
+
+
+    public List<Configuration> configurations(){
+        List<Configuration> configurations = new ArrayList<>();
+        List<Configuration> configurationsRecommandees = new ArrayList<>();
+        configurations = iPersistence.trouverTous();
+        //configurationsRecommandees = systemeRecommandation.choisirConfiguration(configurations);
         return null;
     }
+
 
 }

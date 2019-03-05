@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IEval {
 
-    List<Configuration>  noterConfiguration();
+    void noterConfiguration(int indice, Appreciation a);
 }
