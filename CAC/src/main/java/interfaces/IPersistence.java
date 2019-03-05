@@ -3,6 +3,7 @@ package interfaces;
 import java.util.ArrayList;
 
 import domaine.Configuration;
+import domaine.Connexion;
 
 public interface IPersistence {
 	
@@ -31,5 +32,9 @@ public interface IPersistence {
 	 * @return true si la suppression s'est bien passé
 	 */
 	public boolean supprimerTout();
+	
+	public ArrayList<Connexion> trouverConnexion(ArrayList<Connexion> array);
+
+	boolean sauvegarderConnexion(ArrayList<Connexion> connexionAPersister);
 
 }

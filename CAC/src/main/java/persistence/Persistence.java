@@ -19,6 +19,7 @@ import com.owlike.genson.Genson;
 import com.owlike.genson.GensonBuilder;
 
 import domaine.Configuration;
+import domaine.Connexion;
 import interfaces.IPersistence;
 
 /**
@@ -104,6 +105,55 @@ public class Persistence implements IPersistence {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	@Override
+	public boolean sauvegarderConnexion(ArrayList<Connexion> connexionAPersister) {
+		// TODO Auto-generated method stub
+
+		Genson genson = new GensonBuilder().setSkipNull(true)/* .useClassMetadata(true) */.useRuntimeType(true)
+				.create();
+		String res = genson.serialize(connexionAPersister);
+
+		OutputStream os = null;
+		try {
+			File newfile = new File(FILENAME);
+			os = new FileOutputStream(newfile);
+			os.write(res.getBytes(), 0, res.length());
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public ArrayList<Connexion> trouverConnexion(ArrayList<Connexion> array) {
+		ArrayList<Connexion> res = new ArrayList<Connexion>();
+		try {
+			String content = readFile(FILENAME, StandardCharsets.UTF_8);
+			Genson genson = new GensonBuilder().setSkipNull(true)/* .useClassMetadata(true) */.useRuntimeType(true)
+					.create();
+
+			ArrayList<Connexion> resultv = genson.deserialize(content, new GenericType<ArrayList<Connexion>>() {
+			});
+			for(Connexion c : resultv) {
+				for(Connexion a : array)
+				if(c.equals(a)) {
+					res.add(c);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 }
