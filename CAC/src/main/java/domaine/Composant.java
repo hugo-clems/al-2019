@@ -17,6 +17,7 @@ public class Composant {
      * Port fournis par le composant
      */
     private Set<Port> portFournis = new HashSet<>();
+
     /**
      * Port requis par le composant
      */

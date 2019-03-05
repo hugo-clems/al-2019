@@ -2,16 +2,23 @@ package domaine;
 
 import java.util.UUID;
 
-public class Port  {
+public class Port {
 
+    private UUID uuid;
     private Composant composant;
     private String service;
-    private UUID uuid;
 
-    public Port(Composant composant, String service, UUID uuid) {
+    public Port(Composant composant, String service) {
         this.composant = composant;
         this.service = service;
-        this.uuid= uuid;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getService() {
@@ -30,21 +37,12 @@ public class Port  {
         this.composant = composant;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public boolean equals(Port port) {
+        return this.uuid.equals(port.getUuid());
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public int hashCode() {
+        return uuid.hashCode();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Port p =(Port) obj;
-         if (p.service.equals(this.service) && !this.composant.getNom().equals(p.composant.getNom()) )
-            return true ;
-         else {
-             return false;
-         }
-    }
 }

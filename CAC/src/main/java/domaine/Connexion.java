@@ -1,13 +1,28 @@
 package domaine;
 
-public class Connexion extends Recommandable {
+import java.util.UUID;
+
+public class Connexion {
+
+    private UUID uuid;
 
     private Port fourni;
     private Port requis;
 
+    private Integer nbApprobation;
+    private Integer nbOccurence;
+
     public Connexion(Port fourni, Port requis) {
         this.fourni = fourni;
         this.requis = requis;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Port getFourni() {
@@ -24,6 +39,22 @@ public class Connexion extends Recommandable {
 
     public void setRequis(Port requis) {
         this.requis = requis;
+    }
+
+    public Integer getNbApprobation() {
+        return nbApprobation;
+    }
+
+    public void setNbApprobation(Integer nbApprobation) {
+        this.nbApprobation = nbApprobation;
+    }
+
+    public Integer getNbOccurence() {
+        return nbOccurence;
+    }
+
+    public void setNbOccurence(Integer nbOccurence) {
+        this.nbOccurence = nbOccurence;
     }
 
 }

@@ -1,17 +1,15 @@
-package impl;
+package systemeRecommandation;
 
 import domaine.Composant;
 import domaine.Configuration;
 import domaine.Connexion;
 import domaine.Port;
-import interfaces.SystemeRecommandation;
+import interfaces.IRecommandation;
 import org.junit.*;
 
-import java.util.UUID;
+public class SystemeRecommandationTest {
 
-public class SystemeRecommandationSimpleTest {
-
-    private SystemeRecommandation systemeRecommandation;
+    private IRecommandation iRecommandation;
     private Composant composant1;
     private Composant composant2;
     private Port portR;
@@ -21,13 +19,13 @@ public class SystemeRecommandationSimpleTest {
 
     @Before
     public void setUp() {
-        systemeRecommandation = new SystemeRecommandationSimple();
+        iRecommandation = new SystemeRecommandation();
 
         composant1 = new Composant("comp1");
         composant2 = new Composant("comp2");
 
-        portR = new Port(composant1,"s1", UUID.randomUUID());
-        portF = new Port(composant2,"s1",UUID.randomUUID());
+        portR = new Port(composant1,"s1");
+        portF = new Port(composant2,"s1");
 
         composant1.ajouterPortRequis(portR);
         composant2.ajouterPortFourni(portF);
@@ -41,14 +39,11 @@ public class SystemeRecommandationSimpleTest {
     @Test
     public void testCalculValeurInteretOK() {
         // Given
-        configuration.setNbApprobation(5);
-        configuration.setNbOccurence(5);
 
         // When
-        int vi = systemeRecommandation.calculValeurInteret(configuration);
 
         // Then
-        Assert.assertEquals(100, vi);
+
     }
 
 }
