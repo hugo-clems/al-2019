@@ -43,7 +43,7 @@ public class Fourmi extends AbstractAgentSitue {
         Map<Direction,Integer> myMap = new HashMap<Direction,Integer>();
         myMap.put(Direction.O, 0);
         myMap.put(Direction.NO, 0);
-        myMap.put(Direction.NO, 0);
+        myMap.put(Direction.N, 0);
         myMap.put(Direction.NE, 0);
         myMap.put(Direction.E, 0);
         myMap.put(Direction.SE, 0);
@@ -235,7 +235,8 @@ public class Fourmi extends AbstractAgentSitue {
             for(Map.Entry<Direction, Integer> entry : poids.entrySet()) {
                 tmp = tmp + entry.getValue();
                 if (rnd < tmp){
-                    deposer(new Pheromone(5, this.toString()));
+                    //deposer(new Pheromone(5, this.toString(), (IEntitePlateau) this.plateau));
+
                     seDeplacerVers(entry.getKey());
                     break;
                 }
