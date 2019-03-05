@@ -67,23 +67,23 @@ public class PlateauTest {
     public void deplacerAgentTest() {
         //l'agent ne bouge pas
         Case ancienneCase = plateau.getCase(agent);
-        assertFalse(plateau.deplacerAgent(agent, Direction.N));
+        assertFalse(plateau.deplacerAgent(agent, Direction.S));
         assertEquals(ancienneCase.getAgentites().size(), 1);
 
         //l'agent passe en Position (1,2)
-        assertTrue(plateau.deplacerAgent(agent, Direction.SO));
+        assertTrue(plateau.deplacerAgent(agent, Direction.NO));
         assertEquals(plateau.getCase(agent), new Case(new Position(1,2)));
         assertTrue(ancienneCase.getAgentites().isEmpty());
 
         //l'agent passe en Position (1,1)
         ancienneCase = plateau.getCase(agent);
-        assertTrue(plateau.deplacerAgent(agent, Direction.S));
+        assertTrue(plateau.deplacerAgent(agent, Direction.N));
         assertEquals(plateau.getCase(agent), new Case(new Position(1,1)));
         assertTrue(ancienneCase.getAgentites().isEmpty());
 
         //l'agent ne bouge pas
         ancienneCase = plateau.getCase(agent);
-        assertFalse(plateau.deplacerAgent(agent, Direction.S));
+        assertFalse(plateau.deplacerAgent(agent, Direction.N));
         assertEquals(ancienneCase.getAgentites().size(), 1);
 
         //le plateau sait que l'agent est en Position (1,1)
@@ -112,7 +112,7 @@ public class PlateauTest {
         assertFalse(plateau.ramasserEntite(agent, autreEntite));
 
         // Test ramasser entité normalement
-        when(((AbstractAgentSitue) agent).getDirection()).thenReturn(Direction.S);
+        when(((AbstractAgentSitue) agent).getDirection()).thenReturn(Direction.N);
         when(((AbstractAgentSitue) agent).getEntitePortee()).thenReturn(null);
         assertTrue(plateau.ramasserEntite(agent, entite));
     }
@@ -127,29 +127,29 @@ public class PlateauTest {
         assertTrue(plateau.deposerEntite(agent, entite));
         assertFalse(plateau.deposerEntite(agent, autreEntite));
     }
-
+// SO SE S
     @Test
     public void getVoisinageTest() {
         Map<Direction, Case> voisinage = plateau.getVoisinage(agent);
 
         //Nord
-        assertEquals (new Case(new Position(2, 4)), voisinage.get(Direction.N));
-        assertEquals(voisinage.get(Direction.N).getAgentites().size(), 1);
-        assertTrue(voisinage.get(Direction.N).getAgentites().get(0) instanceof Obstacle);
+        assertEquals (new Case(new Position(2, 4)), voisinage.get(Direction.S));
+        assertEquals(voisinage.get(Direction.S).getAgentites().size(), 1);
+        assertTrue(voisinage.get(Direction.S).getAgentites().get(0) instanceof Obstacle);
 
         //Nord Ouest
-        assertEquals (new Case(new Position(1, 4)), voisinage.get(Direction.NO));
-        assertEquals(voisinage.get(Direction.NO).getAgentites().size(), 1);
-        assertTrue(voisinage.get(Direction.NO).getAgentites().get(0) instanceof Obstacle);
+        assertEquals (new Case(new Position(1, 4)), voisinage.get(Direction.SO));
+        assertEquals(voisinage.get(Direction.SO).getAgentites().size(), 1);
+        assertTrue(voisinage.get(Direction.SO).getAgentites().get(0) instanceof Obstacle);
 
         // Nord Est
-        assertEquals (new Case(new Position(3, 4)), voisinage.get(Direction.NE));
-        assertEquals(voisinage.get(Direction.NE).getAgentites().size(), 1);
-        assertTrue(voisinage.get(Direction.NE).getAgentites().get(0) instanceof Obstacle);
+        assertEquals (new Case(new Position(3, 4)), voisinage.get(Direction.SE));
+        assertEquals(voisinage.get(Direction.SE).getAgentites().size(), 1);
+        assertTrue(voisinage.get(Direction.SE).getAgentites().get(0) instanceof Obstacle);
 
         // Sud Ouest
-        assertEquals(new Case(new Position(1, 2)), voisinage.get(Direction.SO));
-        assertTrue(voisinage.get(Direction.SO).getAgentites().isEmpty());
+        assertEquals(new Case(new Position(1, 2)), voisinage.get(Direction.NO));
+        assertTrue(voisinage.get(Direction.NO).getAgentites().isEmpty());
     }
 
     @Test
