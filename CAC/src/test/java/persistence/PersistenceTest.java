@@ -25,7 +25,7 @@ public class PersistenceTest {
 	private Configuration configuration;
 	private Connexion connexion;
 	private Persistence persistance;
-	
+
 	@Before
 	public void setUp() {
 
@@ -47,50 +47,34 @@ public class PersistenceTest {
 	}
 
 	@Test
-	    public void testSauvegarder() throws IOException {
-		 ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
-		 configurationsAPersister.add(configuration);
-		 persistance.sauvegarder(configurationsAPersister);
-		 OutputStream os = null;
-		 InputStream hey;
-		 // /home/louis/git/al-2019-2/CAC/src/main/resources/bdd.json
-		 // /home/louis/git/al-2019-2/CAC/src/test/java/persistence/PersistenceTest.java
-//		 try {
-//			 hey = PersistenceTest.class.getResourceAsStream("bdd.json");
-//			
-////		     os = new FileOutputStream(new File("../../../../main/resources/bdd.json"));
-//		 }catch (IOException e) {
-//	            e.printStackTrace();
-//	        }finally{
-//	            try {
-//	                os.close();
-//	            } catch (IOException e) {
-//	                e.printStackTrace();
-//	            }
-//		 }
-		 //to empty test file
-		 PrintWriter pw = new PrintWriter("src/main/resources/bdd.json");
-		 pw.close();
-			 System.out.println("hey");
-//		 assert(hey.read() != -1);
-	 }
+	public void testSauvegarder() throws IOException {
+		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
+		configurationsAPersister.add(configuration);
+		persistance.sauvegarder(configurationsAPersister);
+		ArrayList<Configuration> getted = persistance.trouverTous();
+		assert (configurationsAPersister.containsAll(getted));
+		PrintWriter pw = new PrintWriter("src/main/resources/bdd.json");
+		pw.close();
+	}
+
 	@Test
 	public void testTrouverTous() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		ArrayList<Configuration> getted = persistance.trouverTous();
-		assert(configurationsAPersister.containsAll(getted));
+		assert (configurationsAPersister.containsAll(getted));
 	}
-	
+
 	@Test
 	public void testTrouverParId() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		Configuration getted = persistance.trouverParID(configuration.getId());
-		assert(configuration.equals(getted));
+		assert (configuration.equals(getted));
 	}
+
 	@Test
 	public void testSupprimerToutFonctionner() throws IOException {
 		ArrayList<Configuration> configurationsAPersister = new ArrayList<Configuration>();
@@ -105,7 +89,6 @@ public class PersistenceTest {
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		persistance.supprimerTout();
-		
 		ArrayList<Configuration> retrieved = persistance.trouverTous();
 		assertTrue(retrieved.isEmpty());
 	}
@@ -116,7 +99,6 @@ public class PersistenceTest {
 		configurationsAPersister.add(configuration);
 		persistance.sauvegarder(configurationsAPersister);
 		persistance.supprimerTout();
-		
 		String content = Persistence.readFile("src/main/resources/bdd.json", StandardCharsets.UTF_8);
 		assertTrue(content.isEmpty());
 	}
