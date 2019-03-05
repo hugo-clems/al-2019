@@ -19,4 +19,8 @@ public class Pheromone extends AbstractEntiteActive {
         this.tauxPheromone = tauxPheromone;
     }
 
+    @Override
+    public void ActionTour() {
+        this.tauxPheromone--;
+    }
 }
