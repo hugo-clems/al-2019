@@ -24,7 +24,6 @@ public class Runner implements Runnable {
      * @param listeAgents AbstractAgent
      */
     public Runner(List<AbstractAgent> listeAgents, TourListener tourListener) {
-        this.isRunning = isRunning;
         this.listeAgents = listeAgents;
         this.tourListener = tourListener;
     }
@@ -37,17 +36,14 @@ public class Runner implements Runnable {
     @Override
     public void run() {
         this.isRunning = true;
-        System.out.println("start");
         while (this.isRunning) {
             // On attends 666ms pour que les tours ne soient pas instantanés
             for (AbstractAgent agent : listeAgents) {
                 agent.actionTour();     // Effectue l'action du tour
-                // TODO envoie info fin de tour au 2D
-                this.tourListener.refresh();
             }
+            this.tourListener.refresh();
             try {
                 Thread.sleep(this.DUREE_TOUR);
-                System.out.println("sleep");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -61,10 +57,6 @@ public class Runner implements Runnable {
      */
     public void setRunning(boolean running) {
         this.isRunning = running;
-    }
-
-    public void suspend() {
-
     }
 
     public interface TourListener {

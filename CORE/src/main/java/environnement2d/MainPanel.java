@@ -1,7 +1,5 @@
 package environnement2d;
 
-import strategie.Runner;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,12 +14,6 @@ public class MainPanel extends JPanel {
     private static final int SPACE = 5;
 
     private InfraControlPanel infraControlPanel;
-
-    private Runner.TourListener tourListener = () -> MainPanel.super.updateUI();
-
-    public Runner.TourListener getTourListener() {
-        return tourListener;
-    }
 
     /**
      * Constructor.

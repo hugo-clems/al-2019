@@ -51,6 +51,7 @@ public class Strategie implements IStrategie {
     @Override
     public void arreter() {
         this.runner.setRunning(false);
+        this.t = null;
     }
 
     /**
