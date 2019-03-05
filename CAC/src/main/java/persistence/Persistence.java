@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.RestoreAction;
+
 import com.owlike.genson.GenericType;
 import com.owlike.genson.Genson;
 import com.owlike.genson.GensonBuilder;
@@ -31,24 +33,30 @@ public class Persistence implements IPersistence {
 	@Override
 	public ArrayList<Configuration> trouverTous() {
 		// TODO Auto-generated method stub
+		ArrayList<Configuration> res = new ArrayList<Configuration>();
 		try {
 			String content = readFile("src/main/resources/bdd.json", StandardCharsets.UTF_8);
 			Genson genson = new GensonBuilder().setSkipNull(true)/* .useClassMetadata(true) */.useRuntimeType(true)
 					.create();
-			ArrayList<Configuration> resultv = genson.deserialize(content, new GenericType<ArrayList<Configuration>>() {});
-			return resultv;
+
+			ArrayList<Configuration> resultv = genson.deserialize(content, new GenericType<ArrayList<Configuration>>() {
+			});
+			if (!(resultv == null || resultv.isEmpty())) {
+				res = resultv;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return res;
 
 	}
 
 	@Override
 	public Configuration trouverParID(String id) {
 		List<Configuration> configurations = trouverTous();
-		List<Configuration> filtree = configurations.stream().filter(conf -> conf.getId().equals(id)).collect(Collectors.toList());
+		List<Configuration> filtree = configurations.stream().filter(conf -> conf.getId().equals(id))
+				.collect(Collectors.toList());
 		Configuration res = filtree.size() != 0 ? filtree.get(0) : null;
 		return res;
 	}
@@ -58,7 +66,7 @@ public class Persistence implements IPersistence {
 		PrintWriter pw;
 		try {
 			pw = new PrintWriter("src/main/resources/bdd.json");
-			pw.close();			
+			pw.close();
 		} catch (FileNotFoundException e) {
 			return false;
 		}

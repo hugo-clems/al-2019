@@ -107,7 +107,7 @@ public class PersistenceTest {
 		persistance.supprimerTout();
 		
 		ArrayList<Configuration> retrieved = persistance.trouverTous();
-		assertTrue(retrieved == null);
+		assertTrue(retrieved.isEmpty());
 	}
 
 	@Test
