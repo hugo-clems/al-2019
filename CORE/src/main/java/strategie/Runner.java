@@ -36,7 +36,6 @@ public class Runner implements Runnable {
     @Override
     public void run() {
         this.isRunning = true;
-        System.out.println("start");
         while (this.isRunning) {
             // On attends 666ms pour que les tours ne soient pas instantanés
             for (AbstractAgent agent : listeAgents) {
