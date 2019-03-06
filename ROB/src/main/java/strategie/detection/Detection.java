@@ -17,7 +17,7 @@ public class Detection {
         CaseRobot caseRobot;
         for (Case caseAdjacente : casesAdjacentes.values()) {
             caseRobot = convertCaseToCaseRobot(caseAdjacente);
-            addCaseRobotToCarteMemoire(robot.getCarteMemoire(), caseRobot);
+            addCaseRobotToCarteMemoire(robot, caseRobot);
         }
     }
 
@@ -48,33 +48,27 @@ public class Detection {
         return new CaseRobot(caseAdjacente.getPosition(), poids, obstacle, robot, depot, collecte);
     }
 
-    private static void addCaseRobotToCarteMemoire(List<List<CaseRobot>> carteMemoire, CaseRobot caseRobot) {
-        // Quand on get et set, penser -1
-
+    private static void addCaseRobotToCarteMemoire(Robot robot, CaseRobot caseRobot) {
         Position position = caseRobot.getPosition();
+        List<List<CaseRobot>> carteMemoire = robot.getCarteMemoire();
 
         if (carteMemoire == null) {
             carteMemoire = new ArrayList<>();
         }
 
-        while (position.getY() > carteMemoire.size()) {
+        while (position.getY() - 1 >= carteMemoire.size()) {
             carteMemoire.add(new ArrayList<>());
         }
 
         if (carteMemoire.get(position.getY() - 1) == null) {
             carteMemoire.set(position.getY() - 1, new ArrayList<>());
-        } else if (position.getX() > carteMemoire.get(position.getY() - 1).size()) {
-            // while ajouter des null pour atteindre la case voulue
-            // carteMemoire.get(position.getY() - 1).ensureCapacity(position.getX());
+        }
+
+        while (position.getX() > carteMemoire.get(position.getY() - 1).size()) {
+            carteMemoire.get(position.getY() - 1).add(null);
         }
 
         carteMemoire.get(position.getY() - 1).set(position.getX() - 1, caseRobot);
+        robot.setCarteMemoire(carteMemoire);
     }
-
-    public static void main (String[] args){
-        CaseRobot caseRobot = new CaseRobot(new Position(5, 7), 0, false, false, false, false);
-        addCaseRobotToCarteMemoire(null, caseRobot);
-        // afficher la carte pour verifier
-    }
-
 }
