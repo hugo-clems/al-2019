@@ -23,10 +23,12 @@ public class Robot extends AbstractAgentSitue {
 
     private Position caseCollecte;
 
-    public Robot(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+    public Robot(String nom, IAgentPlateau plateau, Direction directionInitiale, Position centreCollecte, Position centreDepot) {
         super(nom, plateau, directionInitiale);
         this.nbActions = 0;
         this.nbDeplacements = 0;
+        this.caseCollecte = centreCollecte;
+        this.caseDepot = centreDepot;
     }
 
     @Override
@@ -134,21 +136,21 @@ public class Robot extends AbstractAgentSitue {
     private  static Direction directionVers(Position pos1, Position pos2){
 
         if(pos1.getX() > pos2.getX() && pos1.getY() > pos2.getY()){
-            return Direction.SO;
+            return Direction.NO;
         }else if(pos1.getX() > pos2.getX() && pos1.getY() < pos2.getY()){
-            return Direction.SE;
+            return Direction.SO;
         }else if(pos1.getX() < pos2.getX() && pos1.getY() > pos2.getY()){
             return Direction.NE;
         }else if(pos1.getX() < pos2.getX() && pos1.getY() < pos2.getY()){
-            return Direction.NO;
+            return Direction.SE;
         }else if(pos1.getX() == pos2.getX() && pos1.getY() < pos2.getY()){
-            return Direction.O;
-        }else if(pos1.getX() == pos2.getX() && pos1.getY() > pos2.getY()){
-            return Direction.E;
-        }else if(pos1.getX() < pos2.getX() && pos1.getY() == pos2.getY()){
-            return Direction.N;
-        }else{
             return Direction.S;
+        }else if(pos1.getX() == pos2.getX() && pos1.getY() > pos2.getY()){
+            return Direction.N;
+        }else if(pos1.getX() < pos2.getX() && pos1.getY() == pos2.getY()){
+            return Direction.E;
+        }else{
+            return Direction.O;
         }
     }
 
@@ -159,18 +161,18 @@ public class Robot extends AbstractAgentSitue {
         int x = 0, y = 0;
 
         switch (this.getDirection()) {
-            case N: x++;
+            case N: y--;
                 break;
-            case E: y++;
+            case E: x++;
                 break;
-            case S: x--;
+            case S: y++;
                 break;
-            case O: y--;
+            case O: x--;
                 break;
             default:
                 break;
         }
-        CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getX() + x).get(caseRobot.getPosition().getY() + y);
+        CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getY() + y -1).get(caseRobot.getPosition().getX() + x -1);
 
         return c.isCollecte();
     }
@@ -182,13 +184,13 @@ public class Robot extends AbstractAgentSitue {
         int x = 0, y = 0;
 
         switch (this.getDirection()) {
-            case N: x++;
+            case N: y--;
                 break;
-            case E: y++;
+            case E: x++;
                 break;
-            case S: x--;
+            case S: y++;
                 break;
-            case O: y--;
+            case O: x--;
                 break;
             default:
                 break;

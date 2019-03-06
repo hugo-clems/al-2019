@@ -196,7 +196,7 @@ public class GenerateurPlateau {
         for(int i = 0; i < nombreRobots; i++) {
             randomPos.setX(ThreadLocalRandom.current().nextInt(1, taillePlateauX));
             randomPos.setY(ThreadLocalRandom.current().nextInt(1, taillePlateauY));
-            if(!application.placerAgentite(randomPos, new Robot("Robot", application.getIAgentPlateau(), Direction.N))) i--;
+            if(!application.placerAgentite(randomPos, new Robot("Robot", application.getIAgentPlateau(), Direction.N, centreCollecte, centreDepot))) i--;
         }
     }
 
