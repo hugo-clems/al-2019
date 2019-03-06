@@ -26,4 +26,6 @@ public interface IPersistence {
 	 */
 	boolean sauvegarderConnexion(ArrayList<Connexion> connexionAPersister);
 
+	public ArrayList<Connexion> trouverTous();
+
 }

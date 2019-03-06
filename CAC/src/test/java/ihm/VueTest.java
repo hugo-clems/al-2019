@@ -47,7 +47,7 @@ public class VueTest {
     @Test
     public void testAffichageConnexion(){
         assertEquals(this.connexion1.toString(), "[PC][PROV]IMAGE - [VIDEO-PROJ][REQ]IMAGE");
-        this.vueImpl.afficherConfiguration(configuration);
+        Affichage.afficherConfiguration(configuration);
     }
 
 }

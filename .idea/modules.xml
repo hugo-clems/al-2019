@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/INFRA/INFRA.iml" filepath="$PROJECT_DIR$/INFRA/INFRA.iml" />
       <module fileurl="file://$PROJECT_DIR$/ROB/ROB.iml" filepath="$PROJECT_DIR$/ROB/ROB.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/al-2019.iml" filepath="$PROJECT_DIR$/.idea/al-2019.iml" />
+      <module fileurl="file://$PROJECT_DIR$/al2019.iml" filepath="$PROJECT_DIR$/al2019.iml" />
     </modules>
   </component>
 </project>
