@@ -47,6 +47,11 @@ public class Noyau extends AbstractAgentSocial implements IEval{
         }
     }
 
+    @Override
+    public List<Configuration> getConfigurations() {
+        return null;
+    }
+
     /*public List<Configuration> recevoirConnexionPossibles(){
 
     }
