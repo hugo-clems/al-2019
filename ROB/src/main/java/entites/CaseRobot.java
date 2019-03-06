@@ -16,6 +16,7 @@ public class CaseRobot {
 
     private boolean collecte;
 
+
     /**
      * Constructeur de CaseRobot.
      * @param position la position x et y du Robot sur le plateau

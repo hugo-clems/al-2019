@@ -2,8 +2,10 @@ package entites;
 
 import agent.AbstractAgentSitue;
 import common.Direction;
+import plateau.Case;
 import plateau.IAgentPlateau;
 import plateau.Position;
+import strategie.detection.Detection;
 
 import java.util.List;
 
@@ -29,7 +31,17 @@ public class Robot extends AbstractAgentSitue {
 
     @Override
     public void actionTour() {
-
+        if(getColis() == null){
+            if(estColisDevantSoi()){
+                this.ramasser(new Colis("Colis"));
+                setColis((Colis) this.getEntitePortee());
+            }
+            boolean b = allerZoneCollecte();
+            if(b) nbActions++; nbDeplacements++;
+        } else {
+            boolean b = allerZoneDepot();
+            if(b) nbActions++; nbDeplacements++;
+        }
     }
 
     public int getNbActions() {
@@ -80,4 +92,120 @@ public class Robot extends AbstractAgentSitue {
         this.caseCollecte = caseCollecte;
     }
 
+    public void faireDemiTour(){
+        switch (this.getDirection()) {
+            case N:
+                this.seTournerVers(Direction.S);
+                break;
+            case NE:
+                this.seTournerVers(Direction.SO);
+                break;
+            case E:
+                this.seTournerVers(Direction.O);
+                break;
+            case SE:
+                this.seTournerVers(Direction.NO);
+                break;
+            case S:
+                this.seTournerVers(Direction.N);
+                break;
+            case SO:
+                this.seTournerVers(Direction.NE);
+                break;
+            case O:
+                this.seTournerVers(Direction.E);
+                break;
+            default:
+                this.seTournerVers(Direction.SE);
+                break;
+        }
+    }
+
+    public boolean allerZoneCollecte(){
+        Position positionRobot = this.plateau.getCase(this).getPosition();
+        return this.seDeplacerVers(directionVers(positionRobot, getCaseCollecte()));
+    }
+
+    public boolean allerZoneDepot(){
+        Position positionRobot = this.plateau.getCase(this).getPosition();
+        return this.seDeplacerVers(directionVers(positionRobot, getCaseDepot()));
+    }
+
+    private  static Direction directionVers(Position pos1, Position pos2){
+
+        if(pos1.getX() > pos2.getX() && pos1.getY() > pos2.getY()){
+            return Direction.SO;
+        }else if(pos1.getX() > pos2.getX() && pos1.getY() < pos2.getY()){
+            return Direction.SE;
+        }else if(pos1.getX() < pos2.getX() && pos1.getY() > pos2.getY()){
+            return Direction.NE;
+        }else if(pos1.getX() < pos2.getX() && pos1.getY() < pos2.getY()){
+            return Direction.NO;
+        }else if(pos1.getX() == pos2.getX() && pos1.getY() < pos2.getY()){
+            return Direction.O;
+        }else if(pos1.getX() == pos2.getX() && pos1.getY() > pos2.getY()){
+            return Direction.E;
+        }else if(pos1.getX() < pos2.getX() && pos1.getY() == pos2.getY()){
+            return Direction.N;
+        }else{
+            return Direction.S;
+        }
+    }
+
+    public boolean estColisDevantSoi(){
+        Detection.detecterVoisinage(this);
+        Case caseRobot = this.plateau.getCase(this);
+
+        int x = 0, y = 0;
+
+        switch (this.getDirection()) {
+            case N: x++;
+                break;
+            case E: y++;
+                break;
+            case S: x--;
+                break;
+            case O: y--;
+                break;
+            default:
+                break;
+        }
+        CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getX() + x).get(caseRobot.getPosition().getY() + y);
+
+        return c.isCollecte();
+    }
+
+    public boolean estMurDevantSoi(){
+        Detection.detecterVoisinage(this);
+        Case caseRobot = this.plateau.getCase(this);
+
+        int x = 0, y = 0;
+
+        switch (this.getDirection()) {
+            case N: x++;
+                break;
+            case E: y++;
+                break;
+            case S: x--;
+                break;
+            case O: y--;
+                break;
+            default:
+                break;
+        }
+        CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getX() + x).get(caseRobot.getPosition().getY() + y);
+        return c.isObstacle();
+    }
+
+    public void attendre(){
+
+    }
+
+    public boolean isColisDansInventaire(){
+        return this.getColis() != null;
+    }
+
+    public void miseAjourCarteMemoire(List<Case> casesDecouvertes){
+
+    }
 }
