@@ -11,12 +11,16 @@ import plateau.Position;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
@@ -208,11 +212,31 @@ public class GenerateurPlateau {
 
     public static void main(final String[] args) throws IOException {
 
-        System.out.print("Utiliser le fichier de demo ? Y/N : ");
+        reader = new Scanner(System.in);
+
+        System.out.print("Utiliser un fichier de configuration ? Y/N : ");
         char choice = (char) System.in.read();
 
         if(choice == 'Y') {
-            String input = readFile("./ROB/src/main/resources/demo.cfg", StandardCharsets.UTF_8);
+            int fileChoice, cpt = 0;
+            List<String> results = new ArrayList<String>();
+            File[] files = new File("./ROB/src/main/resources/").listFiles();
+
+            System.out.println("Liste des fichiers disponibles :");
+            for (File file : files) {
+                if (file.isFile()) {
+                    results.add(file.getName());
+                    System.out.println(cpt + " - " + file.getName());
+                    cpt++;
+                }
+            }
+            do {
+                System.out.print("Numéro du fichier choisi : ");
+                fileChoice = reader.nextInt();
+            } while (fileChoice < 0 || fileChoice > cpt - 1);
+
+            String finalPath = "./ROB/src/main/resources/" + results.get(fileChoice);
+            String input = readFile(finalPath, StandardCharsets.UTF_8);
             InputStream in = new ByteArrayInputStream(input.getBytes());
             System.setIn(in);
         }
