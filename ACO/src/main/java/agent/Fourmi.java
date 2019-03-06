@@ -202,6 +202,7 @@ public class Fourmi extends AbstractAgentSitue {
         //Si la fourmis est sur le nid alors
         if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
             estSurNid = true;
+            estEnPhaseAller = true;
             return;
         }
 
