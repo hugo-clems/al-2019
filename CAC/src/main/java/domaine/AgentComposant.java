@@ -16,7 +16,7 @@ public class AgentComposant extends AbstractAgentSocial  implements IConnexion {
 
     private MessageAgentComposant messagePourAgentComposants;
 
-    private MessageAgentAuNoyeau messagePourAgentNoyeau;
+    private MessageAgentAuNoyau messagePourAgentNoyeau;
 
     private List<MessageAgentComposant> messageRecus = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class AgentComposant extends AbstractAgentSocial  implements IConnexion {
     public AgentComposant(Composant composant, AbstractAgent noyeau) {
         this.composant = composant;
         messagePourAgentComposants = new MessageAgentComposant(composant.getPortRequis());
-        messagePourAgentNoyeau = new MessageAgentAuNoyeau(connexionsPossible);
+        messagePourAgentNoyeau = new MessageAgentAuNoyau(connexionsPossible);
         this.noyeau = noyeau;
 
     }

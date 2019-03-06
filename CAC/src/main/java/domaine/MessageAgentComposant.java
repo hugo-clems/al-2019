@@ -8,7 +8,7 @@ import java.util.Set;
 public class MessageAgentComposant extends AbstractMessage {
 
     /**
-     * Les agent se communique les port qu'ils ont besoin
+     * Les agents se communiquent les ports dont ils ont besoin
      */
      private Set<Port> portRequis;
 

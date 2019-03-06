@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -22,7 +21,7 @@ public class AgentComposantTest {
     private Port portS1,portS2;
 
 
-    private  Noyeau noyeau = new Noyeau();
+    private Noyau noyau = new Noyau();
     @Before
     public void setUp (){
 
@@ -37,9 +36,9 @@ public class AgentComposantTest {
         composant3.ajouterPortFourni(new Port(composant3,"s1"));
         composant3.ajouterPortRequis(new Port(composant3,"s2"));
 
-        agent1 = new AgentComposant(composant1,noyeau);
-        agent2 = new AgentComposant(composant2,noyeau);
-        agent3 = new AgentComposant(composant3,noyeau);
+        agent1 = new AgentComposant(composant1, noyau);
+        agent2 = new AgentComposant(composant2, noyau);
+        agent3 = new AgentComposant(composant3, noyau);
 
 
     }
@@ -60,12 +59,12 @@ public class AgentComposantTest {
         agent1.broadcast();
         agent2.envoyerConnexionPossible();
 
-        List<MessageAgentAuNoyeau> msg = new ArrayList<>();
-        msg= noyeau.recevoirMessage();
+        List<MessageAgentAuNoyau> msg = new ArrayList<>();
+        msg= noyau.recevoirMessage();
         //On verifie qu'il recois bien un messsage
-        assertEquals(1,noyeau.recevoirMessage().size());
+        assertEquals(1, noyau.recevoirMessage().size());
         //On verifie qu'il a recu des connexion possible
-        assertEquals(1,noyeau.getConnexionsPossbile().size());
+        assertEquals(1, noyau.getconnexionsPossibles().size());
     }
 
     @Test
@@ -75,17 +74,17 @@ public class AgentComposantTest {
         agent1.broadcast();
         agent2.broadcast();
         agent3.broadcast();
-        /*Une fois tout le monde au courant des port requies on envoie au noyeau*/
+        /*Une fois tout le monde au courant des port requies on envoie au noyau*/
         agent1.envoyerConnexionPossible();
         agent2.envoyerConnexionPossible();
         agent3.envoyerConnexionPossible();
-        /*On met a jour le noyeau en recuperant les messages des agents*/
-        noyeau.recevoirMessage();
-        List<Connexion> connexions = noyeau.getConnexionsPossbile();
-        //Le noyeau recoit que 2 message car agent 1 ne peut se connecter avec personne
-        assertEquals(2,noyeau.recevoirMessage().size());
+        /*On met a jour le noyau en recuperant les messages des agents*/
+        noyau.recevoirMessage();
+        List<Connexion> connexions = noyau.getconnexionsPossibles();
+        //Le noyau recoit que 2 message car agent 1 ne peut se connecter avec personne
+        assertEquals(2, noyau.recevoirMessage().size());
         //Il y a 3 connexions possible
-        assertEquals(3,noyeau.getConnexionsPossbile().size());
+        assertEquals(3, noyau.getconnexionsPossibles().size());
 
 
     }

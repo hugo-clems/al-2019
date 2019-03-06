@@ -12,7 +12,12 @@ public class Port {
         this.uuid = uuid;
         this.composant = composant;
         this.service = service;
-        this.uuid= UUID.randomUUID();
+    }
+
+    public Port(Composant composant, String service) {
+        this.uuid = UUID.randomUUID();
+        this.composant = composant;
+        this.service = service;
     }
 
     public String getService() {

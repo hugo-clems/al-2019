@@ -9,15 +9,31 @@ public class Connexion {
     private Port fourni;
     private Port requis;
 
-    private Integer nbApprobation;
-    private Integer nbOccurence;
+    private int nbApprobation;
+    private int nbOccurence;
 
-    public Connexion(UUID uuid, Port fourni, Port requis, Integer nbOccurence, Integer nbApprobation) {
+    public Connexion(UUID uuid, Port fourni, Port requis, int nbOccurence, int nbApprobation) {
         this.uuid = uuid;
         this.fourni = fourni;
         this.requis = requis;
         this.nbOccurence = nbOccurence;
         this.nbApprobation = nbApprobation;
+    }
+
+    public Connexion(Port fourni, Port requis, int nbOccurence, int nbApprobation) {
+        this.uuid = UUID.randomUUID();
+        this.fourni = fourni;
+        this.requis = requis;
+        this.nbOccurence = nbOccurence;
+        this.nbApprobation = nbApprobation;
+    }
+
+    public Connexion(Port fourni, Port requis) {
+        this.uuid = UUID.randomUUID();
+        this.fourni = fourni;
+        this.requis = requis;
+        this.nbOccurence = 0;
+        this.nbApprobation = 0;
     }
 
     public UUID getUuid() {
@@ -44,19 +60,19 @@ public class Connexion {
         this.requis = requis;
     }
 
-    public Integer getNbApprobation() {
+    public int getNbApprobation() {
         return nbApprobation;
     }
 
-    public void setNbApprobation(Integer nbApprobation) {
+    public void setNbApprobation(int nbApprobation) {
         this.nbApprobation = nbApprobation;
     }
 
-    public Integer getNbOccurence() {
+    public int getNbOccurence() {
         return nbOccurence;
     }
 
-    public void setNbOccurence(Integer nbOccurence) {
+    public void setNbOccurence(int nbOccurence) {
         this.nbOccurence = nbOccurence;
     }
 

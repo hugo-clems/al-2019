@@ -5,11 +5,11 @@ import communication.AbstractMessage;
 import java.util.HashMap;
 import java.util.List;
 
-public class MessageAgentAuNoyeau extends AbstractMessage {
+public class MessageAgentAuNoyau extends AbstractMessage {
 
     private List<Connexion> couplePossible ;
 
-    public MessageAgentAuNoyeau(List<Connexion> couplePossible) {
+    public MessageAgentAuNoyau(List<Connexion> couplePossible) {
         this.couplePossible = couplePossible;
     }
 
