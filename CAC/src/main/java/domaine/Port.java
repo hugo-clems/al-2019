@@ -8,7 +8,8 @@ public class Port {
     private Composant composant;
     private String service;
 
-    public Port(Composant composant, String service) {
+    public Port(UUID uuid, Composant composant, String service) {
+        this.uuid = uuid;
         this.composant = composant;
         this.service = service;
     }

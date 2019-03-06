@@ -12,9 +12,12 @@ public class Connexion {
     private Integer nbApprobation;
     private Integer nbOccurence;
 
-    public Connexion(Port fourni, Port requis) {
+    public Connexion(UUID uuid, Port fourni, Port requis, Integer nbOccurence, Integer nbApprobation) {
+        this.uuid = uuid;
         this.fourni = fourni;
         this.requis = requis;
+        this.nbOccurence = nbOccurence;
+        this.nbApprobation = nbApprobation;
     }
 
     public UUID getUuid() {

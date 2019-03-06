@@ -4,23 +4,24 @@ import domaine.Configuration;
 import domaine.Connexion;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IRecommandation {
 
     /**
-     * Calcule la valeur d'intérêt pour une Connexion.
+     * Calcule la valeur d'intérêt pour une connexion.
      *
-     * @param connexion La Connexion dont sa valeur d'intérêt doit être calculée
-     * @return Valeur d'intérêt d'une Connexion exprimée en pourcentage
+     * @param connexion La connexion dont la valeur d'intérêt doit être calculée
+     * @return Valeur d'intérêt d'une connexion exprimée en pourcentage
      */
     int calculerValeurInteret(Connexion connexion);
 
     /**
-     * Utilise les Connexions en entrée pour créer des Configurations en fonction de
+     * Utilise les connexions en entrée pour créer toutes les configurations possibles
      *
      * @param connexions Liste de connexions
-     * @return La liste de Configurations triée par valeur d'intérêt
+     * @return L'ensemble des meilleures configurations
      */
-    List<Configuration> creerConfigurations(List<Connexion> connexions);
+    Set<Configuration> creerConfigurations(List<Connexion> connexions);
 
 }
