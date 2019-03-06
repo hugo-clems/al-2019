@@ -2,8 +2,8 @@
 
 <plateau xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="initialisation.xsd">
     <nom>Simulateur ACO</nom>
-    <width>10</width>
-    <heigth>10</heigth>
+    <width>20</width>
+    <heigth>20</heigth>
     <liste_agentite>
         <nid>
             <nom>Fourmilère</nom>

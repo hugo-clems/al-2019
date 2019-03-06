@@ -50,7 +50,7 @@ public class Fourmi extends AbstractAgentSitue {
 
     public void chercherNourriture(){
 
-
+        System.out.println("[ " + this.getNom() + " ] : Je cherche");
         boolean caseSansObstacle = false;
         // Si la fourmi ne transporte pas de nourriture && n'a pas trouvé de traces de phéromones
 
@@ -173,6 +173,8 @@ public class Fourmi extends AbstractAgentSitue {
                     aRamasseNourriture = true;
                     estEnPhaseAller = false;
                     estSurNid = false;
+
+                    System.out.println("[ " + this.getNom() + " ] : J'ai ramssé la nourriture");
                     break;
                 }
             }
@@ -197,13 +199,6 @@ public class Fourmi extends AbstractAgentSitue {
         //Si la fourmi se contentait de suivre de la pheromone à l'aller, maintenant qu'elle retourne au nid elle ne suit plus la pheromone à la trace
         if (suitPheromoneAller){
             suitPheromoneAller = false;
-        }
-
-        //Si la fourmis est sur le nid alors
-        if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
-            estSurNid = true;
-            estEnPhaseAller = true;
-            return;
         }
 
         if ((this.iAgentPlateau.getCase(this).getPosition() != positionNid) && !estEnPhaseAller && !suitPheromoneAller) {
@@ -258,6 +253,13 @@ public class Fourmi extends AbstractAgentSitue {
                 }
             }
         }
+
+        //Si la fourmis est sur le nid alors
+        if (this.iAgentPlateau.getCase(this).getPosition().equals(positionNid)){
+            System.out.println("[ " + this.getNom() + " ] : Je suis sur le nid");
+            estSurNid = true;
+        }
+
     }
 
     /**
@@ -440,6 +442,7 @@ public class Fourmi extends AbstractAgentSitue {
     public void deposerNourriture(){
         estEnPhaseAller = true;
         nourritureTrouvee = false;
+        System.out.println("[ " + this.getNom() + " ] : J'ai déposé la nourriture.");
     }
 
     @Override
