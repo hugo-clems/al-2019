@@ -2,7 +2,7 @@ package entites;
 
 import plateau.IEntitePlateau;
 
-public class ZoneCollecte extends Zone {
+public class ZoneCollecte extends AbstractEntitePassive {
 
     /**
      * Constructeur par défaut.
