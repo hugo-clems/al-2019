@@ -31,13 +31,17 @@ public class GenerateurPlateau {
     private static int nombreColis;
     private static int taillePlateauX;
     private static int taillePlateauY;
+    private static Position point2collecte;
 
     public static void initPlateau() {
 
-        System.out.print("Taille Plateau X : ");
-        taillePlateauX = reader.nextInt();
-        System.out.print("Taille Plateau Y : ");
-        taillePlateauY = reader.nextInt();
+        System.out.println("Initialisation de la taille du plateau.");
+        do {
+            System.out.print("Taille Plateau X (min 10) : ");
+            taillePlateauX = reader.nextInt();
+            System.out.print("Taille Plateau Y (min 10) : ");
+            taillePlateauY = reader.nextInt();
+        } while (taillePlateauX < 10 || taillePlateauY < 10);
 
         //Instance de Application
         application = new Application("Plateau Robot", taillePlateauY, taillePlateauX);
@@ -53,23 +57,69 @@ public class GenerateurPlateau {
 
     }
 
+    private static boolean positionOK(Position pos) {
+        return (pos.getX() > 0 && pos.getX() <= taillePlateauX - 2 && pos.getY() > 0 && pos.getY() <= taillePlateauY - 2);
+    }
+
+    private static boolean zoneOK(Position pos1, Position pos2) {
+        for(int i = pos1.getX(); i <= pos2.getX(); i++) {
+            for (int j = pos1.getY(); j <= pos2.getY(); j++) {
+                // Faire une liste et comparer...
+            }
+        }
+        return true;
+    }
+
+    private static void revertPos(Position pos1, Position pos2) {
+        if(pos1.getX() > pos2.getX()) {
+            int tmp = pos1.getX();
+            pos1.setX(pos2.getX());
+            pos2.setX(tmp);
+        }
+
+        if(pos1.getY() > pos2.getY()) {
+            int tmp = pos1.getY();
+            pos1.setY(pos2.getY());
+            pos2.setY(tmp);
+        }
+    }
+
+    // On vérifie que la zone de dépôt ne soit pas dans la zone de collecte
+    private static boolean checkDepot(Position pos) {
+        return (point2collecte.getX() < pos.getX() || point2collecte.getY() < pos.getY());
+    }
+
     private static void initZones(String nom) {
+        Position point1;
+        Position point2;
+        boolean depotOK;
 
-        System.out.print("Zone " + nom + " Point 1 X : ");
-        int point1X = reader.nextInt();
-        System.out.print("Zone " + nom + " Point 1 Y : ");
-        int point1Y = reader.nextInt();
-        Position point1 = new Position(point1X, point1Y);
+        System.out.println("Initialisation de la zone de " + nom + ".");
+        do {
+            depotOK = true;
 
-        System.out.print("Zone " + nom + " Point 2 X : ");
-        int point2X = reader.nextInt();
-        System.out.print("Zone " + nom + " Point 2 Y : ");
-        int point2Y = reader.nextInt();
-        Position point2 = new Position(point2X, point2Y);
+            System.out.print("Zone " + nom + " Point 1 X : ");
+            int point1X = reader.nextInt();
+            System.out.print("Zone " + nom + " Point 1 Y : ");
+            int point1Y = reader.nextInt();
+            point1 = new Position(point1X, point1Y);
+
+            System.out.print("Zone " + nom + " Point 2 X : ");
+            int point2X = reader.nextInt();
+            System.out.print("Zone " + nom + " Point 2 Y : ");
+            int point2Y = reader.nextInt();
+            point2 = new Position(point2X, point2Y);
+
+            revertPos(point1, point2);
+            if(nom.equals("Depot")) depotOK = checkDepot(point1);
+        } while (!positionOK(point1) || !positionOK(point2) || !depotOK);
 
         Position centreZone = initZone(point1, point2, nom);
 
-        if(nom.equals("Collecte")) centreCollecte = centreZone;
+        if(nom.equals("Collecte")) {
+            centreCollecte = centreZone;
+            point2collecte = point2;
+        }
         else centreDepot = centreZone;
     }
 
@@ -91,7 +141,16 @@ public class GenerateurPlateau {
 
     private static void affichage() {
         application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
-            Supplier<Stream<IAgentite>> iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Robot);
+            Supplier<Stream<IAgentite>> iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneCollecte);
+            if (iAgentiteStream.get().count() > 0) {
+                graphics.setColor(Color.ORANGE);
+                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
+            }iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneDepot);
+            if (iAgentiteStream.get().count() > 0) {
+                graphics.setColor(Color.BLUE);
+                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
+            }
+            iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Robot);
             if (iAgentiteStream.get().count() > 0) {
                 graphics.setColor(Color.GRAY);
                 graphics.fillRoundRect(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6, 5, 5);
@@ -101,15 +160,6 @@ public class GenerateurPlateau {
                         graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
                     }
                 });
-            }
-            iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneCollecte);
-            if (iAgentiteStream.get().count() > 0) {
-                graphics.setColor(Color.ORANGE);
-                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
-            }iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneDepot);
-            if (iAgentiteStream.get().count() > 0) {
-                graphics.setColor(Color.BLUE);
-                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
             }
             iAgentiteStream.get().close();
         });
@@ -125,7 +175,8 @@ public class GenerateurPlateau {
             System.out.print("Obstacle Y : ");
             posObs.setY(reader.nextInt());
             if(posObs.getX() == 0 || posObs.getY() == 0) break;
-            application.placerAgentite(posObs, new Obstacle("Obstacle"));
+            if(application.placerAgentite(posObs, new Obstacle("Obstacle"))) System.out.println("Placement OK !");
+            else System.out.println("Placement KO...");
         }
     }
 
@@ -141,12 +192,12 @@ public class GenerateurPlateau {
         for(int i = 0; i < nombreRobots; i++) {
             randomPos.setX(ThreadLocalRandom.current().nextInt(1, taillePlateauX));
             randomPos.setY(ThreadLocalRandom.current().nextInt(1, taillePlateauY));
-            application.placerAgentite(randomPos, new Robot("Robot", application.getIAgentPlateau(), Direction.N));
+            if(!application.placerAgentite(randomPos, new Robot("Robot", application.getIAgentPlateau(), Direction.N))) i--;
         }
     }
 
     private static void initColis() {
-        System.out.print("Nombre de Colis : ");
+        System.out.print("Nombre de Colis (valeur négative pour infini) : ");
         nombreColis = reader.nextInt();
     }
 
@@ -178,21 +229,5 @@ public class GenerateurPlateau {
 
         // Lancement de l'interface 2D
         application.run();
-
-        /*
-        if(x1 > x2) {
-            int tmp = x1;
-            x1 = x2;
-            x2 = tmp;
-        }
-
-        if(y1 > y2) {
-            int tmp = y1;
-            y1 = y2;
-            y2 = tmp;
-        }
-        */
-
-
     }
 }
