@@ -1,8 +1,5 @@
 package agent;
 
-import MASInfrastructure.Communication.ICommunication;
-import MASInfrastructure.Etat.LifeCycle;
-import MASInfrastructure.Infrastructure;
 import common.Direction;
 import entites.AbstractEntite;
 import plateau.Case;
@@ -62,6 +59,32 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
         this.entitePortee = null;
     }
 
+    //region Getter/Setter
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public AbstractEntite getEntitePortee() {
+        return entitePortee;
+    }
+
+    public void setEntitePortee(AbstractEntite entitePortee) {
+        this.entitePortee = entitePortee;
+    }
+    //endregion
+
     /**
      * Se tourne et se déplace vers une direction.
      * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
@@ -114,4 +137,12 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
      */
     public abstract void actionTour();
 
+    @Override
+    public String toString() {
+        return "AbstractAgentSitue{" +
+                "nom='" + nom + '\'' +
+                ", direction=" + direction +
+                ", entitePortee=" + entitePortee +
+                '}';
+    }
 }

@@ -1,18 +1,18 @@
 package moteur;
 
 import domaine.Configuration;
-//import interfaces.SystemeRecommandation;
+import interfaces.IRecommandation;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Moteur {
 
-   /* private Set<Configuration> configurations = new HashSet<>();
-    private SystemeRecommandation systemeRecommandation;
+    private Set<Configuration> configurations = new HashSet<>();
+    private IRecommandation systemeRecommandation;
 
-    public Moteur(SystemeRecommandation systemeRecommandation) {
-        this.systemeRecommandation = systemeRecommandation;
+    public Moteur(IRecommandation iRecommandation) {
+        this.systemeRecommandation = iRecommandation;
     }
 
     public Set<Configuration> getConfigurations() {
@@ -23,16 +23,16 @@ public class Moteur {
         this.configurations = configurations;
     }
 
-    public SystemeRecommandation getSystemeRecommandation() {
+    public IRecommandation getSystemeRecommandation() {
         return systemeRecommandation;
     }
 
-    public void setSystemeRecommandation(SystemeRecommandation systemeRecommandation) {
-        this.systemeRecommandation = systemeRecommandation;
+    public void setSystemeRecommandation(IRecommandation iRecommandation) {
+        this.systemeRecommandation = iRecommandation;
     }
 
     public void ajouterConfiguration(Configuration configuration) {
         configurations.add(configuration);
-    }*/
+    }
 
 }

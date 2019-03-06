@@ -1,6 +1,5 @@
 package interfaces;
 
-
 public interface IConnexion {
 
     /**
@@ -10,7 +9,7 @@ public interface IConnexion {
 
     /**
      * Fonction pour diffuser la liste des port Requis au autre agent
-     */
+      */
     public void broadcast();
 
 }

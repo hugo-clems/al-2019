@@ -2,10 +2,8 @@ package noyau;
 
 
 import agent.AbstractAgentSocial;
-import domaine.AgentComposant;
-import domaine.Composant;
-import domaine.Configuration;
-import domaine.Connexion;
+import communication.AbstractMessage;
+import domaine.*;
 import enumeration.Appreciation;
 import ihm.IVue;
 import interfaces.*;
@@ -24,7 +22,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     private ArrayList<Configuration> lesConfigurations;
     private ArrayList<Connexion> connexionsPossibles;
     private ArrayList<Connexion> connexionsPossiblesPersistees;
-    private List<MessageAgentAuNoyeau> messageRecus = new ArrayList<>();
+    private List<MessageAgentAuNoyau> messageRecus = new ArrayList<>();
     private List<Connexion> connexionsPossbile = new ArrayList<>();
 
 
@@ -67,22 +65,22 @@ public class Noyau extends AbstractAgentSocial implements IEval{
 
 
     @Override
-    public List<Configuration> getConfigurations() {
+    public Set<Configuration> getConfigurations() {
 
-        List<MessageAgentAuNoyeau> messagesAgentAuNoyeau = recevoirMessage();
+        List<MessageAgentAuNoyau> messagesAgentAuNoyeau = recevoirMessage();
 
-        messagesAgentAuNoyeau.forEach(messageAgentAuNoyeau ->
-            { connexionsPossibles.add(new Connexion(messageAgentAuNoyeau.getCouplePossible()))});
-
+        /*messagesAgentAuNoyeau.forEach(messageAgentAuNoyeau ->
+            { connexionsPossibles.add(messageAgentAuNoyeau.getCouplePossible())});
+*/
         connexionsPossiblesPersistees = iPersistence.trouverConnexion(connexionsPossibles);
         return iRecommandation.creerConfigurations(connexionsPossiblesPersistees);
     }
 
-    public List<MessageAgentAuNoyeau> recevoirMessage() {
+    public List<MessageAgentAuNoyau> recevoirMessage() {
 
         for (AbstractMessage msg : super.recevoirMessages()) {
-            if ( msg instanceof  MessageAgentAuNoyeau){
-                MessageAgentAuNoyeau message = (MessageAgentAuNoyeau) msg;
+            if ( msg instanceof  MessageAgentAuNoyau){
+                MessageAgentAuNoyau message = (MessageAgentAuNoyau) msg;
                 messageRecus.add(message);
                 connexionsPossbile.addAll(message.getCouplePossible());
             }
@@ -104,11 +102,11 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     }
 
 
-    public List<MessageAgentAuNoyeau> getMessageRecus() {
+    public List<MessageAgentAuNoyau> getMessageRecus() {
         return messageRecus;
     }
 
-    public void setMessageRecus(List<MessageAgentAuNoyeau> messageRecus) {
+    public void setMessageRecus(List<MessageAgentAuNoyau> messageRecus) {
         this.messageRecus = messageRecus;
     }
 
@@ -128,4 +126,8 @@ public class Noyau extends AbstractAgentSocial implements IEval{
         this.lesConfigurations = lesConfigurations;
     }
 
+    @Override
+    public void actionTour() {
+
+    }
 }

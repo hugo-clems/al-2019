@@ -1,6 +1,7 @@
 package domaine;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Port implements Serializable{
 
@@ -8,27 +9,31 @@ public class Port implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -9056062783144620502L;
-	private Composant composant;
+
+    private Composant composant;
     private String service;
-    private String id;
-    public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public Port(Composant composant, String service, String id) {
+    private UUID uuid ;
+
+    public Port(UUID uuid, Composant composant, String service) {
+        this.uuid = uuid;
         this.composant = composant;
         this.service = service;
-        this.id = id;
     }
+
+    public Port(Composant composant, String service) {
+        this.uuid = UUID.randomUUID();
+        this.composant = composant;
+        this.service = service;
+    }
+
     public Port() {
     	
     }
 
-    public Port(Composant composant, String service) {
+    /*public Port(Composant composant, String service) {
 		this(composant, service, "");
 	}
+	*/
 	public String getService() {
         return service;
     }
@@ -75,6 +80,30 @@ public class Port implements Serializable{
 			return false;
 		return true;
 	}
-    
-    
+
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public boolean equals(Port port) {
+        return this.uuid.equals(port.getUuid());
+    }
+
+   /* public int hashCode() {
+        return uuid.hashCode();
+    }*/
+
+    public boolean estCompatible(Port p) {
+        if (p.service.equals(this.service) && !this.composant.getNom().equals(p.composant.getNom()) )
+            return true ;
+        else {
+            return false;
+        }
+    }
+
 }

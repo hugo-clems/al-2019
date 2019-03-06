@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Configuration extends Recommandable implements Serializable {
+
+public class Configuration /*extends Recommandable*/ implements Serializable {
 
 	/**
 	 * 

@@ -23,6 +23,7 @@ public class Composant implements Serializable{
      * Port fournis par le composant
      */
     private Set<Port> portFournis = new HashSet<>();
+
     /**
      * Port requis par le composant
      */
@@ -79,9 +80,9 @@ public class Composant implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
+		/*result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((portFournis == null) ? 0 : portFournis.hashCode());
-		result = prime * result + ((portRequis == null) ? 0 : portRequis.hashCode());
+		result = prime * result + ((portRequis == null) ? 0 : portRequis.hashCode());*/
 		return result;
 	}
 	@Override
@@ -112,5 +113,6 @@ public class Composant implements Serializable{
 	}
     
     
+
 
 }

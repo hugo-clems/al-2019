@@ -18,6 +18,7 @@ import com.owlike.genson.GensonBuilder;
 
 import domaine.Configuration;
 import domaine.Connexion;
+import domaine.Port;
 import interfaces.IPersistence;
 
 /**
@@ -106,7 +107,7 @@ public class Persistence implements IPersistence {
 	public boolean sauvegarderConnexion(ArrayList<Connexion> connexionAPersister) {
 		// TODO Auto-generated method stub
 
-		Genson genson = new GensonBuilder().setSkipNull(true)/* .useClassMetadata(true) */.useRuntimeType(true)
+		Genson genson = new GensonBuilder().setSkipNull(true).exclude(Port.class)/* .useClassMetadata(true) */.useRuntimeType(true)
 				.create();
 		String res = genson.serialize(connexionAPersister);
 
@@ -142,7 +143,7 @@ public class Persistence implements IPersistence {
 				res.add(a);
 				for(Connexion c : resultv) {
 					if(c.equalsIdPort(a)) {
-						a.setNbLikes(c.getNbLikes());
+						a.setNbApprobation(c.getNbApprobation());
 					}					
 				}
 			}
