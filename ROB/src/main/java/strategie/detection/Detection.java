@@ -28,7 +28,6 @@ public class Detection {
         boolean robot = false;
         boolean depot = false;
         boolean collecte = false;
-        boolean colis = false;
 
         for (IAgentite agentite : listeAgentsEntites) {
 
@@ -42,13 +41,11 @@ public class Detection {
                 collecte = true;
             } else if (agentite instanceof ZoneDepot) {
                 depot = true;
-            } else if (agentite instanceof Colis) {
-                colis = true;
             }
 
         }
 
-        return new CaseRobot(caseAdjacente.getPosition(), poids, obstacle, robot, depot, collecte, colis);
+        return new CaseRobot(caseAdjacente.getPosition(), poids, obstacle, robot, depot, collecte);
     }
 
     private static void addCaseRobotToCarteMemoire(List<List<CaseRobot>> carteMemoire, CaseRobot caseRobot) {
@@ -75,7 +72,7 @@ public class Detection {
     }
 
     public static void main (String[] args){
-        CaseRobot caseRobot = new CaseRobot(new Position(5, 7), 0, false, false, false, false, false);
+        CaseRobot caseRobot = new CaseRobot(new Position(5, 7), 0, false, false, false, false);
         addCaseRobotToCarteMemoire(null, caseRobot);
         // afficher la carte pour verifier
     }

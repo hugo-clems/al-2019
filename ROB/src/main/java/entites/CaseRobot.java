@@ -16,7 +16,6 @@ public class CaseRobot {
 
     private boolean collecte;
 
-    private boolean colis;
 
     /**
      * Constructeur de CaseRobot.
@@ -26,16 +25,14 @@ public class CaseRobot {
      * @param robot la case contient-elle un robot ?
      * @param depot la case est-elle dans une zone de dépôt ?
      * @param collecte la case est-elle dans une zone de collecte ?
-     * @param colis la case contient-elle un clolis?
      */
-    public CaseRobot(Position position, int poids, boolean obstacle, boolean robot, boolean depot, boolean collecte, boolean colis) {
+    public CaseRobot(Position position, int poids, boolean obstacle, boolean robot, boolean depot, boolean collecte) {
         this.position = position;
         this.poids = poids;
         this.obstacle = obstacle;
         this.robot = robot;
         this.depot = depot;
         this.collecte = collecte;
-        this.colis = colis;
     }
 
     public int getPoids() {
@@ -72,10 +69,6 @@ public class CaseRobot {
 
     public boolean isCollecte() {
         return collecte;
-    }
-
-    public boolean isColis(){
-        return colis;
     }
 
     public void setCollecte(boolean collecte) {

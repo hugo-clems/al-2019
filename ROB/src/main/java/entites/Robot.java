@@ -32,7 +32,7 @@ public class Robot extends AbstractAgentSitue {
     @Override
     public void actionTour() {
         if(getColis() == null){
-            if(estColisDantSoi()){
+            if(estColisDevantSoi()){
                 this.ramasser(new Colis("Colis"));
                 setColis((Colis) this.getEntitePortee());
             }
@@ -152,7 +152,7 @@ public class Robot extends AbstractAgentSitue {
         }
     }
 
-    public boolean estColisDantSoi(){
+    public boolean estColisDevantSoi(){
         Detection.detecterVoisinage(this);
         Case caseRobot = this.plateau.getCase(this);
 
@@ -172,7 +172,7 @@ public class Robot extends AbstractAgentSitue {
         }
         CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getX() + x).get(caseRobot.getPosition().getY() + y);
 
-        return c.isColis();
+        return c.isCollecte();
     }
 
     public boolean estMurDevantSoi(){
