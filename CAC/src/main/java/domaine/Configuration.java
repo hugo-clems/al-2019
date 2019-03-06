@@ -21,6 +21,7 @@ public class Configuration extends Recommandable implements Serializable {
 		super();
 		this.connexions = connexions;
 		this.id = UUID.randomUUID().toString(); 
+//		this.connexions = new HashSet<Connexion>();
 	}
     public Configuration() {
     	
@@ -35,7 +36,7 @@ public class Configuration extends Recommandable implements Serializable {
     }
 
     public void ajouterConnexion(Connexion connexion) {
-        connexions.add(connexion);
+        this.connexions.add(connexion);
     }
     public String getId() {
 		return id;
