@@ -4,6 +4,7 @@ import agent.AbstractAgent;
 import agent.AbstractAgentSitue;
 import common.Direction;
 import entites.AbstractEntite;
+import entites.AbstractEntiteActive;
 import entites.Obstacle;
 
 import java.util.HashMap;
@@ -108,6 +109,17 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     }
     //endregion
 
+    //region IEntitePlateau
+
+    @Override
+    public boolean suiciderEntite(AbstractEntiteActive entiteActive) {
+        if (this.listeAgentites.containsKey(entiteActive)) {
+            return (this.enleverAgentite(this.listeAgentites.get(entiteActive).getPosition(), entiteActive) != null);
+        }
+        return false;
+    }
+    //endregion
+
     /**
      * place agent/entité sur une case
      *
@@ -141,6 +153,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
         return agentite;
     }
 
+    //region IAgentPlateau
     /**
      * Déplace un agent
      *
@@ -236,6 +249,7 @@ public class Plateau implements IEntitePlateau, IAgentPlateau {
     public Case getCase(AbstractAgent agent) {
         return listeAgentites.get(agent);
     }
+    //endregion
 
     /**
      * Initialisation du plateau
