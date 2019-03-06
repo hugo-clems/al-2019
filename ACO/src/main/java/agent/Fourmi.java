@@ -10,7 +10,6 @@ import plateau.*;
 import java.util.*;
 
 import static common.Direction.*;
-import static common.Direction.E;
 
 public class Fourmi extends AbstractAgentSitue {
 
@@ -169,9 +168,10 @@ public class Fourmi extends AbstractAgentSitue {
                     ((Nourriture) agentite).setQuantite(quantiteNourriture);
 
                     //Si il n'y a plus de nourriture on ramasse l'entite
+                    /*
                     if (quantiteNourriture == 0){
                         this.ramasser((AbstractEntite) agentite);
-                    }
+                    }*/
 
                     aRamasseNourriture = true;
                     estEnPhaseAller = false;
@@ -191,8 +191,10 @@ public class Fourmi extends AbstractAgentSitue {
         int rnd = 0; //Variable aleatoire pour calculer le deplacement
         int tmp = 0;
         Map<Direction, Integer> poidsTaux = new HashMap<Direction, Integer>();
+        boolean pheromoneExiste = false;
 
         estEnPhaseAller = false;
+
 
 
         //Si la fourmi se contentait de suivre de la pheromone à l'aller, maintenant qu'elle retourne au nid elle ne suit plus la pheromone à la trace
@@ -203,8 +205,9 @@ public class Fourmi extends AbstractAgentSitue {
         //Si la fourmis est sur le nid alors
         if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
             estSurNid = true;
+            return;
         }
-        else {
+        if ((this.iAgentPlateau.getCase(this).getPosition() != positionNid) && !estEnPhaseAller && !suitPheromoneAller) {
             initPoinds(this.getDirection());
 
             //On analyse le voisinnage
@@ -221,12 +224,12 @@ public class Fourmi extends AbstractAgentSitue {
                 for (IAgentite agentite : agentites) {
                     // Si la case contient au moins un obstacle
                     if (agentite instanceof Obstacle) {
-                        poids.put(myDirection, 0);
+                        poids.replace(myDirection, 0);
                     } else if (agentite instanceof Pheromone) { // Si la case contient de la phéromone
                         //Remplacer le poids par poids * taux de pheromone
-                        poids.put(myDirection, ((Pheromone) agentite).getTauxPheromone() * poids.get(myDirection));
+                        poids.replace(myDirection, ((Pheromone) agentite).getTauxPheromone() * poids.get(myDirection));
                     } else if (agentite instanceof Nourriture) { // Si la case contient de la nourriture
-                        poids.put(myDirection, 0);
+                        poids.replace(myDirection, 0);
                     }
                 }
             }
@@ -234,10 +237,22 @@ public class Fourmi extends AbstractAgentSitue {
             rnd = new Random().nextInt(calculerSomme());
             for(Map.Entry<Direction, Integer> entry : poids.entrySet()) {
                 tmp = tmp + entry.getValue();
-                if (rnd < tmp){
-                    AbstractEntite ent = new Pheromone(5, this.toString(), (IEntitePlateau) this.plateau);
-                    this.setEntitePortee(ent);
-                    deposer(ent);
+                if (rnd <= tmp){
+                    //Verifier si il existe deja le pheromone dans la case
+                    List<IAgentite> agentites = this.iAgentPlateau.getCase(this).getAgentites();
+                    for (IAgentite agentite : agentites) {
+                        if (agentite instanceof Pheromone) {
+                            pheromoneExiste = true;
+                            ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 20);
+                        }
+                    }
+
+                    //On depose que du pheromone dans le cas il n'existe pas
+                    if (!pheromoneExiste) {
+                        AbstractEntite ent = new Pheromone(20, this.toString(), (IEntitePlateau) this.plateau);
+                        this.setEntitePortee(ent);
+                        deposer(ent);
+                    }
                     seDeplacerVers(entry.getKey());
                     break;
                 }
