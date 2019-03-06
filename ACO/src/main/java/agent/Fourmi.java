@@ -1,10 +1,7 @@
 package agent;
 
 import common.Direction;
-import entites.AbstractEntite;
-import entites.Nourriture;
-import entites.Obstacle;
-import entites.Pheromone;
+import entites.*;
 import plateau.*;
 
 import java.util.*;
@@ -207,7 +204,7 @@ public class Fourmi extends AbstractAgentSitue {
             estSurNid = true;
             return;
         }
-        
+
         if ((this.iAgentPlateau.getCase(this).getPosition() != positionNid) && !estEnPhaseAller && !suitPheromoneAller) {
             initPoinds(this.getDirection());
 
@@ -235,6 +232,8 @@ public class Fourmi extends AbstractAgentSitue {
                 }
             }
 
+            poids.replace(sensAuNid(this), poids.get(sensAuNid(this)) * 35 );
+
             rnd = new Random().nextInt(calculerSomme());
             for(Map.Entry<Direction, Integer> entry : poids.entrySet()) {
                 tmp = tmp + entry.getValue();
@@ -257,6 +256,37 @@ public class Fourmi extends AbstractAgentSitue {
                     break;
                 }
             }
+        }
+    }
+
+    /**
+     * Detecter le sens pour rentrer au nid
+     */
+    public Direction sensAuNid(Fourmi f){
+        int posX, posY, posNidX, posNidY;
+
+        posX = f.iAgentPlateau.getCase(f).getPosition().getX();
+        posY = f.iAgentPlateau.getCase(f).getPosition().getY();
+        posNidX = f.getPositionNid().getX();
+        posNidY = f.positionNid.getY();
+
+
+        if (posX < posNidX) {
+            if (posY < posNidY) {
+                return Direction.NE;
+            } else if (posY == posNidY) {
+                return Direction.E;
+            } else return Direction.SE;
+        } else if (posX == posNidX) {
+            if (posY < posNidY) {
+                return Direction.N;
+            } else return Direction.S;
+        } else {
+            if (posY < posNidY){
+                return Direction.SO;
+            } else if (posY == posNidY){
+                return Direction.O;
+            } else return Direction.NO;
         }
     }
 
