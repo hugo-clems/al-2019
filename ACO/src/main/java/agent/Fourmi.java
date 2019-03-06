@@ -235,7 +235,7 @@ public class Fourmi extends AbstractAgentSitue {
             for(Map.Entry<Direction, Integer> entry : poids.entrySet()) {
                 tmp = tmp + entry.getValue();
                 if (rnd < tmp){
-                    AbstractEntite ent = new Pheromone(5, this.toString(), (IEntitePlateau) this.plateau);
+                    AbstractEntite ent = new Pheromone(20, this.toString(), (IEntitePlateau) this.plateau);
                     this.setEntitePortee(ent);
                     deposer(ent);
                     seDeplacerVers(entry.getKey());

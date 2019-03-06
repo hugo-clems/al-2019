@@ -2,8 +2,8 @@
 
 <plateau xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="initialisation.xsd">
     <nom>Simulateur ACO</nom>
-    <width>20</width>
-    <heigth>20</heigth>
+    <width>10</width>
+    <heigth>10</heigth>
     <liste_agentite>
         <nid>
             <nom>Fourmilère</nom>
@@ -12,7 +12,7 @@
                 <y>4</y>
             </position>
         </nid>
-        <fourmis>10</fourmis>
+        <fourmis>3</fourmis>
         <nourritures>
             <nourriture>
                 <quantite>50</quantite>
@@ -24,12 +24,12 @@
             <nourriture>
                 <quantite>60</quantite>
                 <position>
-                    <x>15</x>
-                    <y>10</y>
+                    <x>6</x>
+                    <y>8</y>
                 </position>
             </nourriture>
         </nourritures>
-        <obstacles>
+        <!--<obstacles>
             <obstacle>
                 <position>
                     <x>5</x>
@@ -43,6 +43,7 @@
                 </position>
             </obstacle>
         </obstacles>
+        -->
     </liste_agentite>
 
 </plateau>
