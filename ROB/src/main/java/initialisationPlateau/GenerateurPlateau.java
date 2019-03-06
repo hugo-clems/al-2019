@@ -40,6 +40,16 @@ public class GenerateurPlateau {
 
         //Instance de Application
         application = new Application("Plateau Robot", taillePlateauY, taillePlateauX);
+
+        // Calcul de la taille des cases en pixel
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double pixelWidth = screenSize.getWidth() / (taillePlateauX * 1.2);
+        double pixelHeight = screenSize.getHeight() / (taillePlateauY * 1.2);
+        int finalSize;
+        if(pixelHeight < pixelWidth) finalSize = (int) pixelHeight;
+        else finalSize = (int) pixelWidth;
+        application.setCaseSize(finalSize);
+
     }
 
     private static void initZones(String nom) {
