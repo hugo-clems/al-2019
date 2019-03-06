@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class GenerateurPlateau {
@@ -90,21 +91,27 @@ public class GenerateurPlateau {
 
     private static void affichage() {
         application.setCasePaint((caseToPaint, graphics, positionX, positionY, sizeMax) -> {
-            Stream<IAgentite> iAgentiteStream = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneCollecte);
-            if (iAgentiteStream.count() > 0) {
+            Supplier<Stream<IAgentite>> iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Robot);
+            if (iAgentiteStream.get().count() > 0) {
+                graphics.setColor(Color.GRAY);
+                graphics.fillRoundRect(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6, 5, 5);
+                iAgentiteStream.get().forEach(iAgentite -> {
+                    if (((Robot) iAgentite).getEntitePortee() != null) {
+                        graphics.setColor(Color.LIGHT_GRAY);
+                        graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
+                    }
+                });
+            }
+            iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneCollecte);
+            if (iAgentiteStream.get().count() > 0) {
                 graphics.setColor(Color.ORANGE);
                 graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
-            }
-            iAgentiteStream = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneDepot);
-            if (iAgentiteStream.count() > 0) {
+            }iAgentiteStream = () -> caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof ZoneDepot);
+            if (iAgentiteStream.get().count() > 0) {
                 graphics.setColor(Color.BLUE);
                 graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
             }
-            iAgentiteStream = caseToPaint.getAgentites().stream().filter(aCase -> aCase instanceof Robot);
-            if (iAgentiteStream.count() > 0) {
-                graphics.setColor(Color.GRAY);
-                graphics.fillRect(positionX, positionY, sizeMax, sizeMax);
-            }
+            iAgentiteStream.get().close();
         });
     }
 
