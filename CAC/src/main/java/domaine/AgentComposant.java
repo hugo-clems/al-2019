@@ -85,7 +85,4 @@ public class AgentComposant extends AbstractAgentSocial  implements IConnexion {
 
     }
 
-
-
-
 }

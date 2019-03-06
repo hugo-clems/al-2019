@@ -37,6 +37,7 @@ public class Persistence implements IPersistence {
 		return new String(encoded, encoding);
 	}
 
+	@Override
 	public ArrayList<Connexion> trouverTous() {
 		// TODO Auto-generated method stub
 		ArrayList<Connexion> res = new ArrayList<Connexion>();

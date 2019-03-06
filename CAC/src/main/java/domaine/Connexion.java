@@ -142,4 +142,10 @@ public class Connexion /*extends Recommandable*/ implements Serializable {
         this.nbOccurence = nbOccurence;
     }
 
+    @Override
+    public String toString(){
+        return ("[" + this.getFourni().getComposant().getNom() + "][PROV]" + this.getFourni().getService()
+                + " - [" + this.getRequis().getComposant().getNom() + "][REQ]" + this.getRequis().getService());
+    }
+
 }
