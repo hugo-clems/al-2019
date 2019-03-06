@@ -14,20 +14,15 @@ public class Detection {
 
     public static void detecterVoisinage(Robot robot) {
         Map<Direction, Case> casesAdjacentes = robot.detecter();
-        CaseRobot caseRobot;
         for (Case caseAdjacente : casesAdjacentes.values()) {
-            caseRobot = convertCaseToCaseRobot(caseAdjacente);
-            addCaseRobotToCarteMemoire(robot, caseRobot);
+            addCaseRobotToCarteMemoire(robot, convertCaseToCaseRobot(caseAdjacente));
         }
     }
 
     private static CaseRobot convertCaseToCaseRobot(Case caseAdjacente) {
         List<IAgentite> listeAgentsEntites = caseAdjacente.getAgentites();
+        boolean obstacle = false, robot = false, depot = false, collecte = false;
         int poids = 0;
-        boolean obstacle = false;
-        boolean robot = false;
-        boolean depot = false;
-        boolean collecte = false;
 
         for (IAgentite agentite : listeAgentsEntites) {
 
