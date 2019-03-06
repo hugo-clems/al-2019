@@ -23,10 +23,12 @@ public class Robot extends AbstractAgentSitue {
 
     private Position caseCollecte;
 
-    public Robot(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+    public Robot(String nom, IAgentPlateau plateau, Direction directionInitiale, Position centreCollecte, Position centreDepot) {
         super(nom, plateau, directionInitiale);
         this.nbActions = 0;
         this.nbDeplacements = 0;
+        this.caseCollecte = centreCollecte;
+        this.caseDepot = centreDepot;
     }
 
     @Override
