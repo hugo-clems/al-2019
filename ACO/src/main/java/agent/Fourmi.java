@@ -207,6 +207,7 @@ public class Fourmi extends AbstractAgentSitue {
             estSurNid = true;
             return;
         }
+        
         if ((this.iAgentPlateau.getCase(this).getPosition() != positionNid) && !estEnPhaseAller && !suitPheromoneAller) {
             initPoinds(this.getDirection());
 
@@ -227,7 +228,7 @@ public class Fourmi extends AbstractAgentSitue {
                         poids.replace(myDirection, 0);
                     } else if (agentite instanceof Pheromone) { // Si la case contient de la phéromone
                         //Remplacer le poids par poids * taux de pheromone
-                        poids.replace(myDirection, ((Pheromone) agentite).getTauxPheromone() * poids.get(myDirection));
+                        poids.replace(myDirection, ((Pheromone) agentite).getTauxPheromone() * poids.get(myDirection) / 10);
                     } else if (agentite instanceof Nourriture) { // Si la case contient de la nourriture
                         poids.replace(myDirection, 0);
                     }
