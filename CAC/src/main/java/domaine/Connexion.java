@@ -1,8 +1,13 @@
 package domaine;
 
+
 import java.io.Serializable;
 
-public class Connexion extends Recommandable implements Serializable {
+import java.util.UUID;
+
+public class Connexion /*extends Recommandable*/ implements Serializable {
+
+    private UUID uuid;
 
 	/**
 	 * 
@@ -10,13 +15,40 @@ public class Connexion extends Recommandable implements Serializable {
 	private static final long serialVersionUID = 7856893215103074382L;
 	private Port fourni;
 	private Port requis;
-	private int nbLikes;
+    private int nbApprobation;
+    private int nbOccurence;
 
-	public Connexion(Port fourni, Port requis) {
-		this.fourni = fourni;
-		this.requis = requis;
-		this.nbLikes = 0;
-	}
+    public Connexion(UUID uuid, Port fourni, Port requis, int nbOccurence, int nbApprobation) {
+        this.uuid = uuid;
+        this.fourni = fourni;
+        this.requis = requis;
+        this.nbOccurence = nbOccurence;
+        this.nbApprobation = nbApprobation;
+    }
+
+    public Connexion(Port fourni, Port requis, int nbOccurence, int nbApprobation) {
+        this.uuid = UUID.randomUUID();
+        this.fourni = fourni;
+        this.requis = requis;
+        this.nbOccurence = nbOccurence;
+        this.nbApprobation = nbApprobation;
+    }
+
+    public Connexion(Port fourni, Port requis) {
+        this.uuid = UUID.randomUUID();
+        this.fourni = fourni;
+        this.requis = requis;
+        this.nbOccurence = 0;
+        this.nbApprobation = 0;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
 	public Connexion() {
 	}
@@ -77,32 +109,37 @@ public class Connexion extends Recommandable implements Serializable {
 			return false;
 		Connexion other = (Connexion) obj;
 		return (other.getFourni() != null 
-				&& other.getFourni().getId() !=null 
+				&& other.getFourni().getUuid() !=null
 				&&other.getRequis() != null 
-				&& other.getRequis().getId() !=null 
-				&&  other.getFourni().getId().equals(this.getFourni().getId()) 
-				&& other.getRequis().getId().equals(this.getRequis().getId()));
+				&& other.getRequis().getUuid() !=null
+				&&  other.getFourni().getUuid().equals(this.getFourni().getUuid())
+				&& other.getRequis().getUuid().equals(this.getRequis().getUuid()));
 
 	}
 	
 	public void incrementerNote() {
-		this.nbLikes++;
+		this.nbApprobation++;
 	}
 	
 	public void decrementerNote() {
-		this.nbLikes--;
+		this.nbApprobation--;
 	}
 
-	public int getNbLikes() {
-		return nbLikes;
-	}
 
-	/**
-	 * Ne jamais passer null en paramètre ici sous peine d'exception en masse
-	 * @param nbLikes
-	 */
-	public void setNbLikes(int nbLikes) {
-		this.nbLikes = nbLikes;
-	}
+    public int getNbApprobation() {
+        return nbApprobation;
+    }
+
+    public void setNbApprobation(int nbApprobation) {
+        this.nbApprobation = nbApprobation;
+    }
+
+    public int getNbOccurence() {
+        return nbOccurence;
+    }
+
+    public void setNbOccurence(int nbOccurence) {
+        this.nbOccurence = nbOccurence;
+    }
 
 }

@@ -30,8 +30,8 @@ public class PersistenceTest {
 		composant1 = new Composant("comp1");
 		composant2 = new Composant("comp2");
 
-		portR = new Port(null, "s1", "idR");
-		portF = new Port(null, "s1", "idF");
+		portR = new Port(null, composant1, "idR");
+		portF = new Port(null, composant2, "idF");
 
 		composant1.ajouterPortRequis(portR);
 		composant2.ajouterPortFourni(portF);
@@ -117,13 +117,13 @@ public class PersistenceTest {
 		persistance.sauvegarderConnexion(expectedList);
 		
 		/* Et on met sa note à 0 */
-		connexion.setNbLikes(0);
+		connexion.setNbApprobation(0);
 		
 		/* Lorsqu'on passe la liste en paramètre */
 		actualList = persistance.trouverConnexion(expectedList);
 //		System.out.println(actualList.get(0).getNbLikes());
 		
 		/*on doit avoir la note remise à jour */
-		assertTrue(actualList.get(0).getNbLikes() == 1);
+		assertTrue(actualList.get(0).getNbApprobation() == 1);
 	}
 }
