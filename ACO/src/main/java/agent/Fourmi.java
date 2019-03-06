@@ -49,6 +49,8 @@ public class Fourmi extends AbstractAgentSitue {
     }
 
     public void chercherNourriture(){
+
+        System.out.println("[ " + this.getNom() + " ] : Je cherche");
         estSurNid = false;
 
         boolean caseSansObstacle = false;
@@ -184,6 +186,8 @@ public class Fourmi extends AbstractAgentSitue {
                     aRamasseNourriture = true;
                     estEnPhaseAller = false;
                     estSurNid = false;
+
+                    System.out.println("[ " + this.getNom() + " ] : J'ai ramssé la nourriture");
                     break;
                 }
             }
@@ -265,6 +269,13 @@ public class Fourmi extends AbstractAgentSitue {
                 }
             }
         }
+
+        //Si la fourmis est sur le nid alors
+        if (this.iAgentPlateau.getCase(this).getPosition().equals(positionNid)){
+            System.out.println("[ " + this.getNom() + " ] : Je suis sur le nid");
+            estSurNid = true;
+        }
+
     }
 
     /**
@@ -446,6 +457,7 @@ public class Fourmi extends AbstractAgentSitue {
     public void deposerNourriture(){
         estEnPhaseAller = true;
         nourritureTrouvee = false;
+        System.out.println("[ " + this.getNom() + " ] : J'ai déposé la nourriture.");
     }
 
     @Override
