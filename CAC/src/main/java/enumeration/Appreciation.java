@@ -1,4 +1,4 @@
-package interfaces;
+package enumeration;
 
 public enum Appreciation {
 

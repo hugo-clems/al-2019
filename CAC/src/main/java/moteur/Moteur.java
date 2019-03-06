@@ -1,14 +1,14 @@
 package moteur;
 
 import domaine.Configuration;
-import interfaces.SystemeRecommandation;
+//import interfaces.SystemeRecommandation;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Moteur {
 
-    private Set<Configuration> configurations = new HashSet<>();
+   /* private Set<Configuration> configurations = new HashSet<>();
     private SystemeRecommandation systemeRecommandation;
 
     public Moteur(SystemeRecommandation systemeRecommandation) {
@@ -33,6 +33,6 @@ public class Moteur {
 
     public void ajouterConfiguration(Configuration configuration) {
         configurations.add(configuration);
-    }
+    }*/
 
 }
