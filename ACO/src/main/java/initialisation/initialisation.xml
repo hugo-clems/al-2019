@@ -2,14 +2,14 @@
 
 <plateau xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="initialisation.xsd">
     <nom>Simulateur ACO</nom>
-    <width>10</width>
-    <heigth>10</heigth>
+    <width>20</width>
+    <heigth>20</heigth>
     <liste_agentite>
         <nid>
             <nom>Fourmilère</nom>
             <position>
-                <x>3</x>
-                <y>4</y>
+                <x>10</x>
+                <y>10</y>
             </position>
         </nid>
         <fourmis>5</fourmis>
@@ -17,15 +17,15 @@
             <nourriture>
                 <quantite>50</quantite>
                 <position>
-                    <x>8</x>
+                    <x>5</x>
                     <y>8</y>
                 </position>
             </nourriture>
             <nourriture>
                 <quantite>60</quantite>
                 <position>
-                    <x>6</x>
-                    <y>8</y>
+                    <x>7</x>
+                    <y>5</y>
                 </position>
             </nourriture>
         </nourritures>

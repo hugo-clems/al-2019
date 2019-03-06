@@ -49,10 +49,16 @@ public class Fourmi extends AbstractAgentSitue {
     }
 
     public void chercherNourriture(){
-
+        estSurNid = false;
 
         boolean caseSansObstacle = false;
         // Si la fourmi ne transporte pas de nourriture && n'a pas trouvé de traces de phéromones
+
+        //Si la fourmis est sur le nid alors
+        if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
+            estSurNid = true;
+            return;
+        }
 
         // On analyse le voisinnage
         Map<Direction, Case> voisinnage = detecter();
@@ -133,8 +139,13 @@ public class Fourmi extends AbstractAgentSitue {
 
     public void suivrePheromone(List<Direction> listeDirectionsPheromone){
         Direction direction = listeDirectionsPheromone.get(new Random().nextInt(listeDirectionsPheromone.size()));
-        seTournerVers(direction);
-        seDeplacerVers(direction);
+        if (direction != sensVersNid(this)) {
+            seTournerVers(direction);
+            seDeplacerVers(direction);
+        } else {
+            seTournerVers(directionOpposee(direction));
+            seDeplacerVers(directionOpposee(direction));
+        }
     }
 
     public void prendreNourriture(){
@@ -192,8 +203,6 @@ public class Fourmi extends AbstractAgentSitue {
 
         estEnPhaseAller = false;
 
-
-
         //Si la fourmi se contentait de suivre de la pheromone à l'aller, maintenant qu'elle retourne au nid elle ne suit plus la pheromone à la trace
         if (suitPheromoneAller){
             suitPheromoneAller = false;
@@ -203,10 +212,7 @@ public class Fourmi extends AbstractAgentSitue {
         if (this.iAgentPlateau.getCase(this).getPosition() == positionNid){
             estSurNid = true;
             estEnPhaseAller = true;
-            return;
-        }
-
-        if ((this.iAgentPlateau.getCase(this).getPosition() != positionNid) && !estEnPhaseAller && !suitPheromoneAller) {
+        } else if (!estSurNid && !estEnPhaseAller && !suitPheromoneAller) {
             initPoinds(this.getDirection());
 
             //On analyse le voisinnage
@@ -233,7 +239,8 @@ public class Fourmi extends AbstractAgentSitue {
                 }
             }
 
-            poids.replace(sensAuNid(this), poids.get(sensAuNid(this)) * 35 );
+            //Les fourmis priorise de se deplacer dans le sens vers le Nid
+            poids.replace(sensVersNid(this), poids.get(sensVersNid(this)) * 40 );
 
             rnd = new Random().nextInt(calculerSomme());
             for(Map.Entry<Direction, Integer> entry : poids.entrySet()) {
@@ -263,7 +270,7 @@ public class Fourmi extends AbstractAgentSitue {
     /**
      * Detecter le sens pour rentrer au nid
      */
-    public Direction sensAuNid(Fourmi f){
+    public Direction sensVersNid(Fourmi f){
         int posX, posY, posNidX, posNidY;
 
         posX = f.iAgentPlateau.getCase(f).getPosition().getX();
@@ -271,17 +278,16 @@ public class Fourmi extends AbstractAgentSitue {
         posNidX = f.getPositionNid().getX();
         posNidY = f.positionNid.getY();
 
-
         if (posX < posNidX) {
             if (posY < posNidY) {
-                return Direction.NE;
+                return Direction.SE;
             } else if (posY == posNidY) {
                 return Direction.E;
-            } else return Direction.SE;
+            } else return Direction.NE;
         } else if (posX == posNidX) {
             if (posY < posNidY) {
-                return Direction.N;
-            } else return Direction.S;
+                return Direction.S;
+            } else return Direction.N;
         } else {
             if (posY < posNidY){
                 return Direction.SO;
