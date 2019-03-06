@@ -1,15 +1,15 @@
 package ihm;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+
 import domaine.Composant;
 import domaine.Configuration;
 import domaine.Connexion;
 import domaine.Port;
-import interfaces.Appreciation;
 import interfaces.IEval;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Eval {
 
