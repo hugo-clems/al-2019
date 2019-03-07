@@ -11,10 +11,15 @@ import interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class Noyau extends AbstractAgentSocial implements IEval{
+public class Noyau extends AbstractAgentSocial {
+    @Override
+    public void actionTour() {
 
-    private List<AgentComposant> listAgents;
+    }//implements IEval{
+
+    /*private List<AgentComposant> listAgents;
 
      private IVue iVue;
      private IConnexion iConnexion;
@@ -48,14 +53,14 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     }
 
     @Override
-    public List<Configuration> getConfigurations() {
+    public Set<Configuration> getConfigurations() {
         return null;
     }
 
     /*public List<Configuration> recevoirConnexionPossibles(){
 
     }
-*/
+
 
 
     public List<Configuration> configurations(){
@@ -66,5 +71,5 @@ public class Noyau extends AbstractAgentSocial implements IEval{
         return null;
     }
 
-
+*/
 }
