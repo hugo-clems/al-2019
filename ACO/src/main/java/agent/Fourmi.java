@@ -178,10 +178,10 @@ public class Fourmi extends AbstractAgentSitue {
                     ((Nourriture) agentite).setQuantite(quantiteNourriture);
 
                     //Si il n'y a plus de nourriture on ramasse l'entite
-                    /*
+
                     if (quantiteNourriture == 0){
                         this.ramasser((AbstractEntite) agentite);
-                    }*/
+                    }
 
                     aRamasseNourriture = true;
                     estEnPhaseAller = false;
