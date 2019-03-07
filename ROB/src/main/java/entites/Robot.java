@@ -172,9 +172,17 @@ public class Robot extends AbstractAgentSitue {
             default:
                 break;
         }
-        CaseRobot c = this.carteMemoire.get(caseRobot.getPosition().getY() + y -1).get(caseRobot.getPosition().getX() + x -1);
+        int otherX = caseRobot.getPosition().getX() + x -1;
+        if (otherX < 0) {
+            otherX = 0;
+        }
+        int otherY = caseRobot.getPosition().getY() + y -1;
+        if (otherY < 0) {
+            otherY = 0;
+        }
+        CaseRobot c = this.carteMemoire.get(otherY).get(otherX);
 
-        return c.isCollecte();
+        return c != null && c.isCollecte();
     }
 
     public boolean estMurDevantSoi(){

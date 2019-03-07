@@ -217,7 +217,7 @@ public class GenerateurPlateau {
         System.out.print("Utiliser un fichier de configuration ? Y/N : ");
         char choice = (char) System.in.read();
 
-        if(choice == 'Y') {
+        if(choice == 'Y' || choice == 'y') {
             int fileChoice, cpt = 0;
             List<String> results = new ArrayList<String>();
             File[] files = new File("./ROB/src/main/resources/").listFiles();

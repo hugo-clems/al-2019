@@ -51,19 +51,23 @@ public class Detection {
             carteMemoire = new ArrayList<>();
         }
 
-        while (position.getY() - 1 >= carteMemoire.size()) {
+        int predX=position.getX() - 1,
+                predY=position.getY() - 1;
+        while (predY >= carteMemoire.size()) {
             carteMemoire.add(new ArrayList<>());
         }
 
-        if (carteMemoire.get(position.getY() - 1) == null) {
-            carteMemoire.set(position.getY() - 1, new ArrayList<>());
-        }
+        if (predY >= 0 && predX >= 0) {
+            if (carteMemoire.get(predY) == null) {
+                carteMemoire.set(predY, new ArrayList<>());
+            }
 
-        while (position.getX() > carteMemoire.get(position.getY() - 1).size()) {
-            carteMemoire.get(position.getY() - 1).add(null);
-        }
+            while (position.getX() > carteMemoire.get(predY).size()) {
+                carteMemoire.get(predY).add(null);
+            }
 
-        carteMemoire.get(position.getY() - 1).set(position.getX() - 1, caseRobot);
+            carteMemoire.get(predY).set(predX, caseRobot);
+        }
         robot.setCarteMemoire(carteMemoire);
     }
 }
