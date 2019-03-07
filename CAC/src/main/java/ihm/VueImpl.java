@@ -4,7 +4,7 @@ import domaine.Composant;
 import domaine.Configuration;
 import domaine.Connexion;
 import domaine.Port;
-import impl.Noyau;
+import noyau.Noyau;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +52,5 @@ public class VueImpl implements IVue{
         return composants;
     }
 
-
-
-    public static void main (String[] args){
-        VueImpl vue = new VueImpl();
-        List<Composant> conf = vue.entrerConfiguration();
-        conf.toString();
-        Eval eval = new Eval(null);
-        eval.demanderNotation();
-
-    }
 
 }

@@ -24,9 +24,11 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     private List<MessageAgentAuNoyau> messageRecus = new ArrayList<>();
     private List<Connexion> connexionsPossbile = new ArrayList<>();
 
-
-
-
+    public Noyau (IVue iVue,IPersistence iPersistence,IRecommandation iRecommandation) {
+        this.iVue = iVue;
+        this.iPersistence = iPersistence;
+        this.iRecommandation = iRecommandation;
+    }
 
     public Noyau (IVue iVue,IConnexion iConnexion,IPersistence iPersistence,IRecommandation iRecommandation) {
         this.iVue = iVue;
@@ -101,7 +103,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
 
     }
 
-    private List<AgentComposant> creerAgents(){
+    public List<AgentComposant> creerAgents(){
 
         List<Composant> composants = iVue.entrerConfiguration();
         List<AgentComposant> listAgents = new ArrayList<>();

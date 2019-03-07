@@ -1,9 +1,21 @@
 package moteur;
 
+import domaine.AgentComposant;
+import domaine.Composant;
 import domaine.Configuration;
+import domaine.Connexion;
+import ihm.IVue;
+import interfaces.IConnexion;
+import noyau.Noyau;
+import ihm.Eval;
+import ihm.VueImpl;
+import interfaces.IEval;
 import interfaces.IRecommandation;
+import persistence.Persistence;
+import systemeRecommandation.SystemeRecommandation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Moteur {
@@ -33,6 +45,29 @@ public class Moteur {
 
     public void ajouterConfiguration(Configuration configuration) {
         configurations.add(configuration);
+    }
+
+
+    public static void main (String[] args){
+        //Création instances
+        IVue vue = new VueImpl();
+        Persistence persistence = new Persistence();
+        IRecommandation recommandation = new SystemeRecommandation();
+        Noyau noyau = new Noyau(vue, persistence, recommandation);
+
+        List<AgentComposant> listeAgent = noyau.creerAgents();
+        for (AgentComposant ac : listeAgent){
+            ac.broadcast();
+        }
+        for (AgentComposant ac : listeAgent){
+            ac.envoyerConnexionPossible();
+        }
+        noyau.recevoirMessage();
+        //List<Connexion> connexionsPossibles = noyau.getConnexionsPossbile();
+
+        Eval eval = new Eval(noyau);
+        eval.demanderNotation();
+
     }
 
 }
