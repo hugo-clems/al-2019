@@ -8,6 +8,7 @@ import enumeration.Appreciation;
 import ihm.IVue;
 import interfaces.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +21,6 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     private IRecommandation iRecommandation;
 
     private ArrayList<Configuration> lesConfigurations;
-    private ArrayList<Connexion> connexionsPossibles;
-    private ArrayList<Connexion> connexionsPossiblesPersistees;
     private List<MessageAgentAuNoyau> messageRecus = new ArrayList<>();
     private List<Connexion> connexionsPossbile = new ArrayList<>();
 
@@ -34,8 +33,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
         this.iConnexion = iConnexion;
         this.iPersistence = iPersistence;
         this.iRecommandation = iRecommandation;
-        connexionsPossibles = new ArrayList<>();
-    }
+     }
 
     @Override
     public void noterConfiguration(int configuration, Appreciation appreciation) {
@@ -67,13 +65,24 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     @Override
     public Set<Configuration> getConfigurations() {
 
+        ArrayList<Connexion> connexionsPossiblesAPersistees = new ArrayList<>();
         List<MessageAgentAuNoyau> messagesAgentAuNoyeau = recevoirMessage();
+        ArrayList<Configuration> configurationsPossibles = new ArrayList<>();
+        Set<Connexion> setConnexionPossibles = new HashSet<>();
+        ArrayList<Connexion> inter;
 
-        /*messagesAgentAuNoyeau.forEach(messageAgentAuNoyeau ->
-            { connexionsPossibles.add(messageAgentAuNoyeau.getCouplePossible())});
-*/
-        connexionsPossiblesPersistees = iPersistence.trouverConnexion(connexionsPossibles);
-        return iRecommandation.creerConfigurations(connexionsPossiblesPersistees);
+        messagesAgentAuNoyeau.forEach(messageAgentAuNoyeau -> {
+            setConnexionPossibles.addAll(messageAgentAuNoyeau.getCouplePossible());
+            configurationsPossibles.add(new Configuration(setConnexionPossibles));
+        });
+
+        for (Configuration configuration : configurationsPossibles) {
+            inter = new ArrayList<>();
+            inter.addAll(configuration.getConnexions());
+            connexionsPossiblesAPersistees.addAll(iPersistence.trouverConnexion(inter));
+        }
+
+        return iRecommandation.creerConfigurations(connexionsPossiblesAPersistees);
     }
 
     public List<MessageAgentAuNoyau> recevoirMessage() {

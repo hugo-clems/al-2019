@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SystemeRecommandation implements IRecommandation {
+public class SystemeRecommandation  {
 
-    @Override
+   /* @Override
     public int calculerValeurInteret(Connexion connexion) {
         return 100 * connexion.getNbApprobation() / connexion.getNbOccurence();
     }
@@ -42,5 +42,6 @@ public class SystemeRecommandation implements IRecommandation {
 
         return configurations;
     }
+    */
 
 }
