@@ -34,6 +34,7 @@ public class GenerateurPlateau {
     private static int taillePlateauX;
     private static int taillePlateauY;
     private static Position point2collecte;
+    public static List<Colis> listeColis;
 
     public static void initPlateau() {
 
@@ -61,15 +62,6 @@ public class GenerateurPlateau {
 
     private static boolean positionOK(Position pos) {
         return (pos.getX() > 0 && pos.getX() <= taillePlateauX - 2 && pos.getY() > 0 && pos.getY() <= taillePlateauY - 2);
-    }
-
-    private static boolean zoneOK(Position pos1, Position pos2) {
-        for(int i = pos1.getX(); i <= pos2.getX(); i++) {
-            for (int j = pos1.getY(); j <= pos2.getY(); j++) {
-                // Faire une liste et comparer...
-            }
-        }
-        return true;
     }
 
     private static void revertPos(Position pos1, Position pos2) {
@@ -160,7 +152,7 @@ public class GenerateurPlateau {
                 graphics.setColor(Color.GRAY);
                 graphics.fillRoundRect(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6, 5, 5);
                 iAgentiteStream.get().forEach(iAgentite -> {
-                    if (((Robot) iAgentite).getEntitePortee() != null) {
+                    if (((Robot) iAgentite).isColisDansInventaire() == true) {
                         graphics.setColor(Color.LIGHT_GRAY);
                         graphics.fillOval(positionX + 3, positionY + 3, sizeMax - 6, sizeMax - 6);
                     }
@@ -202,8 +194,13 @@ public class GenerateurPlateau {
     }
 
     private static void initColis() {
-        System.out.print("Nombre de Colis (valeur négative pour infini) : ");
-        nombreColis = reader.nextInt();
+        do {
+            System.out.print("Nombre de Colis : ");
+            nombreColis = reader.nextInt();
+        } while (nombreColis < 1);
+        for(int i = 0; i < nombreColis; i++) {
+            listeColis.add(new Colis("Colis" + i));
+        }
     }
 
     static String readFile(String path, Charset encoding) throws IOException {
@@ -249,6 +246,7 @@ public class GenerateurPlateau {
         initZones("Depot");
         initObstacles();
         initRobots();
+        listeColis = new ArrayList<>();
         initColis();
         affichage();
 

@@ -2,6 +2,7 @@ package entites;
 
 import agent.AbstractAgentSitue;
 import common.Direction;
+import initialisationPlateau.GenerateurPlateau;
 import plateau.Case;
 import plateau.IAgentPlateau;
 import plateau.Position;
@@ -33,22 +34,24 @@ public class Robot extends AbstractAgentSitue {
 
     @Override
     public void actionTour() {
-        if(getColis() == null){
-            Colis c = estColisDevantSoi();
-            if(c != null){
-                this.ramasser(c);
-                setColis(c);
+        if(GenerateurPlateau.listeColis.size() > 0 || this.isColisDansInventaire()) {
+            if (getColis() == null) {
+                if (estColisDevantSoi()) {
+                    setColis(GenerateurPlateau.listeColis.remove(0));
+                } else {
+                    boolean b = allerZoneCollecte();
+                    if (b) nbActions++;
+                    nbDeplacements++;
+                }
             } else {
-                boolean b = allerZoneCollecte();
-                if(b) nbActions++; nbDeplacements++;
-            }
-        } else {
-            if (estZoneDepotDevantSoi()){
-                this.deposer(this.getColis());
-                this.setColis(null);
-            } else {
-                boolean b = allerZoneDepot();
-                if(b) nbActions++; nbDeplacements++;
+                if (estZoneDepotDevantSoi()) {
+                    this.deposer(this.getColis());
+                    this.setColis(null);
+                } else {
+                    boolean b = allerZoneDepot();
+                    if (b) nbActions++;
+                    nbDeplacements++;
+                }
             }
         }
     }
@@ -161,7 +164,7 @@ public class Robot extends AbstractAgentSitue {
         }
     }
 
-    public Colis estColisDevantSoi(){
+    public boolean estColisDevantSoi(){
         Detection.detecterVoisinage(this);
         Case caseRobot = this.plateau.getCase(this);
 
@@ -189,8 +192,8 @@ public class Robot extends AbstractAgentSitue {
         }
         CaseRobot c = this.carteMemoire.get(otherY).get(otherX);
 
-        //return c != null && c.isCollecte();
-        return c.getColis();
+        return c != null && c.isCollecte();
+        //return c.isCollecte();
     }
 
     public boolean estZoneDepotDevantSoi(){
