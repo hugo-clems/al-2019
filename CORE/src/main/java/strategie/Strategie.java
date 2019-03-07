@@ -80,6 +80,10 @@ public class Strategie implements IStrategie {
         this.listeAgents.remove(agent);
     }
 
+    /**
+     * Set le listener de fin de tour
+     * @param tourListener le listener
+     */
     public void setTourListener(Runner.TourListener tourListener) {
         this.tourListener = tourListener;
     }

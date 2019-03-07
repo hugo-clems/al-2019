@@ -120,10 +120,17 @@ public class PlateauComponent extends JComponent {
         }
     }
 
+    /**
+     * Interface permettant d'exposer le dessin des cases
+     */
     public interface CasePaint {
         void onDraw(Case caseToPaint, Graphics g, int positionX, int positionY, int sizeMax);
     }
 
+    /**
+     * Listener de fin de tour
+     * Permet aux entités actives d'agir (ex: les phéromones)
+     */
     private Runner.TourListener tourListener = () -> {
         Map<Position, Case> positionCaseMap = this.plateau.getCases();
 
@@ -145,6 +152,9 @@ public class PlateauComponent extends JComponent {
         this.repaint();
     };
 
+    /**
+     * Get le listener de fin de tour
+     */
     public Runner.TourListener getTourListener() {
         return tourListener;
     }

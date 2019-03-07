@@ -33,6 +33,9 @@ public class Runner implements Runnable {
      */
     private List<AbstractAgent> listeAgents;
 
+    /**
+     * Execution du Runner
+     */
     @Override
     public void run() {
         this.isRunning = true;
@@ -59,6 +62,9 @@ public class Runner implements Runnable {
         this.isRunning = running;
     }
 
+    /**
+     * Interface du listener de fin de cours
+     */
     public interface TourListener {
         void refresh();
     }
