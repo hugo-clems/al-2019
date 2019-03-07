@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +31,8 @@ public class PersistenceTest {
 		composant1 = new Composant("comp1");
 		composant2 = new Composant("comp2");
 
-		portR = new Port(null, composant1, "idR");
-		portF = new Port(null, composant2, "idF");
+		portR = new Port(UUID.randomUUID(), composant1, "idR");
+		portF = new Port(UUID.randomUUID(), composant2, "idF");
 
 		composant1.ajouterPortRequis(portR);
 		composant2.ajouterPortFourni(portF);
