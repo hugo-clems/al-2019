@@ -85,4 +85,10 @@ public class AgentComposant extends AbstractAgentSocial  implements IConnexion {
 
     }
 
+    public void run(){
+        while(true){
+            this.broadcast();
+        }
+    }
+
 }

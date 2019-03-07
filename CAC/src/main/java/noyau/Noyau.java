@@ -20,7 +20,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     private IPersistence iPersistence;
     private IRecommandation iRecommandation;
 
-    private ArrayList<Configuration> lesConfigurations;
+    private List<Configuration> configurations;
     private List<MessageAgentAuNoyau> messageRecus = new ArrayList<>();
     private List<Connexion> connexionsPossbile = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
     @Override
     public void noterConfiguration(int configuration, Appreciation appreciation) {
 
-            Configuration configurationASauvegarder = lesConfigurations.get(configuration);
+            Configuration configurationASauvegarder = configurations.get(configuration);
             Set <Connexion> connexions = configurationASauvegarder.getConnexions();
             ArrayList<Connexion> connexionsASauvegarder = new ArrayList<>();
 
@@ -57,17 +57,14 @@ public class Noyau extends AbstractAgentSocial implements IEval{
                 }
             }
 
-            if (configuration == lesConfigurations.size()){
+            if (configuration == configurations.size()){
                 connexionsASauvegarder.addAll(connexions);
                 iPersistence.sauvegarderConnexion(connexionsASauvegarder);
             }
     }
 
-
-    @Override
-    public List<Configuration> getConfigurations() {
-
-        ArrayList<Connexion> connexionsPossiblesAPersistees = new ArrayList<>();
+    public void calculerConfigurations() {
+        ArrayList<Connexion> connexionsPossibles = new ArrayList<>();
         List<MessageAgentAuNoyau> messagesAgentAuNoyeau = recevoirMessage();
         ArrayList<Configuration> configurationsPossibles = new ArrayList<>();
         Set<Connexion> setConnexionPossibles = new HashSet<>();
@@ -75,18 +72,15 @@ public class Noyau extends AbstractAgentSocial implements IEval{
 
         messagesAgentAuNoyeau.forEach(messageAgentAuNoyeau -> {
             setConnexionPossibles.addAll(messageAgentAuNoyeau.getCouplePossible());
-            configurationsPossibles.add(new Configuration(setConnexionPossibles));
         });
 
-        for (Configuration configuration : configurationsPossibles) {
-            inter = new ArrayList<>();
-            inter.addAll(configuration.getConnexions());
-            connexionsPossiblesAPersistees.addAll(iPersistence.trouverConnexion(inter));
-        }
+        connexionsPossibles = iPersistence.trouverConnexion(new ArrayList<>(setConnexionPossibles));
 
-        List<Configuration> configurations = new ArrayList<>();
-        configurations.addAll(iRecommandation.creerConfigurations(connexionsPossiblesAPersistees));
+        configurations = new ArrayList<>(iRecommandation.creerConfigurations(connexionsPossibles));
+    }
 
+    @Override
+    public List<Configuration> getConfigurations() {
         return configurations;
     }
 
@@ -132,12 +126,8 @@ public class Noyau extends AbstractAgentSocial implements IEval{
         this.connexionsPossbile = connexionsPossbile;
     }
 
-    public ArrayList<Configuration> getLesConfigurations() {
-        return lesConfigurations;
-    }
-
-    public void setLesConfigurations(ArrayList<Configuration> lesConfigurations) {
-        this.lesConfigurations = lesConfigurations;
+    public void setConfigurations(ArrayList<Configuration> configurations) {
+        this.configurations = configurations;
     }
 
     @Override

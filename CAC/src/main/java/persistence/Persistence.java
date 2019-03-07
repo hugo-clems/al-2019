@@ -21,6 +21,9 @@ import domaine.Connexion;
 import domaine.Port;
 import interfaces.IPersistence;
 
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileManager;
+
 /**
  * Cette classe est le composant offrant les services de persistence
  * Pour se faire, elle écrit dans un fichier qu'il ne faut pas modifier !!
@@ -30,7 +33,7 @@ import interfaces.IPersistence;
  */
 public class Persistence implements IPersistence {
 
-	public static final String FILENAME = "src/main/resources/bdd.json";
+	public static final String FILENAME = "CAC/src/main/resources/bdd.json";
 
 	static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));

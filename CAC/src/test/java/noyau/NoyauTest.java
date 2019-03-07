@@ -5,7 +5,6 @@ import domaine.Configuration;
 import domaine.Connexion;
 import domaine.Port;
 import ihm.IVue;
-import impl.SystemeRecommandation;
 import enumeration.Appreciation;
 import interfaces.IConnexion;
 import interfaces.IPersistence;
@@ -65,7 +64,7 @@ public class NoyauTest {
         configurations.add(configuration1);
         configurations.add(configuration2);
 
-        noyau.setLesConfigurations(configurations);
+        noyau.setConfigurations(configurations);
 
     }
 

@@ -44,7 +44,7 @@ public class VueImpl implements IVue{
                 System.out.println("Entrez nom service pour port fourni n°"+(j+1)+" : ");
                 entree = scan.nextLine();
                 p = new Port(c,entree);
-                c.ajouterPortRequis(p);
+                c.ajouterPortFourni(p);
             }
             composants.add(c);
 

@@ -14,6 +14,7 @@ import interfaces.IRecommandation;
 import persistence.Persistence;
 import systemeRecommandation.SystemeRecommandation;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +50,12 @@ public class Moteur {
 
 
     public static void main (String[] args){
+        File f = new File("CAC/src/main/resources/blala");
+        try { f.createNewFile(); }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //Création instances
         IVue vue = new VueImpl();
         Persistence persistence = new Persistence();
@@ -62,8 +69,8 @@ public class Moteur {
         for (AgentComposant ac : listeAgent){
             ac.envoyerConnexionPossible();
         }
-        noyau.recevoirMessage();
-        //List<Connexion> connexionsPossibles = noyau.getConnexionsPossbile();
+
+        noyau.calculerConfigurations();
 
         Eval eval = new Eval(noyau);
         eval.demanderNotation();
