@@ -8,42 +8,71 @@
         <nid>
             <nom>Fourmilère</nom>
             <position>
-                <x>10</x>
-                <y>10</y>
+                <x>14</x>
+                <y>14</y>
             </position>
         </nid>
-        <fourmis>5</fourmis>
+        <fourmis>40</fourmis>
         <nourritures>
             <nourriture>
-                <quantite>50</quantite>
+                <quantite>100</quantite>
                 <position>
                     <x>5</x>
                     <y>8</y>
                 </position>
             </nourriture>
             <nourriture>
-                <quantite>60</quantite>
+                <quantite>100</quantite>
                 <position>
                     <x>7</x>
                     <y>5</y>
                 </position>
             </nourriture>
         </nourritures>
-        <!--<obstacles>
+        <obstacles>
             <obstacle>
                 <position>
-                    <x>5</x>
-                    <y>5</y>
+                    <x>10</x>
+                    <y>11</y>
                 </position>
             </obstacle>
             <obstacle>
                 <position>
-                    <x>5</x>
+                    <x>10</x>
+                    <y>12</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>11</x>
+                    <y>9</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>12</x>
+                    <y>9</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>12</x>
+                    <y>8</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>12</x>
+                    <y>7</y>
+                </position>
+            </obstacle>
+            <obstacle>
+                <position>
+                    <x>12</x>
                     <y>6</y>
                 </position>
             </obstacle>
         </obstacles>
-        -->
     </liste_agentite>
 
 </plateau>

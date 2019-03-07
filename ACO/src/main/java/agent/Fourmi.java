@@ -50,7 +50,7 @@ public class Fourmi extends AbstractAgentSitue {
 
     public void chercherNourriture(){
 
-        System.out.println("[ " + this.getNom() + " ] : Je cherche");
+        //System.out.println("[ " + this.getNom() + " ] : Je cherche");
         estSurNid = false;
 
         boolean caseSansObstacle = false;
@@ -178,7 +178,6 @@ public class Fourmi extends AbstractAgentSitue {
                     ((Nourriture) agentite).setQuantite(quantiteNourriture);
 
                     //Si il n'y a plus de nourriture on ramasse l'entite
-
                     if (quantiteNourriture == 0){
                         this.ramasser((AbstractEntite) agentite);
                     }
@@ -187,7 +186,7 @@ public class Fourmi extends AbstractAgentSitue {
                     estEnPhaseAller = false;
                     estSurNid = false;
 
-                    System.out.println("[ " + this.getNom() + " ] : J'ai ramssé la nourriture");
+                    System.out.println("[ " + this.getNom() + " ] : J'ai ramssé la nourriture. Il reste " + quantiteNourriture + " pv à la source de nourriture");
                     break;
                 }
             }
@@ -236,7 +235,7 @@ public class Fourmi extends AbstractAgentSitue {
                         poids.replace(myDirection, 0);
                     } else if (agentite instanceof Pheromone) { // Si la case contient de la phéromone
                         //Remplacer le poids par poids * taux de pheromone
-                        poids.replace(myDirection, ((Pheromone) agentite).getTauxPheromone() * poids.get(myDirection) / 10);
+                        poids.replace(myDirection, ((Pheromone) agentite).getTauxPheromone()/10 * poids.get(myDirection));
                     } else if (agentite instanceof Nourriture) { // Si la case contient de la nourriture
                         poids.replace(myDirection, 0);
                     }
@@ -255,12 +254,17 @@ public class Fourmi extends AbstractAgentSitue {
                     for (IAgentite agentite : agentites) {
                         if (agentite instanceof Pheromone) {
                             pheromoneExiste = true;
-                            ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 20);
+                            if (((Pheromone) agentite).getTauxPheromone() < 60) {
+                                ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 7);
+                            }
+//                            else {
+//                                ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 2);
+//                            }
                         }
                     }
                     //On depose que du pheromone dans le cas il n'existe pas
                     if (!pheromoneExiste) {
-                        AbstractEntite ent = new Pheromone(20, this.toString(), (IEntitePlateau) this.plateau);
+                        AbstractEntite ent = new Pheromone(15, this.toString(), (IEntitePlateau) this.plateau);
                         this.setEntitePortee(ent);
                         deposer(ent);
                     }
