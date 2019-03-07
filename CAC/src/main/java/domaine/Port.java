@@ -25,6 +25,12 @@ public class Port implements Serializable{
         this.composant = composant;
         this.service = service;
     }
+    
+    public Port(Composant composant, String service, String id) {
+        this.uuid = UUID.fromString(id);
+        this.composant = composant;
+        this.service = service;
+    }
 
     public Port() {
     	

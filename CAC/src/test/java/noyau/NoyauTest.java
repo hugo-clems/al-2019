@@ -77,8 +77,8 @@ public class NoyauTest {
         ArrayList<Connexion> connexionsP = new ArrayList<>();
         connexionsP.addAll(configurations.get(indiceConfig).getConnexions());
         ArrayList<Connexion> connexions = persistence.trouverConnexion(connexionsP);
-        Assert.assertEquals(connexions.get(0).getNbLikes(),1);
-        Assert.assertEquals(connexions.get(1).getNbLikes(),1);
+        Assert.assertEquals(connexions.get(0).getNbApprobation(),1);
+        Assert.assertEquals(connexions.get(1).getNbApprobation(),1);
 
     }
 
@@ -90,8 +90,8 @@ public class NoyauTest {
         ArrayList<Connexion> connexionsP = new ArrayList<>();
         connexionsP.addAll(configurations.get(indiceConfig).getConnexions());
         ArrayList<Connexion> connexions = persistence.trouverConnexion(connexionsP);
-        Assert.assertEquals(connexions.get(0).getNbLikes(),-1);
-        Assert.assertEquals(connexions.get(1).getNbLikes(),-1);
+        Assert.assertEquals(connexions.get(0).getNbApprobation(),-1);
+        Assert.assertEquals(connexions.get(1).getNbApprobation(),-1);
     }
 
 }
