@@ -255,7 +255,7 @@ public class Fourmi extends AbstractAgentSitue {
                         if (agentite instanceof Pheromone) {
                             pheromoneExiste = true;
                             if (((Pheromone) agentite).getTauxPheromone() < 60) {
-                                ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 7);
+                                ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 9);
                             }
 //                            else {
 //                                ((Pheromone) agentite).setTauxPheromone(((Pheromone) agentite).getTauxPheromone() + 2);
