@@ -34,15 +34,22 @@ public class Robot extends AbstractAgentSitue {
     @Override
     public void actionTour() {
         if(getColis() == null){
-            if(estColisDevantSoi()){
-                this.ramasser(new Colis("Colis"));
-                setColis((Colis) this.getEntitePortee());
+            Colis c = estColisDevantSoi();
+            if(c != null){
+                this.ramasser(c);
+                setColis(c);
+            } else {
+                boolean b = allerZoneCollecte();
+                if(b) nbActions++; nbDeplacements++;
             }
-            boolean b = allerZoneCollecte();
-            if(b) nbActions++; nbDeplacements++;
         } else {
-            boolean b = allerZoneDepot();
-            if(b) nbActions++; nbDeplacements++;
+            if (estZoneDepotDevantSoi()){
+                this.deposer(this.getColis());
+                this.setColis(null);
+            } else {
+                boolean b = allerZoneDepot();
+                if(b) nbActions++; nbDeplacements++;
+            }
         }
     }
 
@@ -154,7 +161,7 @@ public class Robot extends AbstractAgentSitue {
         }
     }
 
-    public boolean estColisDevantSoi(){
+    public Colis estColisDevantSoi(){
         Detection.detecterVoisinage(this);
         Case caseRobot = this.plateau.getCase(this);
 
@@ -182,7 +189,39 @@ public class Robot extends AbstractAgentSitue {
         }
         CaseRobot c = this.carteMemoire.get(otherY).get(otherX);
 
-        return c != null && c.isCollecte();
+        //return c != null && c.isCollecte();
+        return c.getColis();
+    }
+
+    public boolean estZoneDepotDevantSoi(){
+        Detection.detecterVoisinage(this);
+        Case caseRobot = this.plateau.getCase(this);
+
+        int x = 0, y = 0;
+
+        switch (this.getDirection()) {
+            case N: y--;
+                break;
+            case E: x++;
+                break;
+            case S: y++;
+                break;
+            case O: x--;
+                break;
+            default:
+                break;
+        }
+        int otherX = caseRobot.getPosition().getX() + x -1;
+        if (otherX < 0) {
+            otherX = 0;
+        }
+        int otherY = caseRobot.getPosition().getY() + y -1;
+        if (otherY < 0) {
+            otherY = 0;
+        }
+        CaseRobot c = this.carteMemoire.get(otherY).get(otherX);
+
+        return c.isDepot();
     }
 
     public boolean estMurDevantSoi(){

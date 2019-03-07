@@ -1,10 +1,8 @@
 package initialisationPlateau;
 
 import common.Direction;
-import entites.Obstacle;
+import entites.*;
 import entites.Robot;
-import entites.ZoneCollecte;
-import entites.ZoneDepot;
 import plateau.Application;
 import plateau.IAgentite;
 import plateau.Position;
@@ -131,7 +129,10 @@ public class GenerateurPlateau {
 
         for(int i = case1.getX(); i <= case2.getX(); i++) {
             for(int j = case1.getY(); j <= case2.getY(); j++) {
-                if(nom.equals("Collecte")) application.placerAgentite(new Position(i, j), new ZoneCollecte(nom));
+                if(nom.equals("Collecte")){
+                    application.placerAgentite(new Position(i, j), new ZoneCollecte(nom));
+                    application.placerAgentite(new Position(i, j), new Colis("Colis"));
+                }
                 else application.placerAgentite(new Position(i, j), new ZoneDepot(nom));
             }
         }

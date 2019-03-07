@@ -22,6 +22,7 @@ public class Detection {
     private static CaseRobot convertCaseToCaseRobot(Case caseAdjacente) {
         List<IAgentite> listeAgentsEntites = caseAdjacente.getAgentites();
         boolean obstacle = false, robot = false, depot = false, collecte = false;
+        Colis colis = null;
         int poids = 0;
 
         for (IAgentite agentite : listeAgentsEntites) {
@@ -36,11 +37,13 @@ public class Detection {
                 collecte = true;
             } else if (agentite instanceof ZoneDepot) {
                 depot = true;
+            } else if (agentite instanceof Colis){
+                colis = (Colis) agentite;
             }
 
         }
 
-        return new CaseRobot(caseAdjacente.getPosition(), poids, obstacle, robot, depot, collecte);
+        return new CaseRobot(caseAdjacente.getPosition(), poids, obstacle, robot, depot, collecte, colis);
     }
 
     private static void addCaseRobotToCarteMemoire(Robot robot, CaseRobot caseRobot) {
