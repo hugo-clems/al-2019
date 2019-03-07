@@ -63,7 +63,7 @@ public class Noyau extends AbstractAgentSocial implements IEval{
 
 
     @Override
-    public Set<Configuration> getConfigurations() {
+    public List<Configuration> getConfigurations() {
 
         ArrayList<Connexion> connexionsPossiblesAPersistees = new ArrayList<>();
         List<MessageAgentAuNoyau> messagesAgentAuNoyeau = recevoirMessage();
@@ -82,7 +82,10 @@ public class Noyau extends AbstractAgentSocial implements IEval{
             connexionsPossiblesAPersistees.addAll(iPersistence.trouverConnexion(inter));
         }
 
-        return iRecommandation.creerConfigurations(connexionsPossiblesAPersistees);
+        List<Configuration> configurations = new ArrayList<>();
+        configurations.addAll(iRecommandation.creerConfigurations(connexionsPossiblesAPersistees));
+
+        return configurations;
     }
 
     public List<MessageAgentAuNoyau> recevoirMessage() {

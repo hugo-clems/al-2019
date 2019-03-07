@@ -49,7 +49,7 @@ public class NoyauTest {
         Configuration configuration1 = new Configuration();
         Configuration configuration2 = new Configuration();
 
-        recommandation = new SystemeRecommandation();
+        //recommandation = new SystemeRecommandation();
         persistence = new Persistence();
         configurations = new ArrayList<>();
         Set<Connexion> connexions1 = new HashSet<>();
