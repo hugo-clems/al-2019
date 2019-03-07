@@ -108,7 +108,7 @@ public class Persistence implements IPersistence {
 	public boolean sauvegarderConnexion(ArrayList<Connexion> connexionAPersister) {
 		// TODO Auto-generated method stub
 
-		Genson genson = new GensonBuilder().setSkipNull(true).exclude(Port.class)/* .useClassMetadata(true) */.useRuntimeType(true)
+		Genson genson = new GensonBuilder().setSkipNull(true).exclude("composant",Port.class)/* .useClassMetadata(true) */.useRuntimeType(true)
 				.create();
 		String res = genson.serialize(connexionAPersister);
 

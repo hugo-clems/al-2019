@@ -97,7 +97,11 @@ public class Port implements Serializable{
     }
 
     public boolean equals(Port port) {
-        return this.uuid.equals(port.getUuid());
+    	if(this.uuid != null && port.getUuid() != null) {
+    		return this.uuid.equals(port.getUuid());
+    	}else {
+    		return true;
+    	}
     }
 
    /* public int hashCode() {
