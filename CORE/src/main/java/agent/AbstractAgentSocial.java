@@ -30,8 +30,8 @@ public abstract class AbstractAgentSocial extends AbstractAgent {
     /**
      * Constructeur par défaut.
      */
-    public AbstractAgentSocial(IAgentPlateau plateau) {
-        super(plateau);
+    public AbstractAgentSocial() {
+        super();
         this.annuaire = Annuaire.getInstance();
         this.annuaire.addAgent(this);
         this.agentsDansAnnuaire = annuaire.getAgents();

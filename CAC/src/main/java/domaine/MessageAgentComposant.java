@@ -1,6 +1,5 @@
 package domaine;
 
-
 import communication.AbstractMessage;
 
 import java.util.Set;

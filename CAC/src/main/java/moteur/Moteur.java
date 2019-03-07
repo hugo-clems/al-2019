@@ -49,13 +49,7 @@ public class Moteur {
     }
 
 
-    public static void main (String[] args){
-        File f = new File("CAC/src/main/resources/blala");
-        try { f.createNewFile(); }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public static void main (String[] args) {
         //Création instances
         IVue vue = new VueImpl();
         Persistence persistence = new Persistence();

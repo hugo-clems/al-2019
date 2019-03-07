@@ -11,5 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="CORE" />
+    <orderEntry type="module" module-name="INFRA" />
   </component>
 </module>
