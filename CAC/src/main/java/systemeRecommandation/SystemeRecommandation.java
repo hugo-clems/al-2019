@@ -44,6 +44,8 @@ public class SystemeRecommandation implements IRecommandation {
      */
     @Override
     public int calculerValeurInteret(Connexion connexion) {
+        if (connexion.getNbOccurence() == 0)
+            return 0;
         return 100 * connexion.getNbApprobation() / connexion.getNbOccurence();
     }
 
