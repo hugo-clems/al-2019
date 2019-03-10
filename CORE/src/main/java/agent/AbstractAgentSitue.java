@@ -1,8 +1,10 @@
 package agent;
 
-import MASInfrastructure.Communication.ICommunication;
-import MASInfrastructure.Etat.LifeCycle;
 import common.Direction;
+import entites.AbstractEntite;
+import plateau.Case;
+import plateau.IAgentPlateau;
+
 import java.util.Map;
 
 /**
@@ -21,53 +23,81 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     private Direction direction;
 
     /**
-     * L'identifiant de l'entité portée par l'agent.
+     * L'entité portée par l'agent.
      */
-    private int idEntitePortee;
-
-    /**
-     * Le plateau.
-     */
-    //private IAgentPlateau plateau;
+    private AbstractEntite entitePortee;
 
     /**
      * Constructeur par défaut.
-     * @param lifeCycle
-     * @param myMailBoxManager
      */
-    public AbstractAgentSitue(LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
+    public AbstractAgentSitue(IAgentPlateau plateau) {
+        super(plateau);
         this.nom = "";
         this.direction = Direction.N;
-        this.idEntitePortee = 0;
-    }
-
-    public AbstractAgentSitue(String nom, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
-        this.nom = nom;
-        this.direction = Direction.N;
-        this.idEntitePortee = 0;
-    }
-
-    public AbstractAgentSitue(String nom, Direction directionInitiale, LifeCycle lifeCycle, ICommunication myMailBoxManager) {
-        super(lifeCycle, myMailBoxManager);
-        this.nom = nom;
-        this.direction = directionInitiale;
-        this.idEntitePortee = 0;
+        this.entitePortee = null;
     }
 
     /**
-     * Se tourne et se déplace vers une direction.
-     * @param nouvelleDirection la direction vers laquel se tourner
+     * Constructeur pour ajouter un nom à l'agent.
+     * @param nom le nom de l'agent
      */
-    public void seDeplacerVers(Direction nouvelleDirection) {
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau) {
+        super(plateau);
+        this.nom = nom;
+        this.direction = Direction.N;
+        this.entitePortee = null;
+    }
+
+    /**
+     * Constructeur pour rajouter un nom et une Direction à l'agent.
+     * @param nom le nom de l'agent
+     * @param directionInitiale la direction initiale de l'agent
+     */
+    public AbstractAgentSitue(String nom, IAgentPlateau plateau, Direction directionInitiale) {
+        super(plateau);
+        this.nom = nom;
+        this.direction = directionInitiale;
+        this.entitePortee = null;
+    }
+
+    //region Getter/Setter
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public AbstractEntite getEntitePortee() {
+        return entitePortee;
+    }
+
+    public void setEntitePortee(AbstractEntite entitePortee) {
+        this.entitePortee = entitePortee;
+    }
+    //endregion
+
+    /**
+     * Se tourne et se déplace vers une direction.
+     * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
+     */
+    public boolean seDeplacerVers(Direction nouvelleDirection) {
         this.seTournerVers(nouvelleDirection);
-        this.avancer();
+        return this.avancer();
     }
 
     /**
      * Change la direction de l'agent.
-     * @param nouvelleDirection la direction vers laquel se tourner
+     * @param nouvelleDirection la direction vers laquelle l'agent va se tourner
      */
     public void seTournerVers(Direction nouvelleDirection) {
         this.direction = nouvelleDirection;
@@ -76,42 +106,44 @@ public abstract class AbstractAgentSitue extends AbstractAgent {
     /**
      * Se déplacer dans la direction de l'agent.
      */
-    public void avancer() {
-        // TODO avancer
-    }
-
-    //public Map<Direction, Case> detecter() {
-    public Map<Direction, String> detecter() {
-        // TODO detecter
-        return null;
+    public boolean avancer() {
+        return plateau.deplacerAgent(this, this.direction);
     }
 
     /**
-     * Dépose l'entité dans la direction choisie.
+     * Permet à l'agent de détecter son environnement.
+     * @return une Map contenant les 8 Directions avec les Cases
      */
-    public void deposer() {
-        // TODO appel du plateau
-        //plateau.deposer(this.direction);
-    }
-
-    public int ramasser(String className) {
-        // TODO
-        return 0;
+    public Map<Direction, Case> detecter() {
+        return plateau.getVoisinage(this);
     }
 
     /**
-     * Renvoie la direction actuel de l'agent.
-     * @return la direction de l'agent
+     * Dépose l'entité sur la case où se situe l'agent.
      */
-    public Direction getDirection() {
-        return direction;
+    public boolean deposer(AbstractEntite entite) {
+        return plateau.deposerEntite(this, entite);
     }
 
-    public String getNom() {
-        return nom;
+    /**
+     * Ramasse l'entité qui se trouve devant l'agent.
+     * @param entite l'entité à ramasser
+     */
+    public boolean ramasser(AbstractEntite entite) {
+        return plateau.ramasserEntite(this, entite);
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    /**
+     * Effectue l'action durant le tour de l'agent.
+     */
+    public abstract void actionTour();
+
+    @Override
+    public String toString() {
+        return "AbstractAgentSitue{" +
+                "nom='" + nom + '\'' +
+                ", direction=" + direction +
+                ", entitePortee=" + entitePortee +
+                '}';
     }
 }

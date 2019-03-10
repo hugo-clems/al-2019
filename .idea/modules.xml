@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ACO/ACO.iml" filepath="$PROJECT_DIR$/ACO/ACO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CAC/CAC.iml" filepath="$PROJECT_DIR$/CAC/CAC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CORE/CORE.iml" filepath="$PROJECT_DIR$/CORE/CORE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/INFRA/INFRA.iml" filepath="$PROJECT_DIR$/INFRA/INFRA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ROB/ROB.iml" filepath="$PROJECT_DIR$/ROB/ROB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/al2019.iml" filepath="$PROJECT_DIR$/al2019.iml" />
+    </modules>
+  </component>
+</project>
